@@ -97,11 +97,11 @@ const ProjectTimeLogs: React.FC<{ project: Project; tasks: Task[]; viewMode: 'ac
 
     if (all.length === 0) {
         return (
-            <section className="bg-slate-800/40 border border-slate-700/50 rounded-2xl p-6">
+            <section className="bg-white/[0.02] border border-white/[0.08] rounded-2xl p-6">
                 <h2 className="text-slate-100 font-bold mb-4 flex items-center gap-2">
                     <Clock size={18} className="text-amber-400" /> Time Records
                 </h2>
-                <p className="text-slate-600 text-sm italic text-center py-8 border-2 border-dashed border-slate-800 rounded-xl">
+                <p className="text-slate-600 text-sm italic text-center py-8 border-2 border-dashed border-white/[0.08] rounded-xl">
                     No time logged yet. Start a task timer to record time against this project.
                 </p>
             </section>
@@ -109,7 +109,7 @@ const ProjectTimeLogs: React.FC<{ project: Project; tasks: Task[]; viewMode: 'ac
     }
 
     return (
-        <section className="bg-slate-800/40 border border-slate-700/50 rounded-2xl p-6">
+        <section className="bg-white/[0.02] border border-white/[0.08] rounded-2xl p-6">
             <h2 className="text-slate-100 font-bold mb-1 flex items-center gap-2">
                 <Clock size={18} className="text-amber-400" /> Time Records
             </h2>
@@ -133,7 +133,7 @@ const ProjectTimeLogs: React.FC<{ project: Project; tasks: Task[]; viewMode: 'ac
                     return (
                         <div
                             key={idx}
-                            className="grid grid-cols-[1fr_auto_auto_auto] gap-x-4 items-center px-3 py-2.5 bg-slate-900/50 rounded-xl border border-white/5 hover:border-amber-500/20 transition-all group"
+                            className="grid grid-cols-[1fr_auto_auto_auto] gap-x-4 items-center px-3 py-2.5 bg-black/20 rounded-xl border border-white/5 hover:border-amber-500/20 transition-all group"
                         >
                             <div className="flex items-center gap-2 min-w-0">
                                 {entry.is_active ?
@@ -228,14 +228,14 @@ const ProjectNotes: React.FC<{ project: Project; viewMode: 'active' | 'archive' 
     };
 
     return (
-        <section className="bg-slate-800/40 border border-slate-700/50 rounded-2xl p-6 mb-8">
+        <section className="bg-white/[0.02] border border-white/[0.08] rounded-2xl p-6 mb-8">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-0 mb-4">
                 <h2 className="text-slate-100 font-bold flex items-center gap-2">
-                    <FileText size={18} className="text-blue-400" /> Project Notes
+                    <FileText size={18} className="text-cyan-300" /> Project Notes
                 </h2>
                 <button
                     onClick={() => { setEditNote(undefined); setShowForm(true); }}
-                    className="flex items-center gap-1.5 px-3 py-1.5 bg-blue-500/10 text-blue-400 hover:bg-blue-500/20 hover:text-blue-300 text-xs font-bold rounded-lg transition-all self-start sm:self-auto"
+                    className="flex items-center gap-1.5 px-3 py-1.5 bg-[#009d9a]/10 text-cyan-300 hover:bg-[#009d9a]/20 hover:text-cyan-200 text-xs font-bold rounded-lg transition-all self-start sm:self-auto"
                 >
                     <Plus size={14} /> New Note
                 </button>
@@ -243,9 +243,9 @@ const ProjectNotes: React.FC<{ project: Project; viewMode: 'active' | 'archive' 
 
             <div className="space-y-3">
                 {projectNotes.map(note => (
-                    <div key={note.id} className="p-4 bg-slate-900/50 border border-white/5 rounded-xl group hover:border-blue-500/30 transition-all cursor-pointer flex justify-between items-start" onClick={() => { setEditNote(note); setShowForm(true); }}>
+                    <div key={note.id} className="p-4 bg-black/20 border border-white/5 rounded-xl group hover:border-[#009d9a]/30 transition-all cursor-pointer flex justify-between items-start" onClick={() => { setEditNote(note); setShowForm(true); }}>
                         <div>
-                            <h3 className="text-slate-200 font-medium group-hover:text-blue-400 transition-colors">{note.title}</h3>
+                            <h3 className="text-slate-200 font-medium group-hover:text-cyan-300 transition-colors">{note.title}</h3>
                             <p className="text-slate-500 text-xs mt-1 line-clamp-2">{note.content}</p>
                         </div>
                         <button
@@ -258,7 +258,7 @@ const ProjectNotes: React.FC<{ project: Project; viewMode: 'active' | 'archive' 
                     </div>
                 ))}
                 {projectNotes.length === 0 && (
-                    <p className="text-slate-600 text-sm italic py-4 text-center border-2 border-dashed border-slate-800 rounded-xl">No notes added</p>
+                    <p className="text-slate-600 text-sm italic py-4 text-center border-2 border-dashed border-white/[0.08] rounded-xl">No notes added</p>
                 )}
             </div>
 
@@ -333,7 +333,7 @@ export const ProjectDetail: React.FC = () => {
             <div className="flex flex-col items-center justify-center h-full text-slate-400">
                 <FolderKanban size={48} className="mb-4 opacity-20" />
                 <p>Project not found</p>
-                <button onClick={() => navigate('/projects')} className="mt-4 text-indigo-400 hover:text-indigo-300">Back to Projects</button>
+                <button onClick={() => navigate('/projects')} className="mt-4 text-[#26f7b2] hover:text-[#26f7b2]/80">Back to Projects</button>
             </div>
         );
     }
@@ -350,11 +350,11 @@ export const ProjectDetail: React.FC = () => {
     return (
         <div className="space-y-8 pb-12">
             {/* Header */}
-            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-slate-700/50 pb-8">
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-white/[0.08] pb-8">
                 <div className="flex items-start gap-4">
                     <button
                         onClick={() => navigate('/projects')}
-                        className="p-2 rounded-xl bg-slate-800 border border-slate-700 text-slate-400 hover:text-slate-100 transition-all"
+                        className="p-2 rounded-xl bg-white/[0.03] border border-white/[0.08] text-slate-400 hover:text-[#26f7b2] hover:border-[#26f7b2]/30 transition-all"
                     >
                         <ArrowLeft size={20} />
                     </button>
@@ -367,7 +367,7 @@ export const ProjectDetail: React.FC = () => {
                             {client && (
                                 <button
                                     onClick={() => navigate(`/clients/${client.id}`)}
-                                    className="hover:text-indigo-400 flex items-center gap-1.5 transition-colors"
+                                    className="hover:text-[#26f7b2] flex items-center gap-1.5 transition-colors"
                                 >
                                     Client: {client.name}
                                 </button>
@@ -379,23 +379,23 @@ export const ProjectDetail: React.FC = () => {
                 </div>
 
                 {/* Archive Toggle */}
-                <div className="flex bg-slate-900/50 p-1 rounded-xl border border-white/5 backdrop-blur-md self-start md:self-auto">
+                <div className="flex bg-black/20 p-1 rounded-xl border border-white/5 backdrop-blur-md self-start md:self-auto">
                     <button
                         onClick={() => setViewMode('active')}
-                        className={`px-4 py-2 rounded-lg text-sm font-bold transition-all ${viewMode === 'active' ? 'bg-indigo-500 text-white shadow-lg' : 'text-slate-500 hover:text-slate-300'}`}
+                        className={`px-4 py-2 rounded-lg text-sm font-bold transition-all ${viewMode === 'active' ? 'bg-gradient-to-r from-[#26f7b2] to-[#009d9a] text-black shadow-lg' : 'text-slate-500 hover:text-slate-300'}`}
                     >
                         Active Board
                     </button>
                     <button
                         onClick={() => setViewMode('archive')}
-                        className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-bold transition-all ${viewMode === 'archive' ? 'bg-slate-700 text-white shadow-lg' : 'text-slate-500 hover:text-slate-300'}`}
+                        className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-bold transition-all ${viewMode === 'archive' ? 'bg-white/[0.08] text-slate-100 shadow-lg' : 'text-slate-500 hover:text-slate-300'}`}
                     >
                         <Archive size={14} /> Project Archive
                     </button>
                 </div>
 
                 {/* Total Time Display — read-only */}
-                <div className="flex items-center gap-3 bg-slate-900/50 p-4 rounded-2xl border border-white/5 backdrop-blur-md">
+                <div className="flex items-center gap-3 bg-black/20 p-4 rounded-2xl border border-white/5 backdrop-blur-md">
                     <div className="p-2 rounded-xl bg-amber-500/10 text-amber-400">
                         <Timer size={20} />
                     </div>
@@ -413,7 +413,7 @@ export const ProjectDetail: React.FC = () => {
 
                 {/* Info & Files */}
                 <div className="space-y-8">
-                    <section className="bg-slate-800/40 border border-slate-700/50 rounded-2xl p-6">
+                    <section className="bg-white/[0.02] border border-white/[0.08] rounded-2xl p-6">
                         <h2 className="text-slate-100 font-bold mb-4">Project Overview</h2>
                         <p className="text-slate-400 text-sm leading-relaxed mb-6">
                             {project.description || 'No description provided for this project.'}
@@ -435,7 +435,7 @@ export const ProjectDetail: React.FC = () => {
                     </section>
 
                     {/* File Upload & List */}
-                    <section className="bg-slate-800/40 border border-slate-700/50 rounded-2xl p-6">
+                    <section className="bg-white/[0.02] border border-white/[0.08] rounded-2xl p-6">
                         <h2 className="text-slate-100 font-bold mb-4 flex items-center justify-between">
                             Project Files
                             <span className="text-xs font-normal text-slate-500">{project.files?.length || 0} items</span>
@@ -444,7 +444,7 @@ export const ProjectDetail: React.FC = () => {
                         {isModerator && (
                             <div
                                 {...getRootProps()}
-                                className={`border-2 border-dashed rounded-xl p-4 text-center cursor-pointer transition-all mb-4 ${isDragActive ? 'border-indigo-500 bg-indigo-500/10' : 'border-slate-700 hover:border-slate-500'}`}
+                                className={`border-2 border-dashed rounded-xl p-4 text-center cursor-pointer transition-all mb-4 ${isDragActive ? 'border-[#26f7b2] bg-[#26f7b2]/10' : 'border-white/[0.08] hover:border-[#26f7b2]/40'}`}
                             >
                                 <input {...getInputProps()} />
                                 <Upload size={24} className="mx-auto mb-2 text-slate-500" />
@@ -456,20 +456,20 @@ export const ProjectDetail: React.FC = () => {
 
                         <div className="space-y-2">
                             {projectFiles.map(f => (
-                                <div key={f.id} className="flex items-center justify-between p-3 bg-slate-900/40 rounded-xl group border border-transparent hover:border-indigo-500/20 transition-all">
+                                <div key={f.id} className="flex items-center justify-between p-3 bg-black/20 rounded-xl group border border-transparent hover:border-[#26f7b2]/20 transition-all">
                                     <div className="flex items-center gap-3 min-w-0">
-                                        <FileArchive size={16} className="text-indigo-400 flex-shrink-0" />
+                                        <FileArchive size={16} className="text-[#26f7b2] flex-shrink-0" />
                                         <span className="text-slate-300 text-xs truncate max-w-[120px]">{f.name}</span>
                                     </div>
                                     <div className="flex items-center gap-1 flex-shrink-0">
-                                        <button 
-                                            onClick={() => triggerDownload(f.url, f.name)} 
-                                            title="Download file" 
+                                        <button
+                                            onClick={() => triggerDownload(f.url, f.name)}
+                                            title="Download file"
                                             className="p-1.5 text-slate-500 hover:text-emerald-400 transition-colors"
                                         >
                                             <Download size={14} />
                                         </button>
-                                        <a href={f.url} target="_blank" rel="noopener noreferrer" title="Open in new tab" className="p-1.5 text-slate-500 hover:text-indigo-400 transition-colors">
+                                        <a href={f.url} target="_blank" rel="noopener noreferrer" title="Open in new tab" className="p-1.5 text-slate-500 hover:text-[#26f7b2] transition-colors">
                                             <ExternalLink size={14} />
                                         </a>
                                         {(isOwner || isAdmin || isModerator) && (
@@ -483,7 +483,7 @@ export const ProjectDetail: React.FC = () => {
                                                 }} className={`p-1.5 rounded-lg transition-all ${f.is_archived ? 'text-amber-400 bg-amber-500/10 hover:bg-amber-500/20' : 'text-slate-400 hover:text-amber-400 hover:bg-amber-500/10'}`} title={viewMode === 'archive' ? "Unarchive file" : "Archive file"}>
                                                     {viewMode === 'archive' ? <ArchiveRestore size={14} /> : <Archive size={14} />}
                                                 </button>
-                                                <button onClick={() => handleDeleteFile(f.id, f.url)} title="Delete file" className="p-1.5 rounded-lg text-slate-400 hover:text-red-400 hover:bg-red-500/10 transition-colors">
+                                                <button onClick={() => handleDeleteFile(f.id, f.url)} title="Delete file" className="p-1.5 rounded-lg text-slate-400 hover:text-rose-400 hover:bg-rose-500/10 transition-colors">
                                                     <Trash2 size={14} />
                                                 </button>
                                             </>
@@ -504,12 +504,12 @@ export const ProjectDetail: React.FC = () => {
                     <section>
                         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-0 mb-4">
                             <h2 className="text-slate-100 font-bold flex items-center gap-2 text-lg">
-                                <CheckSquare size={18} className="text-indigo-400" /> Project Tasks
+                                <CheckSquare size={18} className="text-[#26f7b2]" /> Project Tasks
                             </h2>
                             {isAdmin && (
                                 <button
                                     onClick={() => { setEditTask(undefined); setShowTaskForm(true); }}
-                                    className="flex items-center gap-2 px-3 py-1.5 bg-indigo-500 hover:bg-indigo-600 text-white rounded-lg text-xs font-bold transition-all shadow-lg shadow-indigo-500/20 self-start sm:self-auto"
+                                    className="flex items-center gap-2 px-3 py-1.5 bg-gradient-to-r from-[#26f7b2] to-[#009d9a] hover:opacity-90 text-black rounded-lg text-xs font-bold transition-all shadow-lg shadow-[#26f7b2]/20 active:scale-95 self-start sm:self-auto"
                                 >
                                     <Plus size={14} /> Add Task
                                 </button>
@@ -525,7 +525,7 @@ export const ProjectDetail: React.FC = () => {
                                 />
                             ))}
                             {projectTasks.length === 0 && (
-                                <div className="col-span-full py-12 text-center border-2 border-dashed border-slate-800 rounded-2xl text-slate-600 italic">
+                                <div className="col-span-full py-12 text-center border-2 border-dashed border-white/[0.08] rounded-2xl text-slate-600 italic">
                                     No tasks assigned to this project
                                 </div>
                             )}
@@ -541,18 +541,18 @@ export const ProjectDetail: React.FC = () => {
                     {/* Meetings */}
                     <section>
                         <h2 className="text-slate-100 font-bold mb-4 flex items-center gap-2">
-                            <Calendar size={18} className="text-purple-400" /> Project Meetings
+                            <Calendar size={18} className="text-[#26f7b2]" /> Project Meetings
                         </h2>
                         <div className="space-y-3">
                             {projectMeetings.map(m => (
-                                <div key={m.id} className="p-4 bg-slate-800/40 border border-slate-700/50 rounded-xl flex items-center justify-between group hover:border-purple-500/40 transition-all">
+                                <div key={m.id} className="p-4 bg-white/[0.02] border border-white/[0.08] rounded-xl flex items-center justify-between group hover:border-[#26f7b2]/40 transition-all">
                                     <div className="flex items-center gap-4">
-                                        <div className="w-12 h-12 rounded-xl bg-purple-500/10 flex flex-col items-center justify-center text-purple-400 border border-purple-500/20">
+                                        <div className="w-12 h-12 rounded-xl bg-[#009d9a]/15 flex flex-col items-center justify-center text-[#26f7b2] border border-[#26f7b2]/20">
                                             <span className="text-xs font-bold leading-none">{new Date(m.start_time).toLocaleString('en-US', { month: 'short' }).toUpperCase()}</span>
                                             <span className="text-lg font-black leading-none">{new Date(m.start_time).getDate()}</span>
                                         </div>
                                         <div>
-                                            <h3 className="text-slate-200 font-medium group-hover:text-purple-400 transition-colors">{m.title}</h3>
+                                            <h3 className="text-slate-200 font-medium group-hover:text-[#26f7b2] transition-colors">{m.title}</h3>
                                             <p className="text-slate-500 text-xs mt-0.5">
                                                 {new Date(m.start_time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                                             </p>
@@ -570,7 +570,7 @@ export const ProjectDetail: React.FC = () => {
                                 </div>
                             ))}
                             {projectMeetings.length === 0 && (
-                                <p className="text-slate-600 text-sm italic py-4 text-center border-2 border-dashed border-slate-800 rounded-xl">No meetings linked</p>
+                                <p className="text-slate-600 text-sm italic py-4 text-center border-2 border-dashed border-white/[0.08] rounded-xl">No meetings linked</p>
                             )}
                         </div>
                     </section>
@@ -599,9 +599,9 @@ export const ProjectDetail: React.FC = () => {
 };
 
 const ROLE_CONFIG = {
-    admin: { label: 'Admin', color: 'bg-indigo-500/20 text-indigo-300 border-indigo-500/30' },
+    admin: { label: 'Admin', color: 'bg-[#26f7b2]/15 text-[#26f7b2] border-[#26f7b2]/30' },
     moderator: { label: 'Moderator', color: 'bg-amber-500/20 text-amber-300 border-amber-500/30' },
-    viewer: { label: 'Viewer', color: 'bg-slate-700/50 text-slate-300 border-slate-600/30' },
+    viewer: { label: 'Viewer', color: 'bg-white/[0.06] text-slate-300 border-white/[0.1]' },
 };
 
 const TeamMembers: React.FC<{ project: Project }> = ({ project }) => {
@@ -761,20 +761,20 @@ const TeamMembers: React.FC<{ project: Project }> = ({ project }) => {
     const availableTeam = savedTeam.filter(m => !existingUids.has(m.uid || ''));
 
     return (
-        <section className="bg-slate-800/40 border border-slate-700/50 rounded-2xl p-6">
+        <section className="bg-white/[0.02] border border-white/[0.08] rounded-2xl p-6">
             <h2 className="text-slate-100 font-bold mb-4 flex items-center gap-2">
                 <Users size={18} className="text-emerald-400" /> Team Members
             </h2>
 
             {isOwner && (
-                <div className="mb-6 space-y-3 p-4 bg-slate-900/50 rounded-xl border border-white/5">
+                <div className="mb-6 space-y-3 p-4 bg-black/20 rounded-xl border border-white/5">
                     <p className="text-slate-500 text-[11px] font-bold uppercase tracking-widest">Add Team Member</p>
 
                     {/* Team Member Dropdown */}
                     <select
                         value={selectedMember}
                         onChange={(e) => handleSelectMember(e.target.value)}
-                        className="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-indigo-500 transition-all"
+                        className="w-full bg-slate-950 border border-white/[0.08] rounded-xl px-3 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-[#26f7b2] transition-all"
                     >
                         <option value="">Select from your team directory…</option>
                         {availableTeam.map((m, i) => (
@@ -796,17 +796,17 @@ const TeamMembers: React.FC<{ project: Project }> = ({ project }) => {
                             onChange={(e) => setUserCode(e.target.value.toUpperCase())}
                             onKeyDown={(e) => e.key === 'Enter' && handleAddMember()}
                             placeholder="TM-XXXXXX (User Code)"
-                            className="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-200 font-mono focus:outline-none focus:border-indigo-500 transition-all"
+                            className="w-full bg-slate-950 border border-white/[0.08] rounded-xl px-3 py-2 text-sm text-slate-200 font-mono focus:outline-none focus:border-[#26f7b2] transition-all"
                         />
                     )}
 
                     <div className="flex gap-2">
-                        <select value={role} onChange={(e) => setRole(e.target.value as 'admin' | 'moderator' | 'viewer')} className="flex-1 bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-indigo-500 transition-all">
+                        <select value={role} onChange={(e) => setRole(e.target.value as 'admin' | 'moderator' | 'viewer')} className="flex-1 bg-slate-950 border border-white/[0.08] rounded-xl px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-[#26f7b2] transition-all">
                             <option value="admin">Admin — Full control</option>
                             <option value="moderator">Moderator — Add & edit, no delete</option>
                             <option value="viewer">Viewer — Read only + status changes</option>
                         </select>
-                        <button onClick={handleAddMember} disabled={adding || !userCode.trim()} className="bg-indigo-500 hover:bg-indigo-600 disabled:opacity-50 text-white px-5 py-2 rounded-xl text-sm font-bold transition-all">
+                        <button onClick={handleAddMember} disabled={adding || !userCode.trim()} className="bg-gradient-to-r from-[#26f7b2] to-[#009d9a] hover:opacity-90 disabled:opacity-50 text-black px-5 py-2 rounded-xl text-sm font-bold transition-all active:scale-95">
                             {adding ? '...' : 'Add'}
                         </button>
                     </div>
@@ -814,15 +814,15 @@ const TeamMembers: React.FC<{ project: Project }> = ({ project }) => {
             )}
 
             <div className="space-y-2">
-                <div className="flex items-center justify-between p-3 bg-slate-900/40 rounded-xl border border-indigo-500/20">
+                <div className="flex items-center justify-between p-3 bg-black/20 rounded-xl border border-[#26f7b2]/20">
                     <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-lg bg-indigo-500/30 text-indigo-300 flex items-center justify-center font-bold text-xs">O</div>
+                        <div className="w-8 h-8 rounded-lg bg-[#26f7b2]/20 text-[#26f7b2] flex items-center justify-center font-bold text-xs">O</div>
                         <div>
                             <p className="text-slate-200 text-sm font-medium">Project Owner {auth.currentUser?.uid === project.owner_id ? '(You)' : ''}</p>
                             <p className="text-slate-500 text-[10px]">Full Access</p>
                         </div>
                     </div>
-                    <span className="text-[10px] font-bold px-2 py-0.5 rounded-full border bg-indigo-500/20 text-indigo-300 border-indigo-500/30">Owner</span>
+                    <span className="text-[10px] font-bold px-2 py-0.5 rounded-full border bg-[#26f7b2]/15 text-[#26f7b2] border-[#26f7b2]/30">Owner</span>
                 </div>
 
                 {members.map((m) => {
@@ -853,7 +853,7 @@ const TeamMembers: React.FC<{ project: Project }> = ({ project }) => {
                     };
 
                     return (
-                        <div key={m.uid} className="flex items-center justify-between p-3 bg-slate-900/40 rounded-xl border border-white/5">
+                        <div key={m.uid} className="flex items-center justify-between p-3 bg-black/20 rounded-xl border border-white/5">
                             <div className="flex items-center gap-3">
                                 <div className={`w-8 h-8 rounded-lg flex items-center justify-center font-bold text-xs ${cfg.color.split(' ').slice(0, 2).join(' ')}`}>
                                     {(m.email || m.uid).charAt(0).toUpperCase()}
@@ -868,7 +868,7 @@ const TeamMembers: React.FC<{ project: Project }> = ({ project }) => {
                                     <select
                                         value={m.role}
                                         onChange={(e) => handleUpdateRole(e.target.value)}
-                                        className={`text-[10px] font-bold px-2 py-0.5 rounded-full border bg-transparent outline-none cursor-pointer hover:border-indigo-500/50 transition-all ${cfg.color}`}
+                                        className={`text-[10px] font-bold px-2 py-0.5 rounded-full border bg-transparent outline-none cursor-pointer hover:border-[#26f7b2]/50 transition-all ${cfg.color}`}
                                     >
                                         <option value="admin" className="bg-slate-900">Admin</option>
                                         <option value="moderator" className="bg-slate-900">Moderator</option>
@@ -878,7 +878,7 @@ const TeamMembers: React.FC<{ project: Project }> = ({ project }) => {
                                     <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full border ${cfg.color}`}>{cfg.label}</span>
                                 )}
                                 {isOwner && !isYou && (
-                                    <button onClick={() => handleRemoveMember(m.uid)} className="p-1.5 text-slate-600 hover:text-red-400 transition-colors rounded-lg hover:bg-red-500/10" title="Remove member">
+                                    <button onClick={() => handleRemoveMember(m.uid)} className="p-1.5 text-slate-600 hover:text-rose-400 transition-colors rounded-lg hover:bg-rose-500/10" title="Remove member">
                                         <Trash2 size={14} />
                                     </button>
                                 )}

@@ -21,7 +21,7 @@ export const ClientDetail: React.FC = () => {
             <div className="flex flex-col items-center justify-center h-full text-slate-400">
                 <Building2 size={48} className="mb-4 opacity-20" />
                 <p>Client not found</p>
-                <button onClick={() => navigate('/clients')} className="mt-4 text-indigo-400 hover:text-indigo-300">Back to Clients</button>
+                <button onClick={() => navigate('/clients')} className="mt-4 text-[#26f7b2] hover:text-[#26f7b2]/80">Back to Clients</button>
             </div>
         );
     }
@@ -38,14 +38,14 @@ export const ClientDetail: React.FC = () => {
                 <div className="flex items-start gap-4">
                     <button
                         onClick={() => navigate('/clients')}
-                        className="p-2 rounded-xl bg-slate-800 border border-slate-700 text-slate-400 hover:text-slate-100 transition-all"
+                        className="p-2 rounded-xl bg-white/[0.03] border border-white/[0.08] text-slate-400 hover:text-[#26f7b2] hover:border-[#26f7b2]/30 transition-all"
                     >
                         <ArrowLeft size={20} />
                     </button>
                     <div>
                         <div className="flex items-center gap-3 mb-1">
                             <h1 className="text-3xl font-bold text-slate-50">{client.name}</h1>
-                            <span className="px-3 py-1 bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 rounded-full text-xs font-bold uppercase tracking-wider">
+                            <span className="px-3 py-1 bg-[#26f7b2]/10 text-[#26f7b2] border border-[#26f7b2]/20 rounded-full text-xs font-bold uppercase tracking-wider">
                                 Client
                             </span>
                         </div>
@@ -58,7 +58,7 @@ export const ClientDetail: React.FC = () => {
                                     href={client.website.startsWith('http') ? client.website : `https://${client.website}`}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="flex items-center gap-1.5 text-indigo-400 hover:text-indigo-300 transition-colors bg-indigo-500/10 px-2 py-0.5 rounded-md border border-indigo-500/20 text-xs font-medium"
+                                    className="flex items-center gap-1.5 text-[#26f7b2] hover:text-[#26f7b2]/80 transition-colors bg-[#26f7b2]/10 px-2 py-0.5 rounded-md border border-[#26f7b2]/20 text-xs font-medium"
                                 >
                                     <Globe size={12} /> Website
                                 </a>
@@ -72,12 +72,12 @@ export const ClientDetail: React.FC = () => {
 
                 <div className="flex flex-wrap gap-3">
                     {client.phones?.map(p => (
-                        <a key={p} href={`tel:${p}`} className="flex items-center gap-2 px-4 py-2 bg-slate-800/50 border border-slate-700/50 rounded-xl text-slate-300 text-sm hover:border-emerald-500/40 hover:text-emerald-400 transition-all">
+                        <a key={p} href={`tel:${p}`} className="flex items-center gap-2 px-4 py-2 bg-white/[0.02] border border-white/[0.08] rounded-xl text-slate-300 text-sm hover:border-emerald-500/40 hover:text-emerald-400 transition-all">
                             <Phone size={14} /> {p}
                         </a>
                     ))}
                     {client.emails?.map(e => (
-                        <a key={e} href={`mailto:${e}`} className="flex items-center gap-2 px-4 py-2 bg-slate-800/50 border border-slate-700/50 rounded-xl text-slate-300 text-sm hover:border-indigo-500/40 hover:text-indigo-400 transition-all">
+                        <a key={e} href={`mailto:${e}`} className="flex items-center gap-2 px-4 py-2 bg-white/[0.02] border border-white/[0.08] rounded-xl text-slate-300 text-sm hover:border-[#009d9a]/40 hover:text-cyan-300 transition-all">
                             <Mail size={14} /> {e}
                         </a>
                     ))}
@@ -86,14 +86,14 @@ export const ClientDetail: React.FC = () => {
 
             {/* Contact Info Card */}
             {((client.phones?.length ?? 0) > 0 || (client.emails?.length ?? 0) > 0) && (
-                <div className="bg-slate-800/60 border border-slate-700/50 rounded-xl p-5">
+                <div className="bg-white/[0.02] border border-white/[0.08] rounded-xl p-5">
                     <h2 className="text-slate-300 text-xs font-bold uppercase tracking-widest mb-4 flex items-center gap-2">
                         <Phone size={13} className="text-emerald-400" /> Contact Information
                     </h2>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         {client.phones?.map(p => (
                             <a key={p} href={`tel:${p}`}
-                                className="flex items-center gap-3 p-3 bg-slate-900/60 border border-slate-700/40 rounded-xl hover:border-emerald-500/40 hover:bg-emerald-500/5 group transition-all">
+                                className="flex items-center gap-3 p-3 bg-white/[0.02] border border-white/[0.08] rounded-xl hover:border-emerald-500/40 hover:bg-emerald-500/5 group transition-all">
                                 <div className="w-8 h-8 rounded-lg bg-emerald-500/10 flex items-center justify-center flex-shrink-0 group-hover:bg-emerald-500/20 transition-all">
                                     <Phone size={14} className="text-emerald-400" />
                                 </div>
@@ -105,13 +105,13 @@ export const ClientDetail: React.FC = () => {
                         ))}
                         {client.emails?.map(e => (
                             <a key={e} href={`mailto:${e}`}
-                                className="flex items-center gap-3 p-3 bg-slate-900/60 border border-slate-700/40 rounded-xl hover:border-indigo-500/40 hover:bg-indigo-500/5 group transition-all">
-                                <div className="w-8 h-8 rounded-lg bg-indigo-500/10 flex items-center justify-center flex-shrink-0 group-hover:bg-indigo-500/20 transition-all">
-                                    <Mail size={14} className="text-indigo-400" />
+                                className="flex items-center gap-3 p-3 bg-white/[0.02] border border-white/[0.08] rounded-xl hover:border-[#009d9a]/40 hover:bg-[#009d9a]/5 group transition-all">
+                                <div className="w-8 h-8 rounded-lg bg-[#009d9a]/10 flex items-center justify-center flex-shrink-0 group-hover:bg-[#009d9a]/20 transition-all">
+                                    <Mail size={14} className="text-cyan-300" />
                                 </div>
                                 <div>
                                     <p className="text-[10px] text-slate-500 font-bold uppercase tracking-wider">Email</p>
-                                    <p className="text-slate-200 text-sm font-medium group-hover:text-indigo-300 transition-colors">{e}</p>
+                                    <p className="text-slate-200 text-sm font-medium group-hover:text-cyan-300 transition-colors">{e}</p>
                                 </div>
                             </a>
                         ))}
@@ -121,7 +121,7 @@ export const ClientDetail: React.FC = () => {
 
             {/* Internal Client Notes */}
             {client.notes && (
-                <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-5">
+                <div className="bg-white/[0.02] border border-white/[0.08] rounded-xl p-5">
                     <h2 className="text-slate-300 text-xs font-bold uppercase tracking-widest mb-3 flex items-center gap-2">
                         <StickyNote size={13} className="text-amber-400" /> Internal Notes
                     </h2>
@@ -136,17 +136,17 @@ export const ClientDetail: React.FC = () => {
                     {/* Projects */}
                     <section>
                         <h2 className="text-slate-100 font-bold mb-4 flex items-center gap-2">
-                            <Building2 size={18} className="text-indigo-400" /> Projects ({clientProjects.length})
+                            <Building2 size={18} className="text-[#26f7b2]" /> Projects ({clientProjects.length})
                         </h2>
                         <div className="space-y-3">
                             {clientProjects.map(p => (
                                 <div
                                     key={p.id}
                                     onClick={() => navigate(`/projects/${p.id}`)}
-                                    className="p-4 bg-slate-800/40 border border-slate-700/50 rounded-xl hover:border-indigo-500/40 cursor-pointer transition-all group"
+                                    className="p-4 bg-white/[0.02] border border-white/[0.08] rounded-xl hover:border-[#26f7b2]/40 cursor-pointer transition-all group"
                                 >
                                     <div className="flex items-center justify-between mb-2">
-                                        <h3 className="text-slate-200 font-medium group-hover:text-indigo-400 transition-colors">{p.name}</h3>
+                                        <h3 className="text-slate-200 font-medium group-hover:text-[#26f7b2] transition-colors">{p.name}</h3>
                                         <div className="w-2 h-2 rounded-full" style={{ backgroundColor: p.color }} />
                                     </div>
                                     <div className="flex items-center gap-3">
@@ -155,7 +155,7 @@ export const ClientDetail: React.FC = () => {
                                     </div>
                                 </div>
                             ))}
-                            {clientProjects.length === 0 && <p className="text-slate-600 text-sm italic py-4 text-center border-2 border-dashed border-slate-800/50 rounded-xl">No projects found</p>}
+                            {clientProjects.length === 0 && <p className="text-slate-600 text-sm italic py-4 text-center border-2 border-dashed border-white/[0.08] rounded-xl">No projects found</p>}
                         </div>
                     </section>
 
@@ -166,12 +166,12 @@ export const ClientDetail: React.FC = () => {
                         </h2>
                         <div className="space-y-3">
                             {clientNotes.map(n => (
-                                <div key={n.id} className="p-4 bg-slate-800/40 border border-slate-700/50 rounded-xl">
+                                <div key={n.id} className="p-4 bg-white/[0.02] border border-white/[0.08] rounded-xl">
                                     <h3 className="text-slate-200 font-medium mb-1 truncate">{n.title}</h3>
                                     <p className="text-slate-500 text-xs line-clamp-2">{n.content}</p>
                                 </div>
                             ))}
-                            {clientNotes.length === 0 && <p className="text-slate-600 text-sm italic py-4 text-center border-2 border-dashed border-slate-800/50 rounded-xl">No notes found</p>}
+                            {clientNotes.length === 0 && <p className="text-slate-600 text-sm italic py-4 text-center border-2 border-dashed border-white/[0.08] rounded-xl">No notes found</p>}
                         </div>
                     </section>
 
@@ -187,9 +187,9 @@ export const ClientDetail: React.FC = () => {
                                     href={f.url}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="flex items-center gap-3 p-3 bg-slate-800/40 border border-slate-700/50 rounded-xl hover:bg-slate-700/40 transition-all group"
+                                    className="flex items-center gap-3 p-3 bg-white/[0.02] border border-white/[0.08] rounded-xl hover:bg-white/[0.04] hover:border-[#26f7b2]/30 transition-all group"
                                 >
-                                    <div className="p-2 bg-indigo-500/10 rounded-lg text-indigo-400 group-hover:bg-indigo-500 group-hover:text-white transition-all">
+                                    <div className="p-2 bg-[#26f7b2]/10 rounded-lg text-[#26f7b2] group-hover:bg-[#26f7b2] group-hover:text-black transition-all">
                                         <FileArchive size={16} />
                                     </div>
                                     <div className="flex-1 min-w-0">
@@ -198,7 +198,7 @@ export const ClientDetail: React.FC = () => {
                                     </div>
                                 </a>
                             ))}
-                            {(!client.files || client.files.length === 0) && <p className="text-slate-600 text-sm italic py-4 text-center border-2 border-dashed border-slate-800/50 rounded-xl">No files found</p>}
+                            {(!client.files || client.files.length === 0) && <p className="text-slate-600 text-sm italic py-4 text-center border-2 border-dashed border-white/[0.08] rounded-xl">No files found</p>}
                         </div>
                     </section>
                 </div>
@@ -209,45 +209,45 @@ export const ClientDetail: React.FC = () => {
                     <section>
                         <div className="flex items-center justify-between mb-4">
                             <h2 className="text-slate-100 font-bold flex items-center gap-2">
-                                <CheckSquare size={18} className="text-indigo-400" /> Active Tasks ({clientTasks.length})
+                                <CheckSquare size={18} className="text-[#26f7b2]" /> Active Tasks ({clientTasks.length})
                             </h2>
                         </div>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             {clientTasks.map(t => (
                                 <TaskCard key={t.id} task={t} onEdit={() => { }} compact />
                             ))}
-                            {clientTasks.length === 0 && <div className="col-span-full py-12 text-center border-2 border-dashed border-slate-800/50 rounded-2xl text-slate-500 italic">No tasks assigned to this client</div>}
+                            {clientTasks.length === 0 && <div className="col-span-full py-12 text-center border-2 border-dashed border-white/[0.08] rounded-2xl text-slate-500 italic">No tasks assigned to this client</div>}
                         </div>
                     </section>
 
                     {/* Meetings */}
                     <section>
                         <h2 className="text-slate-100 font-bold mb-4 flex items-center gap-2">
-                            <CalendarIcon size={18} className="text-purple-400" /> Meetings ({clientMeetings.length})
+                            <CalendarIcon size={18} className="text-[#26f7b2]" /> Meetings ({clientMeetings.length})
                         </h2>
                         <div className="space-y-3">
                             {clientMeetings.map(m => (
-                                <div key={m.id} className="p-4 bg-slate-800/40 border border-slate-700/50 rounded-xl flex items-center justify-between group hover:border-purple-500/40 transition-all">
+                                <div key={m.id} className="p-4 bg-white/[0.02] border border-white/[0.08] rounded-xl flex items-center justify-between group hover:border-[#26f7b2]/40 transition-all">
                                     <div className="flex items-center gap-4">
-                                        <div className="w-12 h-12 rounded-xl bg-purple-500/10 flex flex-col items-center justify-center text-purple-400 border border-purple-500/20">
+                                        <div className="w-12 h-12 rounded-xl bg-[#009d9a]/15 flex flex-col items-center justify-center text-[#26f7b2] border border-[#26f7b2]/20">
                                             <span className="text-xs font-bold leading-none">{new Date(m.start_time).toLocaleString('en-US', { month: 'short' }).toUpperCase()}</span>
                                             <span className="text-lg font-black leading-none">{new Date(m.start_time).getDate()}</span>
                                         </div>
                                         <div>
-                                            <h3 className="text-slate-200 font-medium group-hover:text-purple-400 transition-colors">{m.title}</h3>
+                                            <h3 className="text-slate-200 font-medium group-hover:text-[#26f7b2] transition-colors">{m.title}</h3>
                                             <p className="text-slate-500 text-xs flex items-center gap-1.5 mt-0.5">
                                                 <Clock size={12} /> {new Date(m.start_time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                                             </p>
                                         </div>
                                     </div>
                                     <div className="text-right">
-                                        <span className="text-[10px] text-slate-600 bg-slate-900/50 px-2 py-1 rounded-md border border-white/5 uppercase font-bold tracking-tighter">
+                                        <span className="text-[10px] text-slate-600 bg-white/[0.03] px-2 py-1 rounded-md border border-white/5 uppercase font-bold tracking-tighter">
                                             {m.participants.length} Participants
                                         </span>
                                     </div>
                                 </div>
                             ))}
-                            {clientMeetings.length === 0 && <p className="text-slate-600 text-sm italic py-4 text-center border-2 border-dashed border-slate-800/50 rounded-xl">No upcoming meetings</p>}
+                            {clientMeetings.length === 0 && <p className="text-slate-600 text-sm italic py-4 text-center border-2 border-dashed border-white/[0.08] rounded-xl">No upcoming meetings</p>}
                         </div>
                     </section>
                 </div>
