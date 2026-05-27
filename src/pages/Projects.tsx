@@ -26,7 +26,7 @@ export const Projects: React.FC = () => {
         <div className="space-y-4">
             <div className="flex items-center justify-between">
                 <p className="text-slate-400 text-sm">{projects.length} project{projects.length !== 1 ? 's' : ''}</p>
-                <button onClick={() => setShowForm(true)} className="flex items-center gap-2 px-4 py-2 bg-indigo-500 hover:bg-indigo-600 text-white text-sm font-medium rounded-lg transition-all">
+                <button onClick={() => setShowForm(true)} className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-[#26f7b2] to-[#009d9a] hover:opacity-90 text-black text-sm font-bold rounded-xl transition-all shadow-lg shadow-[#26f7b2]/20 active:scale-95">
                     <Plus size={16} /> New Project
                 </button>
             </div>
@@ -47,12 +47,12 @@ export const Projects: React.FC = () => {
                         const isDue = project.due_date && new Date(project.due_date) < new Date(new Date().setHours(0, 0, 0, 0)) && project.status !== 'completed';
 
                         return (
-                            <div key={project.id} className={`group border rounded-xl p-5 transition-all ${isDue ? 'bg-red-500/10 border-red-500/30 hover:border-red-500/50' : 'bg-slate-800 border-slate-700/50 hover:border-indigo-500/40'}`}>
+                            <div key={project.id} className={`group rounded-2xl p-5 transition-all ${isDue ? 'bg-rose-500/10 border border-rose-500/30 hover:border-rose-500/50' : 'glass-card glass-card-hover'}`}>
                                 <div className="flex items-center justify-between mb-4">
                                     <div className="flex items-center gap-3">
                                         <div className="w-3 h-3 rounded-full flex-shrink-0" style={{ backgroundColor: project.color }} />
                                         <h3
-                                            className="text-slate-100 font-bold hover:text-indigo-400 cursor-pointer transition-colors"
+                                            className="text-slate-100 font-bold hover:text-[#26f7b2] cursor-pointer transition-colors"
                                             onClick={() => navigate(`/projects/${project.id}`)}
                                         >
                                             {project.name}
@@ -61,15 +61,15 @@ export const Projects: React.FC = () => {
                                     <div className="flex items-center gap-1 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-all">
                                         <button
                                             onClick={() => navigate(`/projects/${project.id}`)}
-                                            className="p-1.5 text-slate-400 hover:text-indigo-400 rounded-lg hover:bg-indigo-500/10 transition-all"
+                                            className="p-1.5 text-slate-400 hover:text-[#26f7b2] rounded-lg hover:bg-[#26f7b2]/10 transition-all"
                                             title="View Details"
                                         >
                                             <ExternalLink size={14} />
                                         </button>
-                                        <button onClick={() => { setEditProject(project); setShowForm(true); }} className="p-1.5 text-slate-500 hover:text-indigo-400 rounded-lg hover:bg-indigo-500/10 transition-all">
+                                        <button onClick={() => { setEditProject(project); setShowForm(true); }} className="p-1.5 text-slate-500 hover:text-[#26f7b2] rounded-lg hover:bg-[#26f7b2]/10 transition-all">
                                             <Pencil size={13} />
                                         </button>
-                                        <button onClick={() => handleDelete(project.id)} className="p-1.5 text-slate-500 hover:text-red-400 rounded-lg hover:bg-red-500/10 transition-all">
+                                        <button onClick={() => handleDelete(project.id)} className="p-1.5 text-slate-500 hover:text-rose-400 rounded-lg hover:bg-rose-500/10 transition-all">
                                             <Trash2 size={13} />
                                         </button>
                                     </div>
@@ -81,7 +81,7 @@ export const Projects: React.FC = () => {
                                     {statusBadge(project.status)}
                                     {priorityBadge(project.priority || 'medium')}
                                     {project.client_id && (
-                                        <span className="text-xs text-slate-400 bg-slate-800/50 border border-slate-700/50 px-2 py-0.5 rounded uppercase tracking-wide font-medium truncate max-w-[150px]">
+                                        <span className="text-xs text-slate-400 bg-white/[0.03] border border-white/[0.08] px-2 py-0.5 rounded uppercase tracking-wide font-medium truncate max-w-[150px]">
                                             {clients.find(c => c.id === project.client_id)?.name || 'Unknown Client'}
                                         </span>
                                     )}
@@ -94,13 +94,13 @@ export const Projects: React.FC = () => {
                                             <span>Progress</span>
                                             <span>{progress}%</span>
                                         </div>
-                                        <div className="h-1.5 bg-slate-700 rounded-full overflow-hidden">
+                                        <div className="h-1.5 bg-white/[0.06] rounded-full overflow-hidden">
                                             <div className="h-full rounded-full transition-all duration-500" style={{ width: `${progress}%`, backgroundColor: project.color }} />
                                         </div>
                                     </div>
                                 )}
 
-                                <div className="flex items-center gap-4 pt-3 border-t border-slate-700/50">
+                                <div className="flex items-center gap-4 pt-3 border-t border-white/[0.08]">
                                     <div className="flex items-center gap-1.5 text-xs text-slate-500">
                                         <CheckSquare size={12} />
                                         <span>{projectTasks.length} task{projectTasks.length !== 1 ? 's' : ''}</span>

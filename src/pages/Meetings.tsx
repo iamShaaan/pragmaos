@@ -30,8 +30,8 @@ const OUTCOMES: { value: Outcome; label: string; icon: React.ElementType; active
         value: 'failed',
         label: 'Failed',
         icon: XCircle,
-        active: 'bg-red-500/20 text-red-300 border-red-500/40',
-        ring: 'border-red-500/30',
+        active: 'bg-rose-500/20 text-rose-300 border-rose-500/40',
+        ring: 'border-rose-500/30',
     },
 ];
 
@@ -68,7 +68,7 @@ const OutcomeBar = ({ meeting }: { meeting: Meeting }) => {
     };
 
     return (
-        <div className="mt-3 pt-3 border-t border-slate-700/40">
+        <div className="mt-3 pt-3 border-t border-white/[0.08]">
             <p className="text-slate-600 text-[10px] font-bold uppercase tracking-wider mb-2">Meeting Outcome</p>
             <div className="flex gap-2">
                 {OUTCOMES.map(({ value, label, icon: Icon, active, ring }) => {
@@ -81,7 +81,7 @@ const OutcomeBar = ({ meeting }: { meeting: Meeting }) => {
                             disabled={!!saving}
                             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold border transition-all active:scale-95 disabled:opacity-60 ${isActive
                                     ? active
-                                    : `bg-slate-900/50 text-slate-500 border-slate-700/50 hover:${ring} hover:text-slate-300`
+                                    : `bg-white/[0.03] text-slate-500 border-white/[0.08] hover:${ring} hover:text-slate-300`
                                 }`}
                         >
                             {isLoading ? (
@@ -116,27 +116,27 @@ const MeetingCard = ({
 
     // Border colour driven by outcome for past meetings
     const borderCls = isUpcoming
-        ? 'border-slate-700/50'
+        ? 'border-white/[0.08]'
         : meeting.outcome === 'success'
             ? 'border-emerald-500/25'
             : meeting.outcome === 'failed'
-                ? 'border-red-500/25'
-                : 'border-slate-800';
+                ? 'border-rose-500/25'
+                : 'border-white/[0.06]';
 
     return (
-        <div className={`group bg-slate-800 border rounded-xl p-4 hover:border-indigo-500/30 transition-all ${borderCls} ${!isUpcoming ? 'opacity-80 hover:opacity-100' : ''}`}>
+        <div className={`group bg-white/[0.03] backdrop-blur-xl border rounded-2xl p-4 shadow-[0_8px_32px_0_rgba(0,0,0,0.37)] hover:border-[#26f7b2]/30 transition-all ${borderCls} ${!isUpcoming ? 'opacity-80 hover:opacity-100' : ''}`}>
             {/* Header row */}
             <div className="flex items-start justify-between gap-2">
                 <div className="flex items-start gap-3">
-                    <div className={`p-2 rounded-lg flex-shrink-0 mt-0.5 ${isUpcoming ? 'bg-purple-500/15' :
+                    <div className={`p-2 rounded-lg flex-shrink-0 mt-0.5 ${isUpcoming ? 'bg-[#009d9a]/15' :
                             meeting.outcome === 'success' ? 'bg-emerald-500/10' :
-                                meeting.outcome === 'failed' ? 'bg-red-500/10' :
-                                    'bg-slate-700/50'
+                                meeting.outcome === 'failed' ? 'bg-rose-500/10' :
+                                    'bg-white/[0.04]'
                         }`}>
                         <Calendar size={15} className={
-                            isUpcoming ? 'text-purple-400' :
+                            isUpcoming ? 'text-[#26f7b2]' :
                                 meeting.outcome === 'success' ? 'text-emerald-400' :
-                                    meeting.outcome === 'failed' ? 'text-red-400' :
+                                    meeting.outcome === 'failed' ? 'text-rose-400' :
                                         'text-slate-500'
                         } />
                     </div>
@@ -144,7 +144,7 @@ const MeetingCard = ({
                         <div className="flex items-center gap-2 flex-wrap">
                             <h3 className="text-slate-100 font-semibold text-sm">{meeting.title}</h3>
                             {isUpcoming && (
-                                <span className="text-[9px] font-black uppercase tracking-wider text-purple-400 bg-purple-500/10 border border-purple-500/20 px-1.5 py-0.5 rounded-full">
+                                <span className="text-[9px] font-black uppercase tracking-wider text-[#26f7b2] bg-[#26f7b2]/10 border border-[#26f7b2]/20 px-1.5 py-0.5 rounded-full">
                                     UPCOMING
                                 </span>
                             )}
@@ -157,10 +157,10 @@ const MeetingCard = ({
                 </div>
 
                 <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0">
-                    <button onClick={() => onEdit(meeting)} className="p-1.5 rounded-lg text-slate-500 hover:text-indigo-400 hover:bg-indigo-500/10 transition-all">
+                    <button onClick={() => onEdit(meeting)} className="p-1.5 rounded-lg text-slate-500 hover:text-[#26f7b2] hover:bg-[#26f7b2]/10 transition-all">
                         <Pencil size={13} />
                     </button>
-                    <button onClick={() => onDelete(meeting.id)} className="p-1.5 rounded-lg text-slate-500 hover:text-red-400 hover:bg-red-500/10 transition-all">
+                    <button onClick={() => onDelete(meeting.id)} className="p-1.5 rounded-lg text-slate-500 hover:text-rose-400 hover:bg-rose-500/10 transition-all">
                         <Trash2 size={13} />
                     </button>
                 </div>
@@ -178,12 +178,12 @@ const MeetingCard = ({
                 </div>
                 {meeting.location && (
                     <div className="flex items-center gap-1.5 text-xs">
-                        <Link2 size={11} className="text-indigo-400 flex-shrink-0" />
+                        <Link2 size={11} className="text-[#26f7b2] flex-shrink-0" />
                         <a
                             href={meeting.location.startsWith('http') ? meeting.location : `https://${meeting.location}`}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-indigo-400 hover:text-indigo-300 underline underline-offset-2 truncate transition-colors"
+                            className="text-[#26f7b2] hover:text-[#26f7b2]/80 underline underline-offset-2 truncate transition-colors"
                         >
                             Meeting Link
                         </a>
@@ -251,12 +251,12 @@ export const Meetings: React.FC = () => {
                                 </span>
                             )}
                             {failedCount > 0 && (
-                                <span className="flex items-center gap-1 text-[11px] font-bold text-red-400 bg-red-500/10 border border-red-500/20 px-2 py-0.5 rounded-full">
+                                <span className="flex items-center gap-1 text-[11px] font-bold text-rose-400 bg-rose-500/10 border border-rose-500/20 px-2 py-0.5 rounded-full">
                                     <XCircle size={10} /> {failedCount} failed
                                 </span>
                             )}
                             {pendingCount > 0 && (
-                                <span className="flex items-center gap-1 text-[11px] font-bold text-slate-500 bg-slate-800 border border-slate-700 px-2 py-0.5 rounded-full">
+                                <span className="flex items-center gap-1 text-[11px] font-bold text-slate-500 bg-white/[0.03] border border-white/[0.08] px-2 py-0.5 rounded-full">
                                     <StopCircle size={10} /> {pendingCount} no outcome
                                 </span>
                             )}
@@ -265,7 +265,7 @@ export const Meetings: React.FC = () => {
                 </div>
                 <button
                     onClick={() => setShowForm(true)}
-                    className="flex items-center gap-2 px-4 py-2 bg-indigo-500 hover:bg-indigo-600 text-white text-sm font-bold rounded-xl transition-all"
+                    className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-[#26f7b2] to-[#009d9a] hover:opacity-90 text-black text-sm font-bold rounded-xl transition-all shadow-lg shadow-[#26f7b2]/20 active:scale-95"
                 >
                     <Plus size={16} /> Schedule Meeting
                 </button>
@@ -275,7 +275,7 @@ export const Meetings: React.FC = () => {
             {upcoming.length > 0 && (
                 <div>
                     <h2 className="text-slate-300 text-xs font-black uppercase tracking-widest mb-3 flex items-center gap-2">
-                        <Clock size={12} className="text-purple-400" /> Upcoming
+                        <Clock size={12} className="text-[#26f7b2]" /> Upcoming
                     </h2>
                     <div className="space-y-3">
                         {upcoming.map(m => <MeetingCard key={m.id} meeting={m} now={now} onEdit={openEdit} onDelete={handleDelete} />)}
@@ -298,7 +298,7 @@ export const Meetings: React.FC = () => {
                 <div className="text-center py-20">
                     <Calendar size={48} className="text-slate-700 mx-auto mb-3" />
                     <p className="text-slate-400">No meetings scheduled yet</p>
-                    <button onClick={() => setShowForm(true)} className="mt-3 text-indigo-400 text-sm hover:text-indigo-300">
+                    <button onClick={() => setShowForm(true)} className="mt-3 text-[#26f7b2] text-sm hover:text-[#26f7b2]/80">
                         Schedule your first meeting →
                     </button>
                 </div>

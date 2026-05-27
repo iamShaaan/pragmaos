@@ -12,9 +12,9 @@ import toast from 'react-hot-toast';
 
 const STATUS_COLUMNS = [
     { key: 'open', label: 'Open', color: 'border-slate-600' },
-    { key: 'in_progress', label: 'In Progress', color: 'border-indigo-500' },
+    { key: 'in_progress', label: 'In Progress', color: 'border-cyan-500' },
     { key: 'done', label: 'Done', color: 'border-emerald-500' },
-    { key: 'overdue', label: 'Task Due', color: 'border-red-500' },
+    { key: 'overdue', label: 'Task Due', color: 'border-rose-500' },
 ] as const;
 
 export const Tasks: React.FC = () => {
@@ -68,12 +68,12 @@ export const Tasks: React.FC = () => {
             <motion.div
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="flex items-center gap-4 flex-wrap bg-slate-800/40 p-3 rounded-2xl border border-white/5 backdrop-blur-md"
+                className="flex items-center gap-4 flex-wrap glass-card p-3 rounded-2xl"
             >
                 <div className="relative flex-1 min-w-full sm:min-w-[300px]">
                     <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
                     <input
-                        className="w-full bg-slate-900/50 border border-slate-700/50 text-slate-100 rounded-xl pl-11 pr-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/40 transition-all placeholder:text-slate-500"
+                        className="w-full bg-white/[0.03] border border-white/[0.08] text-[#f8fafc] rounded-xl pl-11 pr-4 py-2.5 text-sm focus:outline-none focus:border-[#26f7b2] focus:ring-4 focus:ring-[#26f7b2]/5 transition-all placeholder:text-slate-500"
                         placeholder="Search by title, description, or tags..."
                         value={search}
                         onChange={(e) => setSearch(e.target.value)}
@@ -81,14 +81,14 @@ export const Tasks: React.FC = () => {
                 </div>
 
                 <div className="flex items-center gap-3 w-full sm:w-auto overflow-x-auto pb-1 sm:pb-0 custom-scrollbar">
-                    <select className="bg-slate-900/50 border border-slate-700/50 text-slate-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/40 cursor-pointer hover:bg-slate-800/80 transition-all flex-shrink-0" value={filterType} onChange={(e) => setFilterType(e.target.value)}>
+                    <select className="bg-white/[0.03] border border-white/[0.08] text-slate-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-[#26f7b2] focus:ring-4 focus:ring-[#26f7b2]/5 cursor-pointer hover:bg-white/[0.06] transition-all flex-shrink-0" value={filterType} onChange={(e) => setFilterType(e.target.value)}>
                         <option value="all">📁 All Types</option>
                         <option value="personal">👤 Personal</option>
                         <option value="project">🚀 Project</option>
                         <option value="client">🤝 Client</option>
                     </select>
 
-                    <select className="bg-slate-900/50 border border-slate-700/50 text-slate-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/40 cursor-pointer hover:bg-slate-800/80 transition-all flex-shrink-0" value={filterPriority} onChange={(e) => setFilterPriority(e.target.value)}>
+                    <select className="bg-white/[0.03] border border-white/[0.08] text-slate-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-[#26f7b2] focus:ring-4 focus:ring-[#26f7b2]/5 cursor-pointer hover:bg-white/[0.06] transition-all flex-shrink-0" value={filterPriority} onChange={(e) => setFilterPriority(e.target.value)}>
                         <option value="all">⚡ All Priorities</option>
                         <option value="high">🔴 High</option>
                         <option value="medium">🟡 Medium</option>
@@ -96,20 +96,20 @@ export const Tasks: React.FC = () => {
                     </select>
                 </div>
 
-                <div className="h-8 w-[1px] bg-slate-700/50 mx-1 hidden sm:block" />
+                <div className="h-8 w-[1px] bg-white/[0.08] mx-1 hidden sm:block" />
 
-                <div className="flex p-1 bg-slate-900/50 rounded-xl border border-slate-700/50">
-                    <button onClick={() => setView('kanban')} className={`p-2 rounded-lg transition-all ${view === 'kanban' ? 'bg-indigo-500 text-white shadow-lg shadow-indigo-500/30' : 'text-slate-500 hover:text-slate-300'}`}>
+                <div className="flex p-1 bg-white/[0.03] rounded-xl border border-white/[0.08]">
+                    <button onClick={() => setView('kanban')} className={`p-2 rounded-lg transition-all ${view === 'kanban' ? 'bg-[#26f7b2] text-black shadow-[0_0_15px_rgba(38,247,178,0.3)]' : 'text-slate-500 hover:text-[#26f7b2]'}`}>
                         <LayoutGrid size={18} />
                     </button>
-                    <button onClick={() => setView('list')} className={`p-2 rounded-lg transition-all ${view === 'list' ? 'bg-indigo-500 text-white shadow-lg shadow-indigo-500/30' : 'text-slate-500 hover:text-slate-300'}`}>
+                    <button onClick={() => setView('list')} className={`p-2 rounded-lg transition-all ${view === 'list' ? 'bg-[#26f7b2] text-black shadow-[0_0_15px_rgba(38,247,178,0.3)]' : 'text-slate-500 hover:text-[#26f7b2]'}`}>
                         <List size={18} />
                     </button>
                 </div>
 
                 <button
                     onClick={() => setShowForm(true)}
-                    className="flex items-center gap-2 px-6 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-bold rounded-xl transition-all shadow-lg shadow-indigo-600/20 active:scale-95 w-full sm:w-auto justify-center sm:justify-start mt-2 sm:mt-0"
+                    className="flex items-center gap-2 px-6 py-2.5 bg-gradient-to-r from-[#26f7b2] to-[#009d9a] hover:opacity-90 text-black text-sm font-bold rounded-xl transition-all shadow-lg shadow-[#26f7b2]/20 active:scale-95 w-full sm:w-auto justify-center sm:justify-start mt-2 sm:mt-0"
                 >
                     <Plus size={18} strokeWidth={3} /> NEW TASK
                 </button>
@@ -134,12 +134,12 @@ export const Tasks: React.FC = () => {
                                     transition={{ delay: idx * 0.1 }}
                                     className="flex flex-col gap-4 min-w-[280px] max-w-[280px] md:min-w-[320px] md:max-w-[320px] snap-center shrink-0"
                                 >
-                                    <div className={`flex items-center justify-between p-3 rounded-t-xl bg-slate-800/30 border-b-2 ${color.replace('border-', 'border-b-').replace('600', '400')}`}>
+                                    <div className={`flex items-center justify-between p-3 rounded-t-xl bg-white/[0.02] border-b-2 ${color.replace('border-', 'border-b-').replace('600', '400')}`}>
                                         <div className="flex items-center gap-2">
                                             <div className={`w-2 h-2 rounded-full ${color.replace('border-', 'bg-')}`} />
                                             <span className="text-slate-200 text-sm font-bold uppercase tracking-wider">{label}</span>
                                         </div>
-                                        <span className="text-[10px] font-black bg-slate-900/80 text-slate-400 px-2 py-0.5 rounded-md border border-white/5">
+                                        <span className="text-[10px] font-black bg-white/[0.03] text-slate-400 px-2 py-0.5 rounded-md border border-white/[0.08]">
                                             {colTasks.length}
                                         </span>
                                     </div>
@@ -172,9 +172,9 @@ export const Tasks: React.FC = () => {
                                                     <motion.div
                                                         initial={{ opacity: 0 }}
                                                         animate={{ opacity: 1 }}
-                                                        className="flex flex-col items-center justify-center py-12 px-4 text-center border-2 border-dashed border-slate-700/30 rounded-2xl bg-slate-800/10"
+                                                        className="flex flex-col items-center justify-center py-12 px-4 text-center border-2 border-dashed border-white/[0.08] rounded-2xl bg-white/[0.01]"
                                                     >
-                                                        <div className="w-12 h-12 rounded-full bg-slate-800/50 flex items-center justify-center mb-3 text-slate-600">
+                                                        <div className="w-12 h-12 rounded-full bg-white/[0.03] flex items-center justify-center mb-3 text-slate-600">
                                                             <Plus size={24} />
                                                         </div>
                                                         <p className="text-slate-500 text-xs font-medium italic">Drop tasks here or create new</p>

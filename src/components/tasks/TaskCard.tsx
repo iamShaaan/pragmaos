@@ -76,9 +76,9 @@ export const TaskCard: React.FC<TaskCardProps> = ({ task, onEdit, compact = fals
             className={`group glass-card glass-card-hover rounded-xl p-5 relative overflow-hidden`}
         >
             {/* Left Accent Strip */}
-            <div className={`absolute left-0 top-0 bottom-0 w-1 ${task.status === 'done' ? 'bg-emerald-500' :
-                task.status === 'in_progress' ? 'bg-indigo-500' :
-                    task.status === 'overdue' ? 'bg-red-500' : 'bg-slate-600'
+            <div className={`absolute left-0 top-0 bottom-0 w-1 ${task.status === 'done' ? 'bg-[#26f7b2]' :
+                task.status === 'in_progress' ? 'bg-[#009d9a]' :
+                    task.status === 'overdue' ? 'bg-rose-500' : 'bg-slate-600'
                 } opacity-50 group-hover:opacity-100 transition-opacity`} />
 
             {/* Header */}
@@ -86,7 +86,7 @@ export const TaskCard: React.FC<TaskCardProps> = ({ task, onEdit, compact = fals
                 <div className="flex-1">
                     <button
                         onClick={() => setShowDetails(true)}
-                        className="text-slate-50 font-semibold text-sm leading-relaxed line-clamp-2 hover:text-indigo-300 hover:drop-shadow-[0_0_8px_rgba(129,140,248,0.5)] transform transition-all duration-300 hover:-translate-y-0.5 text-left"
+                        className="text-slate-50 font-semibold text-sm leading-relaxed line-clamp-2 hover:text-[#26f7b2] hover:drop-shadow-[0_0_8px_rgba(38,247,178,0.5)] transform transition-all duration-300 hover:-translate-y-0.5 text-left"
                     >
                         {task.title}
                     </button>
@@ -98,12 +98,12 @@ export const TaskCard: React.FC<TaskCardProps> = ({ task, onEdit, compact = fals
                         </button>
                     )}
                     {canInteract && (
-                        <button onClick={() => onEdit(task)} className="p-1.5 rounded-lg text-slate-400 hover:text-indigo-400 hover:bg-indigo-500/10 transition-all">
+                        <button onClick={() => onEdit(task)} className="p-1.5 rounded-lg text-slate-400 hover:text-[#26f7b2] hover:bg-[#26f7b2]/10 transition-all">
                             <Pencil size={14} />
                         </button>
                     )}
                     {canDelete && (
-                        <button onClick={handleDelete} disabled={deleting} className="p-1.5 rounded-lg text-slate-400 hover:text-red-400 hover:bg-red-500/10 transition-all disabled:opacity-40">
+                        <button onClick={handleDelete} disabled={deleting} className="p-1.5 rounded-lg text-slate-400 hover:text-rose-400 hover:bg-rose-500/10 transition-all disabled:opacity-40">
                             {deleting ? <Loader2 size={14} className="animate-spin" /> : <Trash2 size={14} />}
                         </button>
                     )}
@@ -129,7 +129,7 @@ export const TaskCard: React.FC<TaskCardProps> = ({ task, onEdit, compact = fals
                     )}
                     {/* Project */}
                     {projectName && (
-                        <div className="flex items-center gap-2 text-xs py-1 px-2 rounded-md text-indigo-300 bg-indigo-500/10 border border-indigo-500/10">
+                        <div className="flex items-center gap-2 text-xs py-1 px-2 rounded-md text-cyan-300 bg-[#009d9a]/10 border border-[#009d9a]/20">
                             <FolderKanban size={11} className="flex-shrink-0" />
                             <span className="font-medium truncate">{projectName}</span>
                         </div>
@@ -164,10 +164,10 @@ export const TaskCard: React.FC<TaskCardProps> = ({ task, onEdit, compact = fals
             {/* Timer Row */}
             <div className="flex items-center justify-between pt-4 border-t border-white/5">
                 <div className="flex items-center gap-2">
-                    <div className={`p-1.5 rounded-md ${isRunning ? 'bg-emerald-500/20 text-emerald-400' : 'bg-slate-800/80 text-slate-500'}`}>
+                    <div className={`p-1.5 rounded-md ${isRunning ? 'bg-[#26f7b2]/15 text-[#26f7b2]' : 'bg-white/[0.04] text-slate-500'}`}>
                         <Timer size={14} className={isRunning ? 'animate-spin-slow' : ''} />
                     </div>
-                    <span className={`text-xs font-mono font-bold tracking-tight ${isRunning ? 'text-emerald-400' : 'text-slate-400'}`}>
+                    <span className={`text-xs font-mono font-bold tracking-tight ${isRunning ? 'text-[#26f7b2]' : 'text-slate-400'}`}>
                         {totalMs > 0 ? formatDuration(totalMs) : '00:00:00'}
                     </span>
                 </div>
@@ -175,8 +175,8 @@ export const TaskCard: React.FC<TaskCardProps> = ({ task, onEdit, compact = fals
                     <button
                         onClick={isRunning ? stop : start}
                         className={`flex items-center gap-1.5 px-4 py-1.5 rounded-lg text-xs font-bold transition-all shadow-sm active:scale-95 ${isRunning
-                            ? 'bg-red-500 text-white hover:bg-red-600 shadow-red-500/20'
-                            : 'bg-indigo-500 text-white hover:bg-indigo-600 shadow-indigo-500/20'
+                            ? 'bg-rose-500 text-white hover:bg-rose-600 shadow-rose-500/20'
+                            : 'bg-gradient-to-r from-[#26f7b2] to-[#009d9a] text-black hover:opacity-90 shadow-[#26f7b2]/20'
                             }`}
                     >
                         {isRunning ? <Square size={12} fill="currentColor" /> : <Play size={12} fill="currentColor" />}
