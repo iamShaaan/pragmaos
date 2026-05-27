@@ -55,11 +55,11 @@ export const TimeTracker: React.FC = () => {
 
 
     return (
-        <div className="bg-slate-900/50 border border-white/10 rounded-[2.5rem] p-8 sm:p-10 space-y-8 min-h-[500px]">
+        <div className="glass-card rounded-[2.5rem] p-8 sm:p-10 space-y-8 min-h-[500px]">
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
                 <div>
                     <h2 className="text-white text-xl font-black flex items-center gap-3">
-                        <div className="p-2.5 bg-indigo-500/20 rounded-xl"><Clock size={20} className="text-indigo-400" /></div>
+                        <div className="p-2.5 bg-[#26f7b2]/15 rounded-xl"><Clock size={20} className="text-[#26f7b2]" /></div>
                         Time Tracker
                     </h2>
                     <p className="text-slate-500 text-xs font-bold uppercase tracking-widest mt-2">
@@ -75,13 +75,13 @@ export const TimeTracker: React.FC = () => {
                         placeholder="Search date or task..."
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
-                        className="w-full bg-slate-950/50 border border-white/5 rounded-2xl pl-10 pr-4 py-3 text-sm text-white focus:border-indigo-500/50 outline-none transition-all"
+                        className="w-full bg-white/[0.03] border border-white/[0.08] rounded-2xl pl-10 pr-4 py-3 text-sm text-white focus:border-[#26f7b2] focus:ring-4 focus:ring-[#26f7b2]/5 outline-none transition-all"
                     />
                 </div>
             </div>
 
             {timeEntries.length === 0 ? (
-                <div className="flex flex-col items-center justify-center opacity-30 text-center py-12 border-2 border-dashed border-slate-800 rounded-3xl">
+                <div className="flex flex-col items-center justify-center opacity-30 text-center py-12 border-2 border-dashed border-white/[0.08] rounded-3xl">
                     <Clock size={32} className="mb-2 text-slate-500" />
                     <p className="text-xs font-medium text-slate-400">No time tracked yet.</p>
                     <p className="text-[10px] text-slate-600 mt-1">Start a timer on a task to see your daily reports here.</p>
@@ -93,12 +93,12 @@ export const TimeTracker: React.FC = () => {
             ) : (
                 <div className="space-y-6">
                     {filteredEntries.map((dayEntry) => (
-                        <div key={dayEntry.date.toISOString()} className="bg-slate-950/40 border border-white/5 rounded-2xl overflow-hidden group">
+                        <div key={dayEntry.date.toISOString()} className="bg-white/[0.02] border border-white/[0.08] rounded-2xl overflow-hidden group">
                             {/* Day Header */}
-                            <div className="flex items-center justify-between p-5 bg-slate-900/60 border-b border-white/5 group-hover:bg-slate-800/60 transition-colors">
+                            <div className="flex items-center justify-between p-5 bg-white/[0.02] border-b border-white/[0.08] group-hover:bg-white/[0.04] transition-colors">
                                 <div className="flex items-center gap-3 pr-4">
-                                    <div className="p-2 bg-indigo-500/10 rounded-lg shrink-0">
-                                        <CalendarIcon size={16} className="text-indigo-400" />
+                                    <div className="p-2 bg-[#26f7b2]/10 rounded-lg shrink-0">
+                                        <CalendarIcon size={16} className="text-[#26f7b2]" />
                                     </div>
                                     <div>
                                         <p className="text-white font-bold text-sm tracking-wide">
@@ -121,7 +121,7 @@ export const TimeTracker: React.FC = () => {
                             <div className="p-4 bg-slate-950/20">
                                 <div className="space-y-2">
                                     {Object.values(dayEntry.tasks).sort((a, b) => b.ms - a.ms).map((task, i) => (
-                                        <div key={i} className="flex items-center justify-between py-2 px-3 rounded-xl hover:bg-slate-900 transition-colors">
+                                        <div key={i} className="flex items-center justify-between py-2 px-3 rounded-xl hover:bg-white/[0.03] transition-colors">
                                             <div className="flex items-center gap-2 min-w-0 pr-4">
                                                 <div className="w-1.5 h-1.5 rounded-full bg-slate-700 shrink-0" />
                                                 <p className="text-slate-300 text-xs font-medium truncate">{task.title}</p>

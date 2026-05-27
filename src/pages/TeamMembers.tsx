@@ -150,7 +150,7 @@ export const TeamMembers: React.FC = () => {
     };
 
     return (
-        <div className="bg-slate-900/50 border border-white/10 rounded-[2.5rem] p-8 sm:p-10 space-y-8">
+        <div className="glass-card rounded-[2.5rem] p-8 sm:p-10 space-y-8">
             <div className="flex items-center justify-between">
                 <div>
                     <h2 className="text-white text-xl font-black flex items-center gap-3">
@@ -161,7 +161,7 @@ export const TeamMembers: React.FC = () => {
                 </div>
                 <button
                     onClick={() => { if (showForm) resetForm(); else setShowForm(true); }}
-                    className="bg-emerald-500 hover:bg-emerald-600 text-white px-6 py-3 rounded-2xl font-black transition-all shadow-lg shadow-emerald-500/20 active:scale-95 flex items-center gap-2 text-sm"
+                    className="bg-gradient-to-r from-[#26f7b2] to-[#009d9a] hover:opacity-90 text-black px-6 py-3 rounded-2xl font-black transition-all shadow-lg shadow-[#26f7b2]/20 active:scale-95 flex items-center gap-2 text-sm"
                 >
                     <UserPlus size={16} />
                     {showForm ? 'Cancel' : 'Add Member'}
@@ -170,7 +170,7 @@ export const TeamMembers: React.FC = () => {
 
             {/* Add Member Form */}
             {showForm && (
-                <div className="bg-slate-950/60 border border-white/5 rounded-3xl p-6 space-y-4 animate-in fade-in slide-in-from-top-2">
+                <div className="bg-white/[0.02] border border-white/[0.08] rounded-3xl p-6 space-y-4 animate-in fade-in slide-in-from-top-2">
                     <h3 className="text-white font-bold text-sm flex items-center gap-2">
                         <UserPlus size={14} className="text-emerald-400" />
                         {editingIdx !== null ? 'Edit Team Member' : 'Add New Team Member'}
@@ -179,7 +179,7 @@ export const TeamMembers: React.FC = () => {
                         <div className="relative">
                             <UserIcon size={14} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-600" />
                             <input
-                                className="w-full bg-slate-900 border border-white/5 rounded-2xl px-5 py-3.5 pl-11 text-white outline-none focus:border-emerald-500/50 transition-all text-sm font-medium"
+                                className="w-full bg-white/[0.03] border border-white/[0.08] rounded-2xl px-5 py-3.5 pl-11 text-white outline-none focus:border-emerald-500/50 transition-all text-sm font-medium"
                                 placeholder="Full Name"
                                 value={name}
                                 onChange={(e) => setName(e.target.value)}
@@ -188,7 +188,7 @@ export const TeamMembers: React.FC = () => {
                         <div className="relative">
                             <Mail size={14} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-600" />
                             <input
-                                className="w-full bg-slate-900 border border-white/5 rounded-2xl px-5 py-3.5 pl-11 text-white outline-none focus:border-emerald-500/50 transition-all text-sm font-medium"
+                                className="w-full bg-white/[0.03] border border-white/[0.08] rounded-2xl px-5 py-3.5 pl-11 text-white outline-none focus:border-emerald-500/50 transition-all text-sm font-medium"
                                 placeholder="Email Address"
                                 type="email"
                                 value={email}
@@ -198,7 +198,7 @@ export const TeamMembers: React.FC = () => {
                         <div className="relative">
                             <Hash size={14} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-600" />
                             <input
-                                className="w-full bg-slate-900 border border-white/5 rounded-2xl px-5 py-3.5 pl-11 text-white outline-none focus:border-emerald-500/50 transition-all text-sm font-medium uppercase"
+                                className="w-full bg-white/[0.03] border border-white/[0.08] rounded-2xl px-5 py-3.5 pl-11 text-white outline-none focus:border-emerald-500/50 transition-all text-sm font-medium uppercase"
                                 placeholder="User ID (e.g. TM-A3X9P2)"
                                 value={userCode}
                                 onChange={(e) => setUserCode(e.target.value)}
@@ -208,7 +208,7 @@ export const TeamMembers: React.FC = () => {
                         <div className="relative">
                             <Phone size={14} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-600" />
                             <input
-                                className="w-full bg-slate-900 border border-white/5 rounded-2xl px-5 py-3.5 pl-11 text-white outline-none focus:border-emerald-500/50 transition-all text-sm font-medium"
+                                className="w-full bg-white/[0.03] border border-white/[0.08] rounded-2xl px-5 py-3.5 pl-11 text-white outline-none focus:border-emerald-500/50 transition-all text-sm font-medium"
                                 placeholder="WhatsApp (+1...)"
                                 value={whatsappNumber}
                                 onChange={(e) => setWhatsappNumber(e.target.value)}
@@ -220,7 +220,7 @@ export const TeamMembers: React.FC = () => {
                         <button
                             onClick={saveTeamMember}
                             disabled={saving || (!name.trim() && !email.trim() && !userCode.trim() && !whatsappNumber.trim())}
-                            className="bg-emerald-500 hover:bg-emerald-600 disabled:opacity-40 text-white px-8 py-3 rounded-2xl font-black transition-all shadow-lg shadow-emerald-500/20 active:scale-95 text-sm flex items-center gap-2"
+                            className="bg-gradient-to-r from-[#26f7b2] to-[#009d9a] hover:opacity-90 disabled:opacity-40 text-black px-8 py-3 rounded-2xl font-black transition-all shadow-lg shadow-[#26f7b2]/20 active:scale-95 text-sm flex items-center gap-2"
                         >
                             {saving ? 'Saving...' : (editingIdx !== null ? 'Update Member' : 'Save Member')}
                         </button>
@@ -231,7 +231,7 @@ export const TeamMembers: React.FC = () => {
             {/* Member List */}
             <div className="space-y-3">
                 {(!profile.teamMembers || profile.teamMembers.length === 0) ? (
-                    <div className="flex flex-col items-center justify-center opacity-30 text-center py-12 border-2 border-dashed border-slate-800 rounded-3xl">
+                    <div className="flex flex-col items-center justify-center opacity-30 text-center py-12 border-2 border-dashed border-white/[0.08] rounded-3xl">
                         <Users size={32} className="mb-2 text-slate-500" />
                         <p className="text-xs font-medium text-slate-400">No team members added yet.</p>
                         <p className="text-[10px] text-slate-600 mt-1">Click "Add Member" to get started</p>
@@ -239,7 +239,7 @@ export const TeamMembers: React.FC = () => {
                 ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         {profile.teamMembers.map((member, idx) => (
-                            <div key={idx} className="flex items-center justify-between bg-slate-950 p-4 rounded-2xl border border-white/5 group hover:border-emerald-500/30 transition-all">
+                            <div key={idx} className="flex items-center justify-between bg-white/[0.02] p-4 rounded-2xl border border-white/[0.08] group hover:border-[#26f7b2]/30 transition-all">
                                 <div className="flex items-center gap-4">
                                     <div className="w-10 h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-400 font-black border border-emerald-500/20">
                                         {(member.name || member.email || '?').charAt(0).toUpperCase()}
@@ -276,14 +276,14 @@ export const TeamMembers: React.FC = () => {
                                 <div className="flex items-center gap-2">
                                     <button
                                         onClick={() => handleEdit(idx)}
-                                        className="p-2 bg-slate-900 border border-white/5 rounded-xl text-slate-600 hover:text-indigo-400 hover:border-indigo-500/30 transition-all"
+                                        className="p-2 bg-white/[0.03] border border-white/[0.08] rounded-xl text-slate-600 hover:text-[#26f7b2] hover:border-[#26f7b2]/30 transition-all"
                                         title="Edit member"
                                     >
                                         <Users size={16} />
                                     </button>
                                     <button
                                         onClick={() => removeTeamMember(idx)}
-                                        className="p-2 bg-slate-900 border border-white/5 rounded-xl text-slate-600 hover:text-red-400 hover:border-red-500/30 transition-all"
+                                        className="p-2 bg-white/[0.03] border border-white/[0.08] rounded-xl text-slate-600 hover:text-rose-400 hover:border-rose-500/30 transition-all"
                                         title="Remove member"
                                     >
                                         <X size={16} />
@@ -309,14 +309,14 @@ export const TeamMembers: React.FC = () => {
                 {loadingLeaders ? (
                     <div className="text-slate-500 text-sm animate-pulse">Loading leaders...</div>
                 ) : leaders.length === 0 ? (
-                    <div className="flex flex-col items-center justify-center opacity-40 text-center py-8 border-2 border-dashed border-slate-800 rounded-3xl bg-slate-900/20">
+                    <div className="flex flex-col items-center justify-center opacity-40 text-center py-8 border-2 border-dashed border-white/[0.08] rounded-3xl bg-slate-900/20">
                         <ShieldAlert size={28} className="mb-2 text-slate-500" />
                         <p className="text-xs font-medium text-slate-400">You haven't been added to anyone's team.</p>
                     </div>
                 ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         {leaders.map(leader => (
-                            <div key={leader.uid} className="flex items-center gap-4 bg-slate-950/80 p-4 rounded-2xl border border-white/5 hover:border-amber-500/30 transition-all">
+                            <div key={leader.uid} className="flex items-center gap-4 bg-white/[0.02] p-4 rounded-2xl border border-white/[0.08] hover:border-amber-500/30 transition-all">
                                 <div className="w-10 h-10 rounded-xl bg-amber-500/10 flex items-center justify-center text-amber-400 font-black border border-amber-500/20">
                                     {(leader.displayName || leader.companyName || '?').charAt(0).toUpperCase()}
                                 </div>
