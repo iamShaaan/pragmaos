@@ -13,7 +13,7 @@ interface TaskFormProps {
     initialClientId?: string;
 }
 
-const inputCls = 'w-full bg-slate-800 border border-slate-700 text-slate-100 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-indigo-500 transition-colors placeholder:text-slate-500';
+const inputCls = 'w-full bg-slate-950 border border-white/[0.08] text-slate-100 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#26f7b2] transition-colors placeholder:text-slate-500';
 const labelCls = 'block text-slate-400 text-xs font-medium mb-1';
 
 export const TaskForm: React.FC<TaskFormProps> = ({ onClose, editTask, initialProjectId, initialClientId }) => {
@@ -239,16 +239,16 @@ export const TaskForm: React.FC<TaskFormProps> = ({ onClose, editTask, initialPr
                 <label className={labelCls}>Tags</label>
                 <div className="flex gap-2">
                     <input className={`${inputCls} flex-1`} placeholder="Add tag..." value={tag} onChange={(e) => setTag(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && (e.preventDefault(), addTag())} />
-                    <button type="button" onClick={addTag} className="px-3 py-2 bg-indigo-500/20 text-indigo-400 border border-indigo-500/30 rounded-lg hover:bg-indigo-500/30 transition-all">
+                    <button type="button" onClick={addTag} className="px-3 py-2 bg-[#26f7b2]/15 text-[#26f7b2] border border-[#26f7b2]/30 rounded-lg hover:bg-[#26f7b2]/25 transition-all">
                         <Plus size={16} />
                     </button>
                 </div>
                 {form.tags.length > 0 && (
                     <div className="flex flex-wrap gap-1.5 mt-2">
                         {form.tags.map((t) => (
-                            <span key={t} className="flex items-center gap-1 px-2 py-0.5 bg-slate-700 text-slate-300 rounded-full text-xs">
+                            <span key={t} className="flex items-center gap-1 px-2 py-0.5 bg-white/[0.06] text-slate-300 rounded-full text-xs">
                                 <Tag size={10} />{t}
-                                <button type="button" onClick={() => removeTag(t)} className="text-slate-500 hover:text-red-400"><X size={10} /></button>
+                                <button type="button" onClick={() => removeTag(t)} className="text-slate-500 hover:text-rose-400"><X size={10} /></button>
                             </span>
                         ))}
                     </div>
@@ -257,7 +257,7 @@ export const TaskForm: React.FC<TaskFormProps> = ({ onClose, editTask, initialPr
 
             <div className="flex justify-end gap-3 pt-2">
                 <button type="button" onClick={onClose} className="px-4 py-2 text-sm text-slate-400 hover:text-slate-100 transition-colors">Cancel</button>
-                <button type="submit" disabled={loading} className="px-5 py-2 bg-indigo-500 hover:bg-indigo-600 text-white text-sm font-medium rounded-lg transition-all disabled:opacity-50">
+                <button type="submit" disabled={loading} className="px-5 py-2 bg-gradient-to-r from-[#26f7b2] to-[#009d9a] hover:opacity-90 text-black text-sm font-bold rounded-lg transition-all disabled:opacity-50 active:scale-95">
                     {loading ? 'Saving...' : editTask ? 'Update Task' : 'Create Task'}
                 </button>
             </div>

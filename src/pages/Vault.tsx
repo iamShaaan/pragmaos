@@ -54,8 +54,8 @@ const PinDots: React.FC<{
                         value.length > i
                             ? 'border-amber-500 bg-amber-500/20 text-amber-300'
                             : value.length === i
-                                ? 'border-amber-500/60 bg-slate-900/60 text-transparent animate-pulse'
-                                : 'border-slate-700 bg-slate-900/30 text-transparent'
+                                ? 'border-amber-500/60 bg-black/30 text-transparent animate-pulse'
+                                : 'border-white/[0.08] bg-black/20 text-transparent'
                     }`}
                 >
                     {value.length > i ? '●' : '·'}
@@ -120,13 +120,13 @@ const VaultLockScreen: React.FC<{
 
     return (
         <div className="flex items-center justify-center min-h-[500px]">
-            <div className="bg-gradient-to-br from-slate-900 to-slate-800 border border-amber-500/20 rounded-2xl p-8 sm:p-12 text-center max-w-sm w-full shadow-2xl shadow-amber-500/5 relative overflow-hidden">
+            <div className="bg-gradient-to-br from-[#0b1418] to-[#060d11] border border-amber-500/20 rounded-2xl p-8 sm:p-12 text-center max-w-sm w-full shadow-2xl shadow-amber-500/5 relative overflow-hidden">
                 <div className="absolute inset-0 bg-amber-500/3 pointer-events-none rounded-2xl" />
                 <div className="relative z-10">
                     <div className="w-16 h-16 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center mx-auto mb-6">
                         {step === 'enter' ? <Lock size={28} className="text-amber-400" />
                             : step === 'set' ? <Shield size={28} className="text-amber-400" />
-                            : step === 'resetConfirm' ? <RotateCcw size={28} className="text-red-400" />
+                            : step === 'resetConfirm' ? <RotateCcw size={28} className="text-rose-400" />
                             : <KeyRound size={28} className="text-amber-400" />}
                     </div>
 
@@ -134,7 +134,7 @@ const VaultLockScreen: React.FC<{
                         <h3 className="text-white font-black text-xl mb-1">Secure Vault</h3>
                         <p className="text-slate-500 text-xs mb-6">Enter your vault PIN to access your notes & files</p>
                         {wrongAttempts > 0 && (
-                            <p className="text-red-400 text-xs mb-3">
+                            <p className="text-rose-400 text-xs mb-3">
                                 ❌ Wrong PIN — {wrongAttempts} failed {wrongAttempts === 1 ? 'attempt' : 'attempts'}
                             </p>
                         )}
@@ -177,7 +177,7 @@ const VaultLockScreen: React.FC<{
                         </div>
                         <div className="flex gap-3">
                             <button onClick={() => { setStep('set'); setConfirmPin(''); }}
-                                className="flex-1 bg-slate-700 hover:bg-slate-600 text-slate-300 font-bold py-3 rounded-xl transition-all">
+                                className="flex-1 bg-white/[0.06] hover:bg-white/[0.1] text-slate-300 font-bold py-3 rounded-xl transition-all">
                                 ← Back
                             </button>
                             <button onClick={handleConfirm} disabled={loading || confirmPin.length < 4}
@@ -188,19 +188,19 @@ const VaultLockScreen: React.FC<{
                     </>)}
 
                     {step === 'resetConfirm' && (<>
-                        <h3 className="text-white font-black text-xl mb-1 text-red-300">Reset Vault PIN</h3>
+                        <h3 className="text-white font-black text-xl mb-1 text-rose-300">Reset Vault PIN</h3>
                         <p className="text-slate-400 text-sm mb-2">This will <strong>clear your existing vault PIN</strong> so you can set a new one.</p>
                         <p className="text-slate-500 text-xs mb-6">Your vault content is still safe in Firestore — only the PIN lock is reset.</p>
-                        <div className="p-3 bg-red-500/10 border border-red-500/20 rounded-xl mb-6">
-                            <p className="text-red-300 text-xs font-bold">⚠️ Once reset, you'll need to set a new PIN before accessing the vault.</p>
+                        <div className="p-3 bg-rose-500/10 border border-rose-500/20 rounded-xl mb-6">
+                            <p className="text-rose-300 text-xs font-bold">⚠️ Once reset, you'll need to set a new PIN before accessing the vault.</p>
                         </div>
                         <div className="flex gap-3">
                             <button onClick={() => setStep('enter')}
-                                className="flex-1 bg-slate-700 hover:bg-slate-600 text-slate-300 font-bold py-3 rounded-xl transition-all">
+                                className="flex-1 bg-white/[0.06] hover:bg-white/[0.1] text-slate-300 font-bold py-3 rounded-xl transition-all">
                                 Cancel
                             </button>
                             <button onClick={handleReset} disabled={loading}
-                                className="flex-1 bg-red-500 hover:bg-red-600 disabled:opacity-40 text-white font-black py-3 rounded-xl transition-all active:scale-95">
+                                className="flex-1 bg-rose-500 hover:bg-rose-600 disabled:opacity-40 text-white font-black py-3 rounded-xl transition-all active:scale-95">
                                 {loading ? 'Resetting...' : 'Reset PIN'}
                             </button>
                         </div>
@@ -213,9 +213,9 @@ const VaultLockScreen: React.FC<{
 
 // ─── File icon helper ─────────────────────────────────────────────────────────
 const FileIcon: React.FC<{ type: string; size?: number }> = ({ type, size = 20 }) => {
-    if (type.startsWith('image/')) return <Image size={size} className="text-indigo-400" />;
+    if (type.startsWith('image/')) return <Image size={size} className="text-cyan-300" />;
     if (type.startsWith('video/')) return <Video size={size} className="text-purple-400" />;
-    if (type === 'application/pdf') return <FileTextIcon size={size} className="text-red-400" />;
+    if (type === 'application/pdf') return <FileTextIcon size={size} className="text-rose-400" />;
     return <File size={size} className="text-slate-400" />;
 };
 
@@ -242,7 +242,7 @@ const NoteCard: React.FC<{
     return (
         <div
             onClick={() => isRevealed && onView(note)}
-            className={`group bg-slate-800 border border-amber-500/20 rounded-xl p-4 hover:border-amber-500/40 transition-all ${isRevealed ? 'cursor-pointer' : ''}`}
+            className={`group bg-white/[0.03] border border-amber-500/20 rounded-xl p-4 hover:border-amber-500/40 transition-all ${isRevealed ? 'cursor-pointer' : ''}`}
         >
             <div className="flex items-start justify-between gap-2 mb-2">
                 <div className="flex items-center gap-2">
@@ -255,11 +255,11 @@ const NoteCard: React.FC<{
                         {isRevealed ? <EyeOff size={13} /> : <Eye size={13} />}
                     </button>
                     <button onClick={e => { e.stopPropagation(); onEdit(note); }}
-                        className="p-1.5 text-slate-500 hover:text-indigo-400 rounded-lg hover:bg-indigo-500/10 transition-all">
+                        className="p-1.5 text-slate-500 hover:text-[#26f7b2] rounded-lg hover:bg-[#26f7b2]/10 transition-all">
                         <Pencil size={13} />
                     </button>
                     <button onClick={e => { e.stopPropagation(); onDelete(note.id); }}
-                        className="p-1.5 text-slate-500 hover:text-red-400 rounded-lg hover:bg-red-500/10 transition-all">
+                        className="p-1.5 text-slate-500 hover:text-rose-400 rounded-lg hover:bg-rose-500/10 transition-all">
                         <Trash2 size={13} />
                     </button>
                 </div>
@@ -270,14 +270,14 @@ const NoteCard: React.FC<{
             {note.tags?.length > 0 && (
                 <div className="flex flex-wrap gap-1 mt-3">
                     {note.tags.map(t => (
-                        <span key={t} className="text-xs text-slate-500 bg-slate-700/60 px-1.5 py-0.5 rounded-full flex items-center gap-1">
+                        <span key={t} className="text-xs text-slate-500 bg-white/[0.06] px-1.5 py-0.5 rounded-full flex items-center gap-1">
                             <Tag size={9} />{t}
                         </span>
                     ))}
                 </div>
             )}
             {project && (
-                <div className="mt-3 flex items-center gap-1.5 text-[10px] font-medium text-indigo-300 bg-indigo-500/10 border border-indigo-500/20 px-2 py-1 rounded-md w-fit">
+                <div className="mt-3 flex items-center gap-1.5 text-[10px] font-medium text-[#26f7b2] bg-[#26f7b2]/10 border border-[#26f7b2]/20 px-2 py-1 rounded-md w-fit">
                     <FolderKanban size={10} /> {project.name}
                 </div>
             )}
@@ -326,7 +326,7 @@ const VaultNotes: React.FC<{ uid: string }> = () => {
                 <div className="relative flex-1">
                     <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" />
                     <input
-                        className="w-full bg-slate-800 border border-slate-700 text-slate-100 rounded-xl pl-9 pr-3 py-2.5 text-sm focus:outline-none focus:border-amber-500/50 focus:ring-1 focus:ring-amber-500/20 transition-all"
+                        className="w-full bg-white/[0.03] border border-white/[0.08] text-slate-100 rounded-xl pl-9 pr-3 py-2.5 text-sm focus:outline-none focus:border-amber-500/50 focus:ring-1 focus:ring-amber-500/20 transition-all"
                         placeholder="Search notes..."
                         value={search}
                         onChange={e => setSearch(e.target.value)}
@@ -377,22 +377,22 @@ const VaultNotes: React.FC<{ uid: string }> = () => {
             <Modal isOpen={!!viewNote} onClose={() => setViewNote(undefined)} title={viewNote?.title || 'Note'} size="lg">
                 {viewNote && (
                     <div className="space-y-4">
-                        <div className="bg-slate-900/50 rounded-xl p-4 max-h-[60vh] overflow-y-auto custom-scrollbar border border-slate-700/50">
+                        <div className="bg-black/20 rounded-xl p-4 max-h-[60vh] overflow-y-auto custom-scrollbar border border-white/[0.08]">
                             <pre className="text-slate-300 text-sm whitespace-pre-wrap font-sans leading-relaxed">
                                 {viewNote.content || <span className="text-slate-500 italic">Empty note</span>}
                             </pre>
                         </div>
-                        <div className="flex items-center justify-between border-t border-slate-700/50 pt-4">
+                        <div className="flex items-center justify-between border-t border-white/[0.08] pt-4">
                             <div className="flex flex-wrap gap-2">
                                 {viewNote.tags?.map(t => (
-                                    <span key={t} className="text-xs text-slate-400 bg-slate-800 border border-slate-700 px-2 py-1 rounded-md flex items-center gap-1">
+                                    <span key={t} className="text-xs text-slate-400 bg-white/[0.06] border border-white/[0.08] px-2 py-1 rounded-md flex items-center gap-1">
                                         <Tag size={10} /> {t}
                                     </span>
                                 ))}
                             </div>
                             <button
                                 onClick={() => { setEditNote(viewNote); setViewNote(undefined); setShowForm(true); }}
-                                className="px-3 py-1.5 bg-indigo-500/10 text-indigo-400 hover:bg-indigo-500/20 rounded-lg text-sm transition-colors flex items-center gap-1.5"
+                                className="px-3 py-1.5 bg-[#26f7b2]/10 text-[#26f7b2] hover:bg-[#26f7b2]/20 rounded-lg text-sm transition-colors flex items-center gap-1.5"
                             >
                                 <Pencil size={14} /> Edit
                             </button>
@@ -517,7 +517,7 @@ const VaultFiles: React.FC<{ uid: string }> = ({ uid }) => {
                 {uploading ? (
                     <div className="space-y-3">
                         <Loader2 size={32} className="text-amber-400 mx-auto animate-spin" />
-                        <div className="w-full bg-slate-800 rounded-full h-2 overflow-hidden">
+                        <div className="w-full bg-white/[0.06] rounded-full h-2 overflow-hidden">
                             <div
                                 className="h-full bg-amber-500 rounded-full transition-all"
                                 style={{ width: `${uploadProgress}%` }}
@@ -539,7 +539,7 @@ const VaultFiles: React.FC<{ uid: string }> = ({ uid }) => {
             {loadingFiles ? (
                 <div className="text-center py-8 text-slate-500 text-sm">Loading files...</div>
             ) : files.length === 0 ? (
-                <div className="text-center py-12 border-2 border-dashed border-slate-800 rounded-2xl">
+                <div className="text-center py-12 border-2 border-dashed border-white/[0.08] rounded-2xl">
                     <File size={32} className="text-slate-700 mx-auto mb-3" />
                     <p className="text-slate-500 text-sm">No vault files yet.</p>
                 </div>
@@ -548,17 +548,17 @@ const VaultFiles: React.FC<{ uid: string }> = ({ uid }) => {
                     {files.map(f => (
                         <div
                             key={f.id}
-                            className={`bg-slate-800 border border-slate-700/50 rounded-xl p-4 transition-all group ${deleting === f.id ? 'opacity-40' : 'hover:border-amber-500/20'}`}
+                            className={`bg-white/[0.03] border border-white/[0.08] rounded-xl p-4 transition-all group ${deleting === f.id ? 'opacity-40' : 'hover:border-amber-500/20'}`}
                         >
                             {/* Thumbnail for images */}
                             {f.type.startsWith('image/') && (
-                                <div className="w-full h-28 rounded-lg overflow-hidden mb-3 bg-slate-900">
+                                <div className="w-full h-28 rounded-lg overflow-hidden mb-3 bg-black/30">
                                     <img src={f.url} alt={f.name} className="w-full h-full object-cover" />
                                 </div>
                             )}
                             {/* Video icon */}
                             {f.type.startsWith('video/') && (
-                                <div className="w-full h-28 rounded-lg overflow-hidden mb-3 bg-slate-900 flex items-center justify-center">
+                                <div className="w-full h-28 rounded-lg overflow-hidden mb-3 bg-black/30 flex items-center justify-center">
                                     <Video size={36} className="text-purple-400/50" />
                                 </div>
                             )}
@@ -577,12 +577,12 @@ const VaultFiles: React.FC<{ uid: string }> = ({ uid }) => {
                                         <Download size={13} />
                                     </a>
                                     <a href={f.url} target="_blank" rel="noopener noreferrer" title="Open"
-                                        className="p-1.5 text-slate-500 hover:text-indigo-400 transition-colors rounded-lg">
+                                        className="p-1.5 text-slate-500 hover:text-[#26f7b2] transition-colors rounded-lg">
                                         <ExternalLink size={13} />
                                     </a>
                                     <button onClick={() => handleDelete(f)} disabled={deleting === f.id}
                                         title="Delete"
-                                        className="p-1.5 text-slate-500 hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-all disabled:opacity-30">
+                                        className="p-1.5 text-slate-500 hover:text-rose-400 hover:bg-rose-500/10 rounded-lg transition-all disabled:opacity-30">
                                         <Trash2 size={13} />
                                     </button>
                                 </div>
@@ -718,7 +718,7 @@ export const Vault: React.FC = () => {
                                     Vault: {formatBytes(stats.vaultSize)}
                                 </p>
                                 <span className="w-1 h-1 rounded-full bg-slate-700" />
-                                <p className="text-indigo-400 text-[10px] font-bold uppercase tracking-wider">
+                                <p className="text-[#26f7b2] text-[10px] font-bold uppercase tracking-wider">
                                     Total App: {formatBytes(stats.appSize)}
                                 </p>
                             </div>
@@ -727,14 +727,14 @@ export const Vault: React.FC = () => {
                 </div>
                 <button
                     onClick={() => { setVaultUnlocked(false); }}
-                    className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-400 hover:text-slate-200 text-xs font-medium rounded-xl transition-all"
+                    className="flex items-center gap-1.5 px-3 py-1.5 bg-white/[0.03] hover:bg-white/[0.06] border border-white/[0.08] text-slate-400 hover:text-slate-200 text-xs font-medium rounded-xl transition-all"
                 >
                     <Lock size={13} /> Lock Vault
                 </button>
             </div>
 
             {/* Inner Tabs */}
-            <div className="flex gap-2 border-b border-slate-800 pb-1">
+            <div className="flex gap-2 border-b border-white/[0.08] pb-1">
                 {(['notes', 'files'] as const).map(tab => (
                     <button
                         key={tab}

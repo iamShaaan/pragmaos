@@ -88,12 +88,12 @@ export const ChecklistHeatmap: React.FC<ChecklistHeatmapProps> = ({ routines, da
 
     const getDotStyle = (status: DotStatus): string => {
         switch (status) {
-            case 'deepgreen':  return 'bg-green-500 shadow-[0_0_6px_rgba(34,197,94,0.5)]';
-            case 'lightgreen': return 'bg-emerald-900/60';
-            case 'empty':      return 'bg-slate-800/80';
-            case 'future':     return 'bg-slate-800/30';
+            case 'deepgreen':  return 'bg-[#26f7b2] shadow-[0_0_6px_rgba(38,247,178,0.5)]';
+            case 'lightgreen': return 'bg-[#26f7b2]/30';
+            case 'empty':      return 'bg-white/[0.05]';
+            case 'future':     return 'bg-white/[0.02]';
             case 'outside':    return 'bg-transparent';
-            default:           return 'bg-slate-800/80';
+            default:           return 'bg-white/[0.05]';
         }
     };
 
@@ -106,7 +106,7 @@ export const ChecklistHeatmap: React.FC<ChecklistHeatmapProps> = ({ routines, da
     };
 
     return (
-        <div className="bg-slate-900/50 border border-white/10 rounded-2xl px-5 py-4 backdrop-blur-sm">
+        <div className="bg-white/[0.02] border border-white/[0.08] rounded-2xl px-5 py-4 backdrop-blur-sm">
             {/* Header */}
             <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-2.5">
@@ -116,9 +116,9 @@ export const ChecklistHeatmap: React.FC<ChecklistHeatmapProps> = ({ routines, da
                 </div>
                 <div className="flex items-center gap-1.5">
                     <span className="text-slate-600 text-[10px]">Less</span>
-                    <div className="w-[9px] h-[9px] rounded-[2px] bg-slate-800/80" />
-                    <div className="w-[9px] h-[9px] rounded-[2px] bg-emerald-900/60" />
-                    <div className="w-[9px] h-[9px] rounded-[2px] bg-green-500" />
+                    <div className="w-[9px] h-[9px] rounded-[2px] bg-white/[0.05]" />
+                    <div className="w-[9px] h-[9px] rounded-[2px] bg-[#26f7b2]/30" />
+                    <div className="w-[9px] h-[9px] rounded-[2px] bg-[#26f7b2]" />
                     <span className="text-slate-600 text-[10px]">More</span>
                 </div>
             </div>
@@ -169,13 +169,13 @@ export const ChecklistHeatmap: React.FC<ChecklistHeatmapProps> = ({ routines, da
                                     className={`
                                         w-full aspect-square rounded-[2.5px] transition-all duration-150
                                         ${style}
-                                        ${isTodayDay ? 'ring-1 ring-indigo-500/70 ring-offset-1 ring-offset-slate-900' : ''}
+                                        ${isTodayDay ? 'ring-1 ring-[#26f7b2]/70 ring-offset-1 ring-offset-[#060d11]' : ''}
                                         ${!isOutside ? 'cursor-pointer hover:brightness-150 hover:scale-[1.3]' : ''}
                                     `}
                                 />
 
                                 {isHovered && data && !isOutside && (
-                                    <div className="absolute z-50 bottom-full left-1/2 -translate-x-1/2 mb-2 bg-slate-800 border border-slate-600/50 rounded-lg px-3 py-2 whitespace-nowrap shadow-2xl shadow-black/50 pointer-events-none">
+                                    <div className="absolute z-50 bottom-full left-1/2 -translate-x-1/2 mb-2 bg-[#0b1418] border border-white/10 rounded-lg px-3 py-2 whitespace-nowrap shadow-2xl shadow-black/50 pointer-events-none">
                                         <p className="text-white text-[10px] font-bold">{format(day, 'EEE, MMM d')}</p>
                                         {data.total > 0 ? (
                                             <p className={`text-[9px] mt-0.5 ${getTooltipColor(status)}`}>
@@ -184,7 +184,7 @@ export const ChecklistHeatmap: React.FC<ChecklistHeatmapProps> = ({ routines, da
                                         ) : (
                                             <p className="text-slate-500 text-[9px] mt-0.5">No routines</p>
                                         )}
-                                        <div className="absolute -bottom-[4px] left-1/2 -translate-x-1/2 w-[6px] h-[6px] bg-slate-800 border-r border-b border-slate-600/50 rotate-45" />
+                                        <div className="absolute -bottom-[4px] left-1/2 -translate-x-1/2 w-[6px] h-[6px] bg-[#0b1418] border-r border-b border-white/10 rotate-45" />
                                     </div>
                                 )}
                             </div>

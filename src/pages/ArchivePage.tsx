@@ -19,9 +19,9 @@ interface ArchivedItem {
 const COLLECTIONS = ['tasks', 'clients', 'projects', 'meetings', 'notes'] as const;
 
 const ICON_MAP: Record<string, React.ReactNode> = {
-    tasks: <CheckSquare size={14} className="text-indigo-400" />,
+    tasks: <CheckSquare size={14} className="text-[#26f7b2]" />,
     clients: <Users size={14} className="text-emerald-400" />,
-    projects: <FolderKanban size={14} className="text-purple-400" />,
+    projects: <FolderKanban size={14} className="text-cyan-300" />,
     meetings: <Calendar size={14} className="text-amber-400" />,
     notes: <FileText size={14} className="text-pink-400" />,
 };
@@ -126,8 +126,8 @@ export const ArchivePage: React.FC = () => {
                         key={col}
                         onClick={() => setFilter(col)}
                         className={`px-4 py-2 rounded-2xl text-xs font-bold transition-all duration-300 capitalize border ${filter === col
-                            ? 'bg-gradient-to-r from-indigo-500/20 to-indigo-600/20 text-indigo-300 border-indigo-500/50 shadow-[0_0_15px_rgba(99,102,241,0.2)]'
-                            : 'bg-slate-900/50 border-white/5 text-slate-400 hover:text-slate-200 hover:bg-slate-800/80 hover:border-white/10'
+                            ? 'bg-gradient-to-r from-[#26f7b2]/20 to-[#009d9a]/20 text-[#26f7b2] border-[#26f7b2]/50 shadow-[0_0_15px_rgba(38,247,178,0.2)]'
+                            : 'bg-white/[0.03] border-white/5 text-slate-400 hover:text-slate-200 hover:bg-white/[0.06] hover:border-white/10'
                             }`}
                     >
                         {col === 'all' ? `All (${items.length})` : `${LABEL_MAP[col]}s (${items.filter(i => i.deleted_from === col).length})`}
@@ -139,7 +139,7 @@ export const ArchivePage: React.FC = () => {
             {loading ? (
                 <div className="text-center py-16 text-slate-600 text-sm">Loading archive...</div>
             ) : filtered.length === 0 ? (
-                <div className="text-center py-20 border-2 border-dashed border-slate-800 rounded-2xl">
+                <div className="text-center py-20 border-2 border-dashed border-white/[0.08] rounded-2xl">
                     <Archive size={40} className="text-slate-700 mx-auto mb-3" />
                     <p className="text-slate-500 font-medium">Archive is empty</p>
                     <p className="text-slate-600 text-xs mt-1">Deleted items will appear here for 30 days</p>
@@ -152,11 +152,11 @@ export const ArchivePage: React.FC = () => {
                         return (
                             <div
                                 key={`${item.deleted_from}-${item.id}`}
-                                className={`flex items-center gap-4 p-4 bg-slate-800/60 border rounded-xl transition-all ${urgent ? 'border-red-500/30' : 'border-slate-700/50'
+                                className={`flex items-center gap-4 p-4 bg-white/[0.02] border rounded-xl transition-all ${urgent ? 'border-rose-500/30' : 'border-white/[0.08]'
                                     }`}
                             >
                                 {/* Icon */}
-                                <div className="w-8 h-8 rounded-lg bg-slate-900 border border-slate-700 flex items-center justify-center flex-shrink-0">
+                                <div className="w-8 h-8 rounded-lg bg-black/20 border border-white/[0.08] flex items-center justify-center flex-shrink-0">
                                     {ICON_MAP[item.deleted_from]}
                                 </div>
 
@@ -164,11 +164,11 @@ export const ArchivePage: React.FC = () => {
                                 <div className="flex-1 min-w-0">
                                     <p className="text-slate-200 text-sm font-bold truncate">{getLabel(item)}</p>
                                     <div className="flex items-center gap-2 mt-0.5">
-                                        <span className="text-[10px] text-slate-500 capitalize font-medium bg-slate-900/60 px-1.5 py-0.5 rounded">
+                                        <span className="text-[10px] text-slate-500 capitalize font-medium bg-black/20 px-1.5 py-0.5 rounded">
                                             {LABEL_MAP[item.deleted_from]}
                                         </span>
                                         <span className="text-slate-600 text-[10px]">·</span>
-                                        <span className={`text-[10px] font-bold flex items-center gap-1 ${urgent ? 'text-red-400' : 'text-slate-500'}`}>
+                                        <span className={`text-[10px] font-bold flex items-center gap-1 ${urgent ? 'text-rose-400' : 'text-slate-500'}`}>
                                             {urgent && <AlertTriangle size={9} />}
                                             <Clock size={9} />
                                             {days === 0 ? 'Expires today' : `${days}d left`}
@@ -182,7 +182,7 @@ export const ArchivePage: React.FC = () => {
                                         onClick={() => handleRestore(item)}
                                         disabled={!!restoring}
                                         title="Restore"
-                                        className="flex items-center gap-1.5 px-3 py-1.5 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 hover:bg-emerald-500 hover:text-white rounded-lg text-xs font-bold transition-all disabled:opacity-40"
+                                        className="flex items-center gap-1.5 px-3 py-1.5 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 hover:bg-emerald-500 hover:text-black rounded-lg text-xs font-bold transition-all disabled:opacity-40"
                                     >
                                         <RotateCcw size={12} className={restoring === item.id ? 'animate-spin' : ''} />
                                         Restore
@@ -191,7 +191,7 @@ export const ArchivePage: React.FC = () => {
                                         onClick={() => handlePurge(item)}
                                         disabled={!!purging}
                                         title="Delete permanently"
-                                        className="p-1.5 text-slate-600 hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-all disabled:opacity-40"
+                                        className="p-1.5 text-slate-600 hover:text-rose-400 hover:bg-rose-500/10 rounded-lg transition-all disabled:opacity-40"
                                     >
                                         <Trash2 size={13} />
                                     </button>

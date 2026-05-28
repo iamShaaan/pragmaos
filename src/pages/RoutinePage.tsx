@@ -23,7 +23,7 @@ const CATEGORY_ICONS: Record<RoutineCategory, React.ElementType> = {
 const CATEGORY_COLORS: Record<RoutineCategory, { bg: string; text: string; border: string; label: string }> = {
     body: { bg: 'bg-emerald-500/10', text: 'text-emerald-400', border: 'border-emerald-500/20', label: 'Body' },
     mind: { bg: 'bg-purple-500/10', text: 'text-purple-400', border: 'border-purple-500/20', label: 'Mind' },
-    office: { bg: 'bg-indigo-500/10', text: 'text-indigo-400', border: 'border-indigo-500/20', label: 'Office' },
+    office: { bg: 'bg-[#009d9a]/10', text: 'text-cyan-300', border: 'border-[#009d9a]/20', label: 'Office' },
     fun: { bg: 'bg-pink-500/10', text: 'text-pink-400', border: 'border-pink-500/20', label: 'Fun' },
 };
 
@@ -168,7 +168,7 @@ export const RoutinePage: React.FC = () => {
                 <div>
                     <h1 className="text-2xl sm:text-3xl font-black text-slate-100 tracking-tight flex items-center gap-3">
                         Checklist
-                        <Sparkles size={24} className="text-indigo-400" />
+                        <Sparkles size={24} className="text-[#26f7b2]" />
                     </h1>
                     <p className="text-slate-400 text-sm mt-1">{displayDate} • {activeRoutines.length} items scheduled</p>
                 </div>
@@ -176,7 +176,7 @@ export const RoutinePage: React.FC = () => {
                     {completedCount > 0 && (
                         <button
                             onClick={handleResetRoutine}
-                            className="w-full sm:w-auto px-5 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold rounded-xl border border-slate-700 transition-all flex items-center justify-center gap-2"
+                            className="w-full sm:w-auto px-5 py-2.5 bg-white/[0.06] hover:bg-white/[0.1] text-slate-300 font-bold rounded-xl border border-white/[0.08] transition-all flex items-center justify-center gap-2"
                         >
                             <Activity size={18} />
                             <span>Reset Today</span>
@@ -187,7 +187,7 @@ export const RoutinePage: React.FC = () => {
                             setRoutineToEdit(null);
                             setIsFormOpen(true);
                         }}
-                        className="w-full sm:w-auto px-5 py-2.5 bg-indigo-500 hover:bg-indigo-600 text-white font-bold rounded-xl shadow-[0_0_20px_rgba(99,102,241,0.2)] transition-all flex items-center justify-center gap-2"
+                        className="w-full sm:w-auto px-5 py-2.5 bg-gradient-to-r from-[#26f7b2] to-[#009d9a] hover:opacity-90 text-black font-bold rounded-xl shadow-[0_0_20px_rgba(38,247,178,0.25)] transition-all flex items-center justify-center gap-2 active:scale-95"
                     >
                         <Plus size={18} />
                         <span>Add Routine</span>
@@ -197,9 +197,9 @@ export const RoutinePage: React.FC = () => {
 
             {/* Quick Stats */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="bg-slate-800/80 border border-slate-700/50 rounded-2xl p-5 flex flex-col justify-between relative overflow-hidden sm:col-span-2">
+                <div className="bg-white/[0.02] border border-white/[0.08] rounded-2xl p-5 flex flex-col justify-between relative overflow-hidden sm:col-span-2">
                     <div className="relative z-10 flex items-center justify-between mb-4">
-                        <div className="p-2.5 rounded-xl bg-indigo-500/20 text-indigo-400"><TrendingUp size={18} /></div>
+                        <div className="p-2.5 rounded-xl bg-[#26f7b2]/15 text-[#26f7b2]"><TrendingUp size={18} /></div>
                         <span className="text-xs font-bold uppercase tracking-wider text-slate-500">Today's Progress</span>
                     </div>
                     <div className="relative z-10">
@@ -207,16 +207,16 @@ export const RoutinePage: React.FC = () => {
                             <p className="text-3xl font-black text-slate-100">{completionRate}%</p>
                             <p className="text-slate-400 font-medium mb-1 shrink-0">{completedCount} of {activeRoutines.length} done</p>
                         </div>
-                        <div className="mt-4 h-2 bg-slate-900 rounded-full overflow-hidden border border-slate-700">
+                        <div className="mt-4 h-2 bg-black/30 rounded-full overflow-hidden border border-white/[0.08]">
                             <motion.div
-                                className="h-full bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full shadow-[0_0_10px_rgba(99,102,241,0.5)]"
+                                className="h-full bg-gradient-to-r from-[#26f7b2] to-[#009d9a] rounded-full shadow-[0_0_10px_rgba(38,247,178,0.5)]"
                                 initial={{ width: 0 }}
                                 animate={{ width: `${completionRate}%` }}
                                 transition={{ duration: 0.8, ease: 'easeOut' }}
                             />
                         </div>
                     </div>
-                    <div className="absolute right-[-20%] top-[-20%] w-32 h-32 bg-indigo-500/10 blur-[40px] rounded-full pointer-events-none" />
+                    <div className="absolute right-[-20%] top-[-20%] w-32 h-32 bg-[#26f7b2]/10 blur-[40px] rounded-full pointer-events-none" />
                 </div>
             </div>
 
@@ -225,9 +225,9 @@ export const RoutinePage: React.FC = () => {
                 <button
                     onClick={() => setActiveTab('all')}
                     className={`px-4 py-2 rounded-xl text-sm font-bold whitespace-nowrap transition-all ${
-                        activeTab === 'all' 
-                            ? 'bg-slate-700 text-white shadow-md' 
-                            : 'bg-slate-800/50 text-slate-400 hover:bg-slate-800 hover:text-slate-300'
+                        activeTab === 'all'
+                            ? 'bg-white/[0.08] text-slate-100 shadow-md'
+                            : 'bg-white/[0.03] text-slate-400 hover:bg-white/[0.06] hover:text-slate-300'
                     }`}
                 >
                     All Day Timeline
@@ -239,7 +239,7 @@ export const RoutinePage: React.FC = () => {
                         className={`px-4 py-2 rounded-xl text-sm font-bold whitespace-nowrap transition-all flex items-center gap-2 ${
                             activeTab === cat 
                                 ? `${CATEGORY_COLORS[cat].bg} ${CATEGORY_COLORS[cat].border} border ${CATEGORY_COLORS[cat].text}` 
-                                : 'bg-slate-800/50 text-slate-400 hover:bg-slate-800 hover:text-slate-300 border border-transparent'
+                                : 'bg-white/[0.03] text-slate-400 hover:bg-white/[0.06] hover:text-slate-300 border border-transparent'
                         }`}
                     >
                         {React.createElement(CATEGORY_ICONS[cat], { size: 14 })}
@@ -253,12 +253,12 @@ export const RoutinePage: React.FC = () => {
                 
                 {/* Routine List */}
                 <div 
-                    className={`col-span-1 ${activeTab === 'all' ? 'lg:col-span-3' : 'lg:col-span-2'} space-y-3 p-4 rounded-xl border border-transparent transition-colors ${activeTab === 'office' ? 'border-dashed border-indigo-500/30 bg-slate-800/20' : ''}`}
+                    className={`col-span-1 ${activeTab === 'all' ? 'lg:col-span-3' : 'lg:col-span-2'} space-y-3 p-4 rounded-xl border border-transparent transition-colors ${activeTab === 'office' ? 'border-dashed border-[#009d9a]/40 bg-[#009d9a]/5' : ''}`}
                     onDrop={activeTab === 'office' ? handleDropOnTimeline : undefined}
                     onDragOver={activeTab === 'office' ? handleDragOver : undefined}
                 >
                     {activeTab === 'office' && (
-                        <div className="mb-4 flex items-center gap-2 text-indigo-400 text-sm bg-indigo-500/10 p-3 rounded-lg border border-indigo-500/20">
+                        <div className="mb-4 flex items-center gap-2 text-cyan-300 text-sm bg-[#009d9a]/10 p-3 rounded-lg border border-[#009d9a]/20">
                             <Briefcase size={16} />
                             <span>Drop tasks here to schedule them in your routine</span>
                         </div>
@@ -268,9 +268,9 @@ export const RoutinePage: React.FC = () => {
                             <motion.div
                                 initial={{ opacity: 0, y: 10 }}
                                 animate={{ opacity: 1, y: 0 }}
-                                className="bg-slate-800/30 border border-slate-700/50 border-dashed rounded-2xl p-10 text-center"
+                                className="bg-white/[0.02] border border-white/[0.08] border-dashed rounded-2xl p-10 text-center"
                             >
-                                <div className="p-4 bg-slate-800 rounded-full inline-flex mb-4">
+                                <div className="p-4 bg-white/[0.06] rounded-full inline-flex mb-4">
                                     <Clock size={24} className="text-slate-500" />
                                 </div>
                                 <h3 className="text-slate-200 font-bold text-lg mb-1">No routines found</h3>
@@ -291,16 +291,16 @@ export const RoutinePage: React.FC = () => {
                                         animate={{ opacity: 1, scale: 1 }}
                                         exit={{ opacity: 0, scale: 0.98 }}
                                         className={`flex items-center gap-4 p-4 rounded-2xl border transition-all cursor-pointer group ${
-                                            isCompleted 
-                                                ? 'bg-slate-800/40 border-slate-700/50' 
-                                                : `bg-slate-800/80 border-slate-700 hover:border-slate-600 hover:shadow-lg hover:-translate-y-0.5`
+                                            isCompleted
+                                                ? 'bg-white/[0.02] border-white/[0.08]'
+                                                : `bg-white/[0.03] border-white/[0.08] hover:border-[#26f7b2]/30 hover:shadow-lg hover:-translate-y-0.5`
                                         }`}
                                         onClick={() => toggleRoutine(routine.id)}
                                     >
                                         <button className={`p-1 flex-shrink-0 transition-colors ${
-                                            isCompleted ? 'text-indigo-500' : 'text-slate-600 hover:text-indigo-400'
+                                            isCompleted ? 'text-[#26f7b2]' : 'text-slate-600 hover:text-[#26f7b2]'
                                         }`}>
-                                            {isCompleted ? <CheckCircle2 size={24} className="fill-indigo-500/20" /> : <Circle size={24} />}
+                                            {isCompleted ? <CheckCircle2 size={24} className="fill-[#26f7b2]/20" /> : <Circle size={24} />}
                                         </button>
                                         
                                         <div className="flex-1 min-w-0 pr-4">
@@ -311,7 +311,7 @@ export const RoutinePage: React.FC = () => {
                                             </p>
                                             <div className="flex items-center gap-3 mt-1">
                                                 {isCompleted && log?.completed_at && (
-                                                    <div className="flex items-center gap-1.5 text-indigo-400 text-xs font-bold bg-indigo-500/10 px-2 py-0.5 rounded border border-indigo-500/20">
+                                                    <div className="flex items-center gap-1.5 text-[#26f7b2] text-xs font-bold bg-[#26f7b2]/10 px-2 py-0.5 rounded border border-[#26f7b2]/20">
                                                         <Clock size={12} />
                                                         Done at {format(new Date((log.completed_at as any).seconds ? (log.completed_at as any).toDate() : log.completed_at), 'h:mm a')}
                                                     </div>
@@ -321,7 +321,7 @@ export const RoutinePage: React.FC = () => {
                                                     {catColor.label}
                                                 </div>
                                                 {routine.linked_task_id && (
-                                                    <div className="flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-slate-700/50 text-slate-400">
+                                                    <div className="flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-white/[0.06] text-slate-400">
                                                         <Briefcase size={10} />
                                                         Task Linked
                                                     </div>
@@ -332,14 +332,14 @@ export const RoutinePage: React.FC = () => {
                                         <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                                             <button 
                                                 onClick={(e) => handleEditRoutine(e, routine)}
-                                                className="p-2 text-slate-400 hover:text-indigo-400 hover:bg-indigo-500/10 rounded-lg transition-all"
+                                                className="p-2 text-slate-400 hover:text-[#26f7b2] hover:bg-[#26f7b2]/10 rounded-lg transition-all"
                                                 title="Edit Routine"
                                             >
                                                 <Edit2 size={16} />
                                             </button>
                                             <button 
                                                 onClick={(e) => handleDeleteRoutine(e, routine.id)}
-                                                className="p-2 text-slate-400 hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-all"
+                                                className="p-2 text-slate-400 hover:text-rose-400 hover:bg-rose-500/10 rounded-lg transition-all"
                                                 title="Delete Routine"
                                             >
                                                 <Trash2 size={16} />
@@ -354,10 +354,10 @@ export const RoutinePage: React.FC = () => {
 
                 {/* Specific Sections (Visible when a tab is active) */}
                 {activeTab !== 'all' && (
-                    <div className="col-span-1 border-l border-slate-700/50 pl-0 lg:pl-6 space-y-6">
-                        
+                    <div className="col-span-1 border-l border-white/[0.08] pl-0 lg:pl-6 space-y-6">
+
                         {activeTab === 'body' && (
-                            <div className="bg-slate-800/50 border border-emerald-500/20 rounded-2xl p-5 text-center">
+                            <div className="bg-white/[0.02] border border-emerald-500/20 rounded-2xl p-5 text-center">
                                 <div className="p-3 bg-emerald-500/10 rounded-full inline-flex mb-3">
                                     <Activity size={24} className="text-emerald-400" />
                                 </div>
@@ -367,7 +367,7 @@ export const RoutinePage: React.FC = () => {
                         )}
 
                         {activeTab === 'mind' && (
-                            <div className="bg-slate-800/50 border border-purple-500/20 rounded-2xl p-5 text-center">
+                            <div className="bg-white/[0.02] border border-purple-500/20 rounded-2xl p-5 text-center">
                                 <div className="p-3 bg-purple-500/10 rounded-full inline-flex mb-3">
                                     <BrainCircuit size={24} className="text-purple-400" />
                                 </div>
@@ -377,9 +377,9 @@ export const RoutinePage: React.FC = () => {
                         )}
 
                         {activeTab === 'office' && (
-                            <div className="flex flex-col h-full bg-slate-800/30 border border-indigo-500/20 rounded-2xl overflow-hidden">
-                                <div className="p-4 border-b border-slate-700/50 bg-slate-800/80">
-                                    <h3 className="text-indigo-400 font-bold flex items-center gap-2">
+                            <div className="flex flex-col h-full bg-white/[0.02] border border-[#009d9a]/20 rounded-2xl overflow-hidden">
+                                <div className="p-4 border-b border-white/[0.08] bg-white/[0.03]">
+                                    <h3 className="text-cyan-300 font-bold flex items-center gap-2">
                                         <Briefcase size={18} />
                                         Task Backlog
                                     </h3>
@@ -397,12 +397,12 @@ export const RoutinePage: React.FC = () => {
                                                 key={task.id}
                                                 draggable
                                                 onDragStart={(e) => handleDragStart(e, task.id, task.title)}
-                                                className="p-3 bg-slate-800 border border-slate-700 rounded-xl cursor-grab active:cursor-grabbing hover:border-indigo-500/50 hover:shadow-lg transition-all"
+                                                className="p-3 bg-white/[0.03] border border-white/[0.08] rounded-xl cursor-grab active:cursor-grabbing hover:border-[#009d9a]/50 hover:shadow-lg transition-all"
                                             >
                                                 <p className="text-sm font-bold text-slate-200 mb-1">{task.title}</p>
                                                 <div className="flex items-center gap-2">
                                                     <span className={`text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded ${
-                                                        task.priority === 'high' ? 'bg-red-500/20 text-red-400' :
+                                                        task.priority === 'high' ? 'bg-rose-500/20 text-rose-400' :
                                                         task.priority === 'medium' ? 'bg-amber-500/20 text-amber-400' :
                                                         'bg-emerald-500/20 text-emerald-400'
                                                     }`}>
@@ -417,7 +417,7 @@ export const RoutinePage: React.FC = () => {
                         )}
 
                         {activeTab === 'fun' && (
-                            <div className="bg-slate-800/50 border border-pink-500/20 rounded-2xl p-5 text-center">
+                            <div className="bg-white/[0.02] border border-pink-500/20 rounded-2xl p-5 text-center">
                                 <div className="p-3 bg-pink-500/10 rounded-full inline-flex mb-3">
                                     <Gamepad2 size={24} className="text-pink-400" />
                                 </div>
