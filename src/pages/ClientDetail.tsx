@@ -21,7 +21,7 @@ export const ClientDetail: React.FC = () => {
             <div className="flex flex-col items-center justify-center h-full text-slate-400">
                 <Building2 size={48} className="mb-4 opacity-20" />
                 <p>Client not found</p>
-                <button onClick={() => navigate('/clients')} className="mt-4 text-[#26f7b2] hover:text-[#26f7b2]/80">Back to Clients</button>
+                <button onClick={() => navigate('/clients')} className="mt-4 text-[#21D89A] hover:text-[#21D89A]/80">Back to Clients</button>
             </div>
         );
     }
@@ -38,14 +38,14 @@ export const ClientDetail: React.FC = () => {
                 <div className="flex items-start gap-4">
                     <button
                         onClick={() => navigate('/clients')}
-                        className="p-2 rounded-xl bg-white/[0.03] border border-white/[0.08] text-slate-400 hover:text-[#26f7b2] hover:border-[#26f7b2]/30 transition-all"
+                        className="p-2 rounded-xl bg-white/[0.03] border border-white/[0.08] text-slate-400 hover:text-[#21D89A] hover:border-[#21D89A]/30 transition-all"
                     >
                         <ArrowLeft size={20} />
                     </button>
                     <div>
                         <div className="flex items-center gap-3 mb-1">
                             <h1 className="text-3xl font-bold text-slate-50">{client.name}</h1>
-                            <span className="px-3 py-1 bg-[#26f7b2]/10 text-[#26f7b2] border border-[#26f7b2]/20 rounded-full text-xs font-bold uppercase tracking-wider">
+                            <span className="px-3 py-1 bg-[#21D89A]/10 text-[#21D89A] border border-[#21D89A]/20 rounded-full text-xs font-bold uppercase tracking-wider">
                                 Client
                             </span>
                         </div>
@@ -58,7 +58,7 @@ export const ClientDetail: React.FC = () => {
                                     href={client.website.startsWith('http') ? client.website : `https://${client.website}`}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="flex items-center gap-1.5 text-[#26f7b2] hover:text-[#26f7b2]/80 transition-colors bg-[#26f7b2]/10 px-2 py-0.5 rounded-md border border-[#26f7b2]/20 text-xs font-medium"
+                                    className="flex items-center gap-1.5 text-[#21D89A] hover:text-[#21D89A]/80 transition-colors bg-[#21D89A]/10 px-2 py-0.5 rounded-md border border-[#21D89A]/20 text-xs font-medium"
                                 >
                                     <Globe size={12} /> Website
                                 </a>
@@ -77,7 +77,7 @@ export const ClientDetail: React.FC = () => {
                         </a>
                     ))}
                     {client.emails?.map(e => (
-                        <a key={e} href={`mailto:${e}`} className="flex items-center gap-2 px-4 py-2 bg-white/[0.02] border border-white/[0.08] rounded-xl text-slate-300 text-sm hover:border-[#009d9a]/40 hover:text-cyan-300 transition-all">
+                        <a key={e} href={`mailto:${e}`} className="flex items-center gap-2 px-4 py-2 bg-white/[0.02] border border-white/[0.08] rounded-xl text-slate-300 text-sm hover:border-[#047857]/40 hover:text-cyan-300 transition-all">
                             <Mail size={14} /> {e}
                         </a>
                     ))}
@@ -105,8 +105,8 @@ export const ClientDetail: React.FC = () => {
                         ))}
                         {client.emails?.map(e => (
                             <a key={e} href={`mailto:${e}`}
-                                className="flex items-center gap-3 p-3 bg-white/[0.02] border border-white/[0.08] rounded-xl hover:border-[#009d9a]/40 hover:bg-[#009d9a]/5 group transition-all">
-                                <div className="w-8 h-8 rounded-lg bg-[#009d9a]/10 flex items-center justify-center flex-shrink-0 group-hover:bg-[#009d9a]/20 transition-all">
+                                className="flex items-center gap-3 p-3 bg-white/[0.02] border border-white/[0.08] rounded-xl hover:border-[#047857]/40 hover:bg-[#047857]/5 group transition-all">
+                                <div className="w-8 h-8 rounded-lg bg-[#047857]/10 flex items-center justify-center flex-shrink-0 group-hover:bg-[#047857]/20 transition-all">
                                     <Mail size={14} className="text-cyan-300" />
                                 </div>
                                 <div>
@@ -136,17 +136,17 @@ export const ClientDetail: React.FC = () => {
                     {/* Projects */}
                     <section>
                         <h2 className="text-slate-100 font-bold mb-4 flex items-center gap-2">
-                            <Building2 size={18} className="text-[#26f7b2]" /> Projects ({clientProjects.length})
+                            <Building2 size={18} className="text-[#21D89A]" /> Projects ({clientProjects.length})
                         </h2>
                         <div className="space-y-3">
                             {clientProjects.map(p => (
                                 <div
                                     key={p.id}
                                     onClick={() => navigate(`/projects/${p.id}`)}
-                                    className="p-4 bg-white/[0.02] border border-white/[0.08] rounded-xl hover:border-[#26f7b2]/40 cursor-pointer transition-all group"
+                                    className="p-4 bg-white/[0.02] border border-white/[0.08] rounded-xl hover:border-[#21D89A]/40 cursor-pointer transition-all group"
                                 >
                                     <div className="flex items-center justify-between mb-2">
-                                        <h3 className="text-slate-200 font-medium group-hover:text-[#26f7b2] transition-colors">{p.name}</h3>
+                                        <h3 className="text-slate-200 font-medium group-hover:text-[#21D89A] transition-colors">{p.name}</h3>
                                         <div className="w-2 h-2 rounded-full" style={{ backgroundColor: p.color }} />
                                     </div>
                                     <div className="flex items-center gap-3">
@@ -187,9 +187,9 @@ export const ClientDetail: React.FC = () => {
                                     href={f.url}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="flex items-center gap-3 p-3 bg-white/[0.02] border border-white/[0.08] rounded-xl hover:bg-white/[0.04] hover:border-[#26f7b2]/30 transition-all group"
+                                    className="flex items-center gap-3 p-3 bg-white/[0.02] border border-white/[0.08] rounded-xl hover:bg-white/[0.04] hover:border-[#21D89A]/30 transition-all group"
                                 >
-                                    <div className="p-2 bg-[#26f7b2]/10 rounded-lg text-[#26f7b2] group-hover:bg-[#26f7b2] group-hover:text-black transition-all">
+                                    <div className="p-2 bg-[#21D89A]/10 rounded-lg text-[#21D89A] group-hover:bg-[#21D89A] group-hover:text-black transition-all">
                                         <FileArchive size={16} />
                                     </div>
                                     <div className="flex-1 min-w-0">
@@ -209,7 +209,7 @@ export const ClientDetail: React.FC = () => {
                     <section>
                         <div className="flex items-center justify-between mb-4">
                             <h2 className="text-slate-100 font-bold flex items-center gap-2">
-                                <CheckSquare size={18} className="text-[#26f7b2]" /> Active Tasks ({clientTasks.length})
+                                <CheckSquare size={18} className="text-[#21D89A]" /> Active Tasks ({clientTasks.length})
                             </h2>
                         </div>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -223,18 +223,18 @@ export const ClientDetail: React.FC = () => {
                     {/* Meetings */}
                     <section>
                         <h2 className="text-slate-100 font-bold mb-4 flex items-center gap-2">
-                            <CalendarIcon size={18} className="text-[#26f7b2]" /> Meetings ({clientMeetings.length})
+                            <CalendarIcon size={18} className="text-[#21D89A]" /> Meetings ({clientMeetings.length})
                         </h2>
                         <div className="space-y-3">
                             {clientMeetings.map(m => (
-                                <div key={m.id} className="p-4 bg-white/[0.02] border border-white/[0.08] rounded-xl flex items-center justify-between group hover:border-[#26f7b2]/40 transition-all">
+                                <div key={m.id} className="p-4 bg-white/[0.02] border border-white/[0.08] rounded-xl flex items-center justify-between group hover:border-[#21D89A]/40 transition-all">
                                     <div className="flex items-center gap-4">
-                                        <div className="w-12 h-12 rounded-xl bg-[#009d9a]/15 flex flex-col items-center justify-center text-[#26f7b2] border border-[#26f7b2]/20">
+                                        <div className="w-12 h-12 rounded-xl bg-[#047857]/15 flex flex-col items-center justify-center text-[#21D89A] border border-[#21D89A]/20">
                                             <span className="text-xs font-bold leading-none">{new Date(m.start_time).toLocaleString('en-US', { month: 'short' }).toUpperCase()}</span>
                                             <span className="text-lg font-black leading-none">{new Date(m.start_time).getDate()}</span>
                                         </div>
                                         <div>
-                                            <h3 className="text-slate-200 font-medium group-hover:text-[#26f7b2] transition-colors">{m.title}</h3>
+                                            <h3 className="text-slate-200 font-medium group-hover:text-[#21D89A] transition-colors">{m.title}</h3>
                                             <p className="text-slate-500 text-xs flex items-center gap-1.5 mt-0.5">
                                                 <Clock size={12} /> {new Date(m.start_time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                                             </p>

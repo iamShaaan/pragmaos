@@ -40,14 +40,14 @@ export const ClientDetailsModal: React.FC<ClientDetailsModalProps> = ({ isOpen, 
                     <div>
                         <div className="flex items-center gap-4 text-slate-400 mt-1">
                             <p className="flex items-center gap-1.5">
-                                <Building2 size={16} className="text-[#26f7b2]" /> {client.company || 'Private Client'}
+                                <Building2 size={16} className="text-[#21D89A]" /> {client.company || 'Private Client'}
                             </p>
                             {client.website && (
                                 <a
                                     href={client.website.startsWith('http') ? client.website : `https://${client.website}`}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="flex items-center gap-1.5 text-[#26f7b2] hover:text-[#26f7b2]/80 transition-colors bg-[#26f7b2]/10 px-2 py-0.5 rounded-md border border-[#26f7b2]/20 text-xs font-medium"
+                                    className="flex items-center gap-1.5 text-[#21D89A] hover:text-[#21D89A]/80 transition-colors bg-[#21D89A]/10 px-2 py-0.5 rounded-md border border-[#21D89A]/20 text-xs font-medium"
                                 >
                                     <Globe size={12} /> Website
                                 </a>
@@ -80,8 +80,8 @@ export const ClientDetailsModal: React.FC<ClientDetailsModalProps> = ({ isOpen, 
                             ))}
                             {client.emails?.map(e => (
                                 <a key={e} href={`mailto:${e}`}
-                                    className="flex items-center gap-3 p-3 bg-white/[0.02] border border-white/[0.08] rounded-xl hover:border-[#009d9a]/40 hover:bg-[#009d9a]/5 group transition-all">
-                                    <div className="w-8 h-8 rounded-lg bg-[#009d9a]/10 flex items-center justify-center flex-shrink-0 group-hover:bg-[#009d9a]/20 transition-all">
+                                    className="flex items-center gap-3 p-3 bg-white/[0.02] border border-white/[0.08] rounded-xl hover:border-[#047857]/40 hover:bg-[#047857]/5 group transition-all">
+                                    <div className="w-8 h-8 rounded-lg bg-[#047857]/10 flex items-center justify-center flex-shrink-0 group-hover:bg-[#047857]/20 transition-all">
                                         <Mail size={14} className="text-cyan-300" />
                                     </div>
                                     <div>
@@ -108,7 +108,7 @@ export const ClientDetailsModal: React.FC<ClientDetailsModalProps> = ({ isOpen, 
                     {/* Projects */}
                     <section className="bg-white/[0.02] p-5 rounded-2xl border border-white/[0.08]">
                         <h2 className="text-slate-100 font-bold mb-4 flex items-center gap-2">
-                            <Building2 size={16} className="text-[#26f7b2]" /> Projects ({clientProjects.length})
+                            <Building2 size={16} className="text-[#21D89A]" /> Projects ({clientProjects.length})
                         </h2>
                         <div className="space-y-3">
                             {clientProjects.map(p => (
@@ -129,7 +129,7 @@ export const ClientDetailsModal: React.FC<ClientDetailsModalProps> = ({ isOpen, 
                     {/* Tasks */}
                     <section className="bg-white/[0.02] p-5 rounded-2xl border border-white/[0.08]">
                         <h2 className="text-slate-100 font-bold mb-4 flex items-center gap-2">
-                            <CheckSquare size={16} className="text-[#26f7b2]" /> Active Tasks ({clientTasks.length})
+                            <CheckSquare size={16} className="text-[#21D89A]" /> Active Tasks ({clientTasks.length})
                         </h2>
                         <div className="space-y-3">
                             {clientTasks.map(t => (

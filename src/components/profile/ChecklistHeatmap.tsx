@@ -88,47 +88,47 @@ export const ChecklistHeatmap: React.FC<ChecklistHeatmapProps> = ({ routines, da
 
     const getDotStyle = (status: DotStatus): string => {
         switch (status) {
-            case 'deepgreen':  return 'bg-[#26f7b2] shadow-[0_0_6px_rgba(38,247,178,0.5)]';
-            case 'lightgreen': return 'bg-[#26f7b2]/30';
-            case 'empty':      return 'bg-white/[0.05]';
-            case 'future':     return 'bg-white/[0.02]';
+            case 'deepgreen':  return 'bg-[#21D89A] dark:bg-[#21D89A]';
+            case 'lightgreen': return 'bg-[#DDFBF0] dark:bg-[#21D89A]/20 border border-[#B7F3DD] dark:border-transparent';
+            case 'empty':      return 'bg-[#F3F7F5] dark:bg-[#1A2B23]/40 border border-[#DDE8E2] dark:border-[#22372D]/30';
+            case 'future':     return 'bg-[#F7FAF8]/50 dark:bg-[#0D1612]/20 border border-[#DDE8E2]/30 dark:border-[#22372D]/10';
             case 'outside':    return 'bg-transparent';
-            default:           return 'bg-white/[0.05]';
+            default:           return 'bg-[#F3F7F5] dark:bg-[#1A2B23]/40 border border-[#DDE8E2]';
         }
     };
 
     const getTooltipColor = (status: DotStatus): string => {
         switch (status) {
-            case 'deepgreen':  return 'text-emerald-400';
-            case 'lightgreen': return 'text-emerald-300';
-            default:           return 'text-slate-500';
+            case 'deepgreen':  return 'text-[#047857] dark:text-[#21D89A] font-bold';
+            case 'lightgreen': return 'text-[#21D89A] dark:text-emerald-300 font-semibold';
+            default:           return 'text-text-muted';
         }
     };
 
     return (
-        <div className="bg-white/[0.02] border border-white/[0.08] rounded-2xl px-5 py-4 backdrop-blur-sm">
+        <div className="bg-bg-card border border-border-card rounded-[22px] px-6 py-5 shadow-sm">
             {/* Header */}
-            <div className="flex items-center justify-between mb-3">
+            <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-2.5">
-                    <span className="text-slate-200 text-xs font-bold tracking-wide">All Around Productivity</span>
-                    <span className="text-slate-700 text-[10px]">•</span>
-                    <span className="text-slate-500 text-[10px] font-medium">{year}</span>
+                    <span className="text-text-main text-xs font-bold tracking-wide uppercase">All-Around Productivity</span>
+                    <span className="text-text-muted/30 text-[10px]">•</span>
+                    <span className="text-text-muted text-xs font-medium">{year}</span>
                 </div>
-                <div className="flex items-center gap-1.5">
-                    <span className="text-slate-600 text-[10px]">Less</span>
-                    <div className="w-[9px] h-[9px] rounded-[2px] bg-white/[0.05]" />
-                    <div className="w-[9px] h-[9px] rounded-[2px] bg-[#26f7b2]/30" />
-                    <div className="w-[9px] h-[9px] rounded-[2px] bg-[#26f7b2]" />
-                    <span className="text-slate-600 text-[10px]">More</span>
+                <div className="flex items-center gap-2">
+                    <span className="text-text-muted text-[10px] font-medium">Less</span>
+                    <div className="w-[10px] h-[10px] rounded-[3px] bg-[#F3F7F5] dark:bg-[#1A2B23]/40 border border-[#DDE8E2] dark:border-[#22372D]/30" />
+                    <div className="w-[10px] h-[10px] rounded-[3px] bg-[#DDFBF0] dark:bg-[#21D89A]/20 border border-[#B7F3DD] dark:border-transparent" />
+                    <div className="w-[10px] h-[10px] rounded-[3px] bg-[#21D89A]" />
+                    <span className="text-text-muted text-[10px] font-medium">More</span>
                 </div>
             </div>
 
             {/* Month labels */}
-            <div className="relative mb-1.5" style={{ height: 14 }}>
+            <div className="relative mb-2" style={{ height: 14 }}>
                 {monthLabels.map(({ index, label }, i) => (
                     <span
                         key={`${label}-${i}`}
-                        className="text-slate-500 text-[10px] font-semibold absolute whitespace-nowrap"
+                        className="text-text-muted text-[10px] font-semibold absolute whitespace-nowrap"
                         style={{ left: `${(index / totalWeeks) * 100}%` }}
                     >
                         {label}
@@ -142,7 +142,7 @@ export const ChecklistHeatmap: React.FC<ChecklistHeatmapProps> = ({ routines, da
                 style={{
                     gridTemplateColumns: `repeat(${totalWeeks}, 1fr)`,
                     gridTemplateRows: 'repeat(7, 1fr)',
-                    gap: 3,
+                    gap: 4,
                 }}
             >
                 {weeks.map((week, wi) =>
@@ -167,24 +167,24 @@ export const ChecklistHeatmap: React.FC<ChecklistHeatmapProps> = ({ routines, da
                             >
                                 <div
                                     className={`
-                                        w-full aspect-square rounded-[2.5px] transition-all duration-150
+                                        w-full aspect-square rounded-[3px] transition-all duration-150
                                         ${style}
-                                        ${isTodayDay ? 'ring-1 ring-[#26f7b2]/70 ring-offset-1 ring-offset-[#060d11]' : ''}
-                                        ${!isOutside ? 'cursor-pointer hover:brightness-150 hover:scale-[1.3]' : ''}
+                                        ${isTodayDay ? 'ring-2 ring-[#047857] dark:ring-[#21D89A] ring-offset-2 ring-offset-bg-card' : ''}
+                                        ${!isOutside ? 'cursor-pointer hover:brightness-110 hover:scale-[1.25]' : ''}
                                     `}
                                 />
 
                                 {isHovered && data && !isOutside && (
-                                    <div className="absolute z-50 bottom-full left-1/2 -translate-x-1/2 mb-2 bg-[#0b1418] border border-white/10 rounded-lg px-3 py-2 whitespace-nowrap shadow-2xl shadow-black/50 pointer-events-none">
-                                        <p className="text-white text-[10px] font-bold">{format(day, 'EEE, MMM d')}</p>
+                                    <div className="absolute z-50 bottom-full left-1/2 -translate-x-1/2 mb-2.5 bg-bg-card-strong border border-border-card rounded-xl px-3.5 py-2.5 whitespace-nowrap shadow-md pointer-events-none">
+                                        <p className="text-text-main text-[11px] font-bold">{format(day, 'EEE, MMM d')}</p>
                                         {data.total > 0 ? (
-                                            <p className={`text-[9px] mt-0.5 ${getTooltipColor(status)}`}>
-                                                {data.completed}/{data.total} done • {data.rate}%
+                                            <p className={`text-[10px] mt-0.5 ${getTooltipColor(status)}`}>
+                                                {data.completed}/{data.total} completed • {data.rate}%
                                             </p>
                                         ) : (
-                                            <p className="text-slate-500 text-[9px] mt-0.5">No routines</p>
+                                            <p className="text-text-muted text-[10px] mt-0.5">No routines</p>
                                         )}
-                                        <div className="absolute -bottom-[4px] left-1/2 -translate-x-1/2 w-[6px] h-[6px] bg-[#0b1418] border-r border-b border-white/10 rotate-45" />
+                                        <div className="absolute -bottom-[4px] left-1/2 -translate-x-1/2 w-[8px] h-[8px] bg-bg-card-strong border-r border-b border-border-card rotate-45" />
                                     </div>
                                 )}
                             </div>

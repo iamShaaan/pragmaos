@@ -79,8 +79,8 @@ export const Auth: React.FC = () => {
     return (
         <div className="min-h-screen bg-[#060d11] flex items-center justify-center p-4 relative overflow-hidden noise-overlay grid-bg">
             {/* Background Orbs */}
-            <div className="absolute top-0 -left-1/4 w-1/2 h-1/2 bg-[#26f7b2]/5 blur-[150px] rounded-full" />
-            <div className="absolute bottom-0 -right-1/4 w-1/2 h-1/2 bg-[#009d9a]/5 blur-[150px] rounded-full" />
+            <div className="absolute top-0 -left-1/4 w-1/2 h-1/2 bg-[#21D89A]/5 blur-[150px] rounded-full" />
+            <div className="absolute bottom-0 -right-1/4 w-1/2 h-1/2 bg-[#047857]/5 blur-[150px] rounded-full" />
 
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -88,7 +88,7 @@ export const Auth: React.FC = () => {
                 className="w-full max-w-md relative z-10"
             >
                 <div className="text-center mb-8">
-                    <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#26f7b2] to-[#009d9a] flex items-center justify-center mx-auto mb-4 shadow-lg shadow-[#26f7b2]/20">
+                    <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#21D89A] to-[#047857] flex items-center justify-center mx-auto mb-4 shadow-lg shadow-[#21D89A]/20">
                         <Sparkles size={32} className="text-black" />
                     </div>
                     <h1 className="text-3xl font-extrabold text-[#f8fafc] mb-2 tracking-tight font-display">TaskMaster</h1>
@@ -99,13 +99,13 @@ export const Auth: React.FC = () => {
                     <div className="flex bg-white/[0.02] p-1 rounded-xl mb-8 border border-white/[0.08]">
                         <button
                             onClick={() => setIsLogin(true)}
-                            className={`flex-1 py-2 text-sm font-semibold rounded-lg transition-all cursor-pointer ${isLogin ? 'bg-[#26f7b2] text-black shadow-lg shadow-[#26f7b2]/25' : 'text-slate-400 hover:text-slate-200'}`}
+                            className={`flex-1 py-2 text-sm font-semibold rounded-lg transition-all cursor-pointer ${isLogin ? 'bg-[#21D89A] text-black shadow-lg shadow-[#21D89A]/25' : 'text-slate-400 hover:text-slate-200'}`}
                         >
                             Login
                         </button>
                         <button
                             onClick={() => setIsLogin(false)}
-                            className={`flex-1 py-2 text-sm font-semibold rounded-lg transition-all cursor-pointer ${!isLogin ? 'bg-[#26f7b2] text-black shadow-lg shadow-[#26f7b2]/25' : 'text-slate-400 hover:text-slate-200'}`}
+                            className={`flex-1 py-2 text-sm font-semibold rounded-lg transition-all cursor-pointer ${!isLogin ? 'bg-[#21D89A] text-black shadow-lg shadow-[#21D89A]/25' : 'text-slate-400 hover:text-slate-200'}`}
                         >
                             Sign Up
                         </button>
@@ -129,7 +129,7 @@ export const Auth: React.FC = () => {
                                             value={name}
                                             onChange={(e) => setName(e.target.value)}
                                             placeholder="John Doe"
-                                            className="w-full bg-white/[0.02] border border-white/[0.08] rounded-xl py-3 pl-11 pr-4 text-slate-200 placeholder:text-slate-650 focus:outline-none focus:border-[#26f7b2] focus:ring-4 focus:ring-[#26f7b2]/5 transition-all duration-200"
+                                            className="w-full bg-white/[0.02] border border-white/[0.08] rounded-xl py-3 pl-11 pr-4 text-slate-200 placeholder:text-slate-650 focus:outline-none focus:border-[#21D89A] focus:ring-4 focus:ring-[#21D89A]/5 transition-all duration-200"
                                         />
                                     </div>
                                 </motion.div>
@@ -146,7 +146,7 @@ export const Auth: React.FC = () => {
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
                                     placeholder="name@company.com"
-                                    className="w-full bg-white/[0.02] border border-white/[0.08] rounded-xl py-3 pl-11 pr-4 text-slate-200 placeholder:text-slate-650 focus:outline-none focus:border-[#26f7b2] focus:ring-4 focus:ring-[#26f7b2]/5 transition-all duration-200"
+                                    className="w-full bg-white/[0.02] border border-white/[0.08] rounded-xl py-3 pl-11 pr-4 text-slate-200 placeholder:text-slate-650 focus:outline-none focus:border-[#21D89A] focus:ring-4 focus:ring-[#21D89A]/5 transition-all duration-200"
                                 />
                             </div>
                         </div>
@@ -161,7 +161,7 @@ export const Auth: React.FC = () => {
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
                                     placeholder="••••••••"
-                                    className="w-full bg-white/[0.02] border border-white/[0.08] rounded-xl py-3 pl-11 pr-4 text-slate-200 placeholder:text-slate-650 focus:outline-none focus:border-[#26f7b2] focus:ring-4 focus:ring-[#26f7b2]/5 transition-all duration-200"
+                                    className="w-full bg-white/[0.02] border border-white/[0.08] rounded-xl py-3 pl-11 pr-4 text-slate-200 placeholder:text-slate-650 focus:outline-none focus:border-[#21D89A] focus:ring-4 focus:ring-[#21D89A]/5 transition-all duration-200"
                                 />
                             </div>
                         </div>
@@ -169,7 +169,7 @@ export const Auth: React.FC = () => {
                         <button
                             type="submit"
                             disabled={loading}
-                            className="w-full bg-gradient-to-r from-[#26f7b2] to-[#009d9a] hover:opacity-90 text-black font-extrabold py-3.5 rounded-xl shadow-lg shadow-[#26f7b2]/10 hover:shadow-[#26f7b2]/20 transition-all active:scale-95 flex items-center justify-center gap-2 mt-6 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+                            className="w-full bg-gradient-to-r from-[#21D89A] to-[#047857] hover:opacity-90 text-black font-extrabold py-3.5 rounded-xl shadow-lg shadow-[#21D89A]/10 hover:shadow-[#21D89A]/20 transition-all active:scale-95 flex items-center justify-center gap-2 mt-6 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
                         >
                             {loading ? (
                                 <Loader2 size={20} className="animate-spin text-black" />
@@ -187,7 +187,7 @@ export const Auth: React.FC = () => {
                         <div className="mt-4 text-center">
                             <button
                                 onClick={() => { setShowForgot(true); setForgotEmail(email); setForgotSent(false); }}
-                                className="text-slate-500 hover:text-[#26f7b2] text-xs font-semibold transition-colors cursor-pointer"
+                                className="text-slate-500 hover:text-[#21D89A] text-xs font-semibold transition-colors cursor-pointer"
                             >
                                 Forgot password?
                             </button>
@@ -199,7 +199,7 @@ export const Auth: React.FC = () => {
                             {isLogin ? "Don't have an account?" : "Already have an account?"}{' '}
                             <button
                                 onClick={() => setIsLogin(!isLogin)}
-                                className="text-[#26f7b2] hover:text-[#26f7b2]/80 font-bold transition-colors cursor-pointer"
+                                className="text-[#21D89A] hover:text-[#21D89A]/80 font-bold transition-colors cursor-pointer"
                             >
                                 {isLogin ? 'Create one now' : 'Sign in here'}
                             </button>
@@ -226,8 +226,8 @@ export const Auth: React.FC = () => {
                         >
                             {!forgotSent ? (
                                 <>
-                                    <div className="w-12 h-12 rounded-xl bg-[#26f7b2]/10 flex items-center justify-center mx-auto mb-4 border border-[#26f7b2]/20">
-                                        <Mail size={22} className="text-[#26f7b2]" />
+                                    <div className="w-12 h-12 rounded-xl bg-[#21D89A]/10 flex items-center justify-center mx-auto mb-4 border border-[#21D89A]/20">
+                                        <Mail size={22} className="text-[#21D89A]" />
                                     </div>
                                     <h2 className="text-white font-extrabold text-center text-lg mb-1 font-display">Reset Password</h2>
                                     <p className="text-slate-400 text-sm text-center mb-6">Enter your account email — we'll send a reset link.</p>
@@ -241,13 +241,13 @@ export const Auth: React.FC = () => {
                                                 value={forgotEmail}
                                                 onChange={(e) => setForgotEmail(e.target.value)}
                                                 placeholder="name@company.com"
-                                                className="w-full bg-[#060d11]/50 border border-white/[0.08] rounded-xl py-3 pl-11 pr-4 text-slate-200 placeholder:text-slate-650 focus:outline-none focus:border-[#26f7b2] focus:ring-4 focus:ring-[#26f7b2]/5 transition-all duration-200"
+                                                className="w-full bg-[#060d11]/50 border border-white/[0.08] rounded-xl py-3 pl-11 pr-4 text-slate-200 placeholder:text-slate-650 focus:outline-none focus:border-[#21D89A] focus:ring-4 focus:ring-[#21D89A]/5 transition-all duration-200"
                                             />
                                         </div>
                                         <button
                                             type="submit"
                                             disabled={forgotLoading}
-                                            className="w-full bg-gradient-to-r from-[#26f7b2] to-[#009d9a] hover:opacity-90 text-black font-extrabold py-3.5 rounded-xl transition-all active:scale-95 flex items-center justify-center gap-2 cursor-pointer shadow-md shadow-[#26f7b2]/10"
+                                            className="w-full bg-gradient-to-r from-[#21D89A] to-[#047857] hover:opacity-90 text-black font-extrabold py-3.5 rounded-xl transition-all active:scale-95 flex items-center justify-center gap-2 cursor-pointer shadow-md shadow-[#21D89A]/10"
                                         >
                                             {forgotLoading ? <Loader2 size={18} className="animate-spin text-black" /> : <><ArrowRight size={18} /> Send Reset Link</>}
                                         </button>
@@ -262,16 +262,16 @@ export const Auth: React.FC = () => {
                                 </>
                             ) : (
                                 <div className="text-center">
-                                    <div className="w-14 h-14 rounded-2xl bg-[#26f7b2]/10 border border-[#26f7b2]/20 flex items-center justify-center mx-auto mb-4">
-                                        <ArrowRight size={24} className="text-[#26f7b2]" />
+                                    <div className="w-14 h-14 rounded-2xl bg-[#21D89A]/10 border border-[#21D89A]/20 flex items-center justify-center mx-auto mb-4">
+                                        <ArrowRight size={24} className="text-[#21D89A]" />
                                     </div>
                                     <h2 className="text-white font-extrabold text-lg mb-2 font-display">Check your email</h2>
                                     <p className="text-slate-400 text-sm mb-1">We sent a reset link to:</p>
-                                    <p className="text-[#26f7b2] font-extrabold text-sm mb-6">{forgotEmail}</p>
+                                    <p className="text-[#21D89A] font-extrabold text-sm mb-6">{forgotEmail}</p>
                                     <p className="text-slate-550 text-xs mb-6 leading-relaxed">Click the link in the email to set a new password. Check your spam folder if you don't see it.</p>
                                     <button
                                         onClick={() => { setShowForgot(false); setForgotSent(false); }}
-                                        className="w-full bg-white/[0.03] border border-white/[0.08] hover:bg-white/[0.08] hover:border-[#26f7b2]/30 text-white font-bold py-3 rounded-xl transition-all cursor-pointer"
+                                        className="w-full bg-white/[0.03] border border-white/[0.08] hover:bg-white/[0.08] hover:border-[#21D89A]/30 text-white font-bold py-3 rounded-xl transition-all cursor-pointer"
                                     >
                                         Back to Login
                                     </button>

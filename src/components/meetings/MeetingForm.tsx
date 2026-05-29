@@ -12,7 +12,7 @@ interface MeetingFormProps {
     editMeeting?: Meeting;
 }
 
-const inputCls = 'w-full bg-bg-input border border-border-input text-text-main rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#26f7b2] transition-colors placeholder:text-slate-500/70';
+const inputCls = 'w-full bg-bg-input border border-border-input text-text-main rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#21D89A] transition-colors placeholder:text-slate-500/70';
 const labelCls = 'block text-text-muted text-xs font-medium mb-1';
 
 export const MeetingForm: React.FC<MeetingFormProps> = ({ onClose, editMeeting }) => {
@@ -139,7 +139,7 @@ export const MeetingForm: React.FC<MeetingFormProps> = ({ onClose, editMeeting }
                 <label className={labelCls}>Participants (email)</label>
                 <div className="flex gap-2">
                     <input className={`${inputCls} flex-1`} type="email" placeholder="add@email.com" value={participantInput} onChange={(e) => setParticipantInput(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && (e.preventDefault(), addParticipant())} />
-                    <button type="button" onClick={addParticipant} className="px-3 py-2 bg-[#26f7b2]/15 text-[#26f7b2] border border-[#26f7b2]/30 rounded-lg hover:bg-[#26f7b2]/25 text-sm">Add</button>
+                    <button type="button" onClick={addParticipant} className="px-3 py-2 bg-[#21D89A]/15 text-[#21D89A] border border-[#21D89A]/30 rounded-lg hover:bg-[#21D89A]/25 text-sm">Add</button>
                 </div>
                 {form.participants.length > 0 && (
                     <div className="flex flex-wrap gap-1.5 mt-2">
@@ -180,7 +180,7 @@ export const MeetingForm: React.FC<MeetingFormProps> = ({ onClose, editMeeting }
 
             <div className="flex justify-end gap-3 pt-2">
                 <button type="button" onClick={onClose} className="px-4 py-2 text-sm text-slate-400 hover:text-slate-100 transition-colors">Cancel</button>
-                <button type="submit" disabled={loading} className="px-5 py-2 bg-gradient-to-r from-[#26f7b2] to-[#009d9a] hover:opacity-90 text-black text-sm font-bold rounded-lg transition-all disabled:opacity-50 active:scale-95">
+                <button type="submit" disabled={loading} className="px-5 py-2 bg-gradient-to-r from-[#21D89A] to-[#047857] hover:opacity-90 text-black text-sm font-bold rounded-lg transition-all disabled:opacity-50 active:scale-95">
                     {loading ? 'Saving...' : editMeeting ? 'Update Meeting' : 'Schedule Meeting'}
                 </button>
             </div>

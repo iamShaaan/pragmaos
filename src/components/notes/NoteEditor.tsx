@@ -12,7 +12,7 @@ interface NoteEditorProps {
     defaultSecure?: boolean;
 }
 
-const inputCls = 'w-full bg-bg-input border border-border-input text-text-main rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#26f7b2] transition-colors placeholder:text-slate-500/70';
+const inputCls = 'w-full bg-bg-input border border-border-input text-text-main rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#21D89A] transition-colors placeholder:text-slate-500/70';
 const labelCls = 'block text-text-muted text-xs font-medium mb-1';
 
 export const NoteEditor: React.FC<NoteEditorProps> = ({ onClose, editNote, linked_project_id, defaultSecure }) => {
@@ -69,7 +69,7 @@ export const NoteEditor: React.FC<NoteEditorProps> = ({ onClose, editNote, linke
                         onClick={() => set('is_secure', !form.is_secure)}
                         className={`flex items-center gap-2 px-3 py-2 rounded-lg border text-sm font-medium transition-all ${form.is_secure
                             ? 'bg-amber-500/15 text-amber-400 border-amber-500/30'
-                            : 'bg-bg-input text-text-muted border-border-input hover:border-[#26f7b2]/40'
+                            : 'bg-bg-input text-text-muted border-border-input hover:border-[#21D89A]/40'
                             }`}
                         title="Toggle secure/vault mode"
                     >
@@ -86,7 +86,7 @@ export const NoteEditor: React.FC<NoteEditorProps> = ({ onClose, editNote, linke
                         }}
                         className={`flex items-center gap-2 px-3 py-2 rounded-lg border text-sm font-medium transition-all ${form.is_credential
                             ? 'bg-emerald-500/15 text-emerald-400 border-emerald-500/30'
-                            : 'bg-bg-input text-text-muted border-border-input hover:border-[#26f7b2]/40'
+                            : 'bg-bg-input text-text-muted border-border-input hover:border-[#21D89A]/40'
                             }`}
                     >
                         <Zap size={14} />
@@ -96,9 +96,9 @@ export const NoteEditor: React.FC<NoteEditorProps> = ({ onClose, editNote, linke
             </div>
 
             {(form.is_secure || form.is_credential) && (
-                <div className="flex items-center gap-3 p-3 bg-[#26f7b2]/10 border border-[#26f7b2]/20 rounded-xl">
-                    <Zap size={15} className="text-[#26f7b2]" />
-                    <p className="text-[#26f7b2] text-[10px] font-medium leading-relaxed">
+                <div className="flex items-center gap-3 p-3 bg-[#21D89A]/10 border border-[#21D89A]/20 rounded-xl">
+                    <Zap size={15} className="text-[#21D89A]" />
+                    <p className="text-[#21D89A] text-[10px] font-medium leading-relaxed">
                         {form.is_credential ? "Credential mode enabled. Template injected for secure storage." : "Vault mode enabled. This note will be hidden behind your PIN."}
                     </p>
                 </div>
@@ -123,7 +123,7 @@ export const NoteEditor: React.FC<NoteEditorProps> = ({ onClose, editNote, linke
                 <label className={labelCls}>Tags</label>
                 <div className="flex gap-2">
                     <input className={`${inputCls} flex-1`} placeholder="api-key, secret, config..." value={tagInput} onChange={(e) => setTagInput(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && (e.preventDefault(), addTag())} />
-                    <button type="button" onClick={addTag} className="px-3 py-2 bg-[#26f7b2]/15 text-[#26f7b2] border border-[#26f7b2]/30 rounded-lg hover:bg-[#26f7b2]/25 text-sm">Add</button>
+                    <button type="button" onClick={addTag} className="px-3 py-2 bg-[#21D89A]/15 text-[#21D89A] border border-[#21D89A]/30 rounded-lg hover:bg-[#21D89A]/25 text-sm">Add</button>
                 </div>
                 {form.tags.length > 0 && (
                     <div className="flex flex-wrap gap-1.5 mt-2">
@@ -139,7 +139,7 @@ export const NoteEditor: React.FC<NoteEditorProps> = ({ onClose, editNote, linke
 
             <div className="flex justify-end gap-3 pt-2">
                 <button type="button" onClick={onClose} className="px-4 py-2 text-sm text-slate-400 hover:text-slate-100 transition-colors">Cancel</button>
-                <button type="submit" disabled={loading} className="px-5 py-2 bg-gradient-to-r from-[#26f7b2] to-[#009d9a] hover:opacity-90 text-black text-sm font-bold rounded-lg transition-all disabled:opacity-50 active:scale-95">
+                <button type="submit" disabled={loading} className="px-5 py-2 bg-gradient-to-r from-[#21D89A] to-[#047857] hover:opacity-90 text-black text-sm font-bold rounded-lg transition-all disabled:opacity-50 active:scale-95">
                     {loading ? 'Saving...' : editNote ? 'Update Note' : 'Save Note'}
                 </button>
             </div>

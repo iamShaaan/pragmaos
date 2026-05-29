@@ -8,7 +8,7 @@ import { deleteDocById, updateDocById } from '../firebase/firestore';
 import { formatDateTime, formatTime } from '../utils/timeFormat';
 import toast from 'react-hot-toast';
 
-// ─── Outcome config ────────────────────────────────────────────────────────────
+// ─── Outcome config ───
 type Outcome = Meeting['outcome'];
 
 const OUTCOMES: { value: Outcome; label: string; icon: React.ElementType; active: string; ring: string }[] = [
@@ -16,26 +16,26 @@ const OUTCOMES: { value: Outcome; label: string; icon: React.ElementType; active
         value: 'ended',
         label: 'Ended',
         icon: StopCircle,
-        active: 'bg-slate-600 text-slate-200 border-slate-500',
-        ring: 'border-slate-600/40',
+        active: 'bg-[#F3F7F5] text-[#6B7C73] border-[#DDE8E2]',
+        ring: 'border-border-card',
     },
     {
         value: 'success',
         label: 'Success',
         icon: CheckCircle2,
-        active: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40',
-        ring: 'border-emerald-500/30',
+        active: 'bg-[#DDFBF0] text-[#047857] border-[#B7F3DD]/60',
+        ring: 'border-[#B7F3DD]/40',
     },
     {
         value: 'failed',
         label: 'Failed',
         icon: XCircle,
-        active: 'bg-rose-500/20 text-rose-300 border-rose-500/40',
-        ring: 'border-rose-500/30',
+        active: 'bg-[#FFE4E8] text-[#BE123C] border-transparent',
+        ring: 'border-[#FECDD3]/40',
     },
 ];
 
-// ─── Outcome Badge (read-only, used in header) ─────────────────────────────────
+// ─── Outcome Badge ───
 const OutcomeBadge = ({ outcome }: { outcome: Outcome }) => {
     if (!outcome) return null;
     const cfg = OUTCOMES.find(o => o.value === outcome)!;
@@ -48,13 +48,12 @@ const OutcomeBadge = ({ outcome }: { outcome: Outcome }) => {
     );
 };
 
-// ─── Status Bar (interactive chips) ───────────────────────────────────────────
+// ─── Status Bar (interactive chips) ───
 const OutcomeBar = ({ meeting }: { meeting: Meeting }) => {
     const [saving, setSaving] = useState<Outcome | null>(null);
 
     const setOutcome = async (value: Outcome) => {
         if (saving) return;
-        // Toggle off if already set
         const newVal = meeting.outcome === value ? undefined : value;
         setSaving(value);
         try {
@@ -68,8 +67,8 @@ const OutcomeBar = ({ meeting }: { meeting: Meeting }) => {
     };
 
     return (
-        <div className="mt-3 pt-3 border-t border-white/[0.08]">
-            <p className="text-slate-600 text-[10px] font-bold uppercase tracking-wider mb-2">Meeting Outcome</p>
+        <div className="mt-4 pt-3 border-t border-border-card">
+            <p className="text-text-muted text-[10px] font-bold uppercase tracking-wider mb-2">Meeting Outcome</p>
             <div className="flex gap-2">
                 {OUTCOMES.map(({ value, label, icon: Icon, active, ring }) => {
                     const isActive = meeting.outcome === value;
@@ -79,9 +78,9 @@ const OutcomeBar = ({ meeting }: { meeting: Meeting }) => {
                             key={value}
                             onClick={() => setOutcome(value)}
                             disabled={!!saving}
-                            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold border transition-all active:scale-95 disabled:opacity-60 ${isActive
+                            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold border transition-all active:scale-95 disabled:opacity-60 cursor-pointer ${isActive
                                     ? active
-                                    : `bg-white/[0.03] text-slate-500 border-white/[0.08] hover:${ring} hover:text-slate-300`
+                                    : `bg-bg-input text-text-muted border-border-input hover:${ring} hover:text-text-main`
                                 }`}
                         >
                             {isLoading ? (
@@ -98,7 +97,7 @@ const OutcomeBar = ({ meeting }: { meeting: Meeting }) => {
     );
 };
 
-// ─── Meeting Card ──────────────────────────────────────────────────────────────
+// ─── Meeting Card ───
 const MeetingCard = ({
     meeting,
     now,
@@ -114,53 +113,53 @@ const MeetingCard = ({
     const durationMs = meeting.end_time.getTime() - meeting.start_time.getTime();
     const durationMin = Math.round(durationMs / 60000);
 
-    // Border colour driven by outcome for past meetings
-    const borderCls = isUpcoming
-        ? 'border-white/[0.08]'
+    // Left border indicator matches outcome or upcoming status
+    const borderLeftCls = isUpcoming
+        ? 'border-l-4 border-l-[#21D89A]'
         : meeting.outcome === 'success'
-            ? 'border-emerald-500/25'
+            ? 'border-l-4 border-l-[#21D89A]'
             : meeting.outcome === 'failed'
-                ? 'border-rose-500/25'
-                : 'border-white/[0.06]';
+                ? 'border-l-4 border-l-[#EF476F]'
+                : 'border-l-4 border-l-text-muted/40';
 
     return (
-        <div className={`group bg-white/[0.03] backdrop-blur-xl border rounded-2xl p-4 shadow-[0_8px_32px_0_rgba(0,0,0,0.37)] hover:border-[#26f7b2]/30 transition-all ${borderCls} ${!isUpcoming ? 'opacity-80 hover:opacity-100' : ''}`}>
+        <div className={`group bg-white dark:bg-bg-card border border-border-card ${borderLeftCls} rounded-[18px] p-6 shadow-[0_4px_16px_rgba(16,35,27,0.03)] hover:shadow-[0_8px_24px_rgba(16,35,27,0.05)] transition-all ${!isUpcoming ? 'opacity-85 hover:opacity-100' : ''}`}>
             {/* Header row */}
             <div className="flex items-start justify-between gap-2">
                 <div className="flex items-start gap-3">
-                    <div className={`p-2 rounded-lg flex-shrink-0 mt-0.5 ${isUpcoming ? 'bg-[#009d9a]/15' :
-                            meeting.outcome === 'success' ? 'bg-emerald-500/10' :
-                                meeting.outcome === 'failed' ? 'bg-rose-500/10' :
-                                    'bg-white/[0.04]'
+                    <div className={`p-2 rounded-lg flex-shrink-0 mt-0.5 ${isUpcoming ? 'bg-[#DDFBF0]' :
+                            meeting.outcome === 'success' ? 'bg-[#DDFBF0]' :
+                                meeting.outcome === 'failed' ? 'bg-[#FFE4E8]' :
+                                    'bg-bg-input'
                         }`}>
                         <Calendar size={15} className={
-                            isUpcoming ? 'text-[#26f7b2]' :
-                                meeting.outcome === 'success' ? 'text-emerald-400' :
-                                    meeting.outcome === 'failed' ? 'text-rose-400' :
-                                        'text-slate-500'
+                            isUpcoming ? 'text-[#047857]' :
+                                meeting.outcome === 'success' ? 'text-[#047857]' :
+                                    meeting.outcome === 'failed' ? 'text-[#BE123C]' :
+                                        'text-text-muted'
                         } />
                     </div>
                     <div className="min-w-0">
                         <div className="flex items-center gap-2 flex-wrap">
-                            <h3 className="text-slate-100 font-semibold text-sm">{meeting.title}</h3>
+                            <h3 className="text-text-main font-bold text-sm">{meeting.title}</h3>
                             {isUpcoming && (
-                                <span className="text-[9px] font-black uppercase tracking-wider text-[#26f7b2] bg-[#26f7b2]/10 border border-[#26f7b2]/20 px-1.5 py-0.5 rounded-full">
+                                <span className="text-[9px] font-bold uppercase tracking-wider text-[#047857] bg-[#DDFBF0] border border-[#B7F3DD] px-1.5 py-0.5 rounded-full">
                                     UPCOMING
                                 </span>
                             )}
                             {!isUpcoming && <OutcomeBadge outcome={meeting.outcome} />}
                         </div>
                         {meeting.description && (
-                            <p className="text-slate-500 text-xs mt-0.5 line-clamp-1">{meeting.description}</p>
+                            <p className="text-text-muted text-xs mt-1 line-clamp-1">{meeting.description}</p>
                         )}
                     </div>
                 </div>
 
                 <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0">
-                    <button onClick={() => onEdit(meeting)} className="p-1.5 rounded-lg text-slate-500 hover:text-[#26f7b2] hover:bg-[#26f7b2]/10 transition-all">
+                    <button onClick={() => onEdit(meeting)} className="p-1.5 rounded-lg text-text-muted hover:text-[#047857] hover:bg-[#DDFBF0] transition-all cursor-pointer">
                         <Pencil size={13} />
                     </button>
-                    <button onClick={() => onDelete(meeting.id)} className="p-1.5 rounded-lg text-slate-500 hover:text-rose-400 hover:bg-rose-500/10 transition-all">
+                    <button onClick={() => onDelete(meeting.id)} className="p-1.5 rounded-lg text-text-muted hover:text-[#BE123C] hover:bg-[#FFE4E8] transition-all cursor-pointer">
                         <Trash2 size={13} />
                     </button>
                 </div>
@@ -168,29 +167,29 @@ const MeetingCard = ({
 
             {/* Meta row */}
             <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1.5">
-                <div className="flex items-center gap-1.5 text-xs text-slate-400">
+                <div className="flex items-center gap-1.5 text-xs text-text-muted">
                     <Clock size={11} />
                     <span>{formatTime(meeting.start_time)} – {formatTime(meeting.end_time)} ({durationMin}min)</span>
                 </div>
-                <div className="flex items-center gap-1.5 text-xs text-slate-500">
+                <div className="flex items-center gap-1.5 text-xs text-text-muted/80">
                     <Calendar size={11} />
                     <span>{formatDateTime(meeting.start_time)}</span>
                 </div>
                 {meeting.location && (
                     <div className="flex items-center gap-1.5 text-xs">
-                        <Link2 size={11} className="text-[#26f7b2] flex-shrink-0" />
+                        <Link2 size={11} className="text-[#047857] flex-shrink-0" />
                         <a
                             href={meeting.location.startsWith('http') ? meeting.location : `https://${meeting.location}`}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-[#26f7b2] hover:text-[#26f7b2]/80 underline underline-offset-2 truncate transition-colors"
+                            className="text-[#047857] hover:underline underline-offset-2 truncate transition-colors"
                         >
                             Meeting Link
                         </a>
                     </div>
                 )}
                 {meeting.participants?.length > 0 && (
-                    <div className="flex items-center gap-1.5 text-xs text-slate-500">
+                    <div className="flex items-center gap-1.5 text-xs text-text-muted/80">
                         <Users size={11} />
                         <span>
                             {meeting.participants.slice(0, 2).join(', ')}
@@ -200,13 +199,13 @@ const MeetingCard = ({
                 )}
             </div>
 
-            {/* Status bar — only for past meetings */}
+            {/* Status bar */}
             {!isUpcoming && <OutcomeBar meeting={meeting} />}
         </div>
     );
 };
 
-// ─── Page ──────────────────────────────────────────────────────────────────────
+// ─── Page ───
 export const Meetings: React.FC = () => {
     const { meetings } = useAppStore();
     const [showForm, setShowForm] = useState(false);
@@ -230,7 +229,7 @@ export const Meetings: React.FC = () => {
     const openEdit = (m: Meeting) => { setEditMeeting(m); setShowForm(true); };
     const closeForm = () => { setEditMeeting(undefined); setShowForm(false); };
 
-    // Quick summary counts for the header bar
+    // Summary counts for header bar
     const successCount = past.filter(m => m.outcome === 'success').length;
     const failedCount = past.filter(m => m.outcome === 'failed').length;
     const pendingCount = past.filter(m => !m.outcome).length;
@@ -240,23 +239,23 @@ export const Meetings: React.FC = () => {
             {/* Toolbar */}
             <div className="flex items-center justify-between flex-wrap gap-3">
                 <div className="flex items-center gap-3 flex-wrap">
-                    <p className="text-slate-400 text-sm">
-                        <span className="text-slate-200 font-bold">{upcoming.length}</span> upcoming
+                    <p className="text-text-muted text-sm">
+                        <span className="text-text-main font-bold">{upcoming.length}</span> upcoming
                     </p>
                     {past.length > 0 && (
                         <div className="flex items-center gap-2">
                             {successCount > 0 && (
-                                <span className="flex items-center gap-1 text-[11px] font-bold text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded-full">
+                                <span className="flex items-center gap-1 text-[11px] font-bold text-[#047857] bg-[#DDFBF0] border border-[#B7F3DD] px-2.5 py-0.5 rounded-full">
                                     <CheckCircle2 size={10} /> {successCount} success
                                 </span>
                             )}
                             {failedCount > 0 && (
-                                <span className="flex items-center gap-1 text-[11px] font-bold text-rose-400 bg-rose-500/10 border border-rose-500/20 px-2 py-0.5 rounded-full">
+                                <span className="flex items-center gap-1 text-[11px] font-bold text-[#BE123C] bg-[#FFE4E8] border border-transparent px-2.5 py-0.5 rounded-full">
                                     <XCircle size={10} /> {failedCount} failed
                                 </span>
                             )}
                             {pendingCount > 0 && (
-                                <span className="flex items-center gap-1 text-[11px] font-bold text-slate-500 bg-white/[0.03] border border-white/[0.08] px-2 py-0.5 rounded-full">
+                                <span className="flex items-center gap-1 text-[11px] font-bold text-[#6B7C73] bg-[#F3F7F5] border border-transparent px-2.5 py-0.5 rounded-full">
                                     <StopCircle size={10} /> {pendingCount} no outcome
                                 </span>
                             )}
@@ -265,40 +264,58 @@ export const Meetings: React.FC = () => {
                 </div>
                 <button
                     onClick={() => setShowForm(true)}
-                    className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-[#26f7b2] to-[#009d9a] hover:opacity-90 text-black text-sm font-bold rounded-xl transition-all shadow-lg shadow-[#26f7b2]/20 active:scale-95"
+                    className="flex items-center gap-2 px-5 py-2.5 bg-glitch-emerald text-[#053B2A] text-sm font-bold rounded-xl transition-all shadow-[0_8px_20px_rgba(33,216,154,0.2)] hover:opacity-95 active:scale-95 cursor-pointer"
                 >
                     <Plus size={16} /> Schedule Meeting
                 </button>
             </div>
 
-            {/* Upcoming */}
-            {upcoming.length > 0 && (
-                <div>
-                    <h2 className="text-slate-300 text-xs font-black uppercase tracking-widest mb-3 flex items-center gap-2">
-                        <Clock size={12} className="text-[#26f7b2]" /> Upcoming
-                    </h2>
-                    <div className="space-y-3">
-                        {upcoming.map(m => <MeetingCard key={m.id} meeting={m} now={now} onEdit={openEdit} onDelete={handleDelete} />)}
+            {/* Vertical Timeline container */}
+            <div className="relative pl-6 sm:pl-8 border-l-2 border-border-card space-y-8 ml-3 py-2">
+                {/* Upcoming Title Dot & Indicator */}
+                {upcoming.length > 0 && (
+                    <div className="relative">
+                        <span className="absolute -left-[30px] sm:-left-[38px] top-1 w-3 h-3 rounded-full border-2 border-bg-app bg-[#21D89A]" />
+                        <h2 className="text-[#047857] text-xs font-black uppercase tracking-widest mb-3 flex items-center gap-2">
+                            <Clock size={12} className="text-[#21D89A]" /> Upcoming Meetings
+                        </h2>
+                        <div className="space-y-4">
+                            {upcoming.map(m => (
+                                <div key={m.id} className="relative">
+                                    <span className="absolute -left-[30px] sm:-left-[38px] top-6 w-3 h-3 rounded-full border-2 border-bg-app bg-[#21D89A]" />
+                                    <MeetingCard meeting={m} now={now} onEdit={openEdit} onDelete={handleDelete} />
+                                </div>
+                            ))}
+                        </div>
                     </div>
-                </div>
-            )}
+                )}
 
-            {/* Past */}
-            {past.length > 0 && (
-                <div>
-                    <h2 className="text-slate-500 text-xs font-black uppercase tracking-widest mb-3">Past Meetings</h2>
-                    <div className="space-y-3">
-                        {past.slice(0, 10).map(m => <MeetingCard key={m.id} meeting={m} now={now} onEdit={openEdit} onDelete={handleDelete} />)}
+                {/* Past Title Dot & Indicator */}
+                {past.length > 0 && (
+                    <div className="relative pt-2">
+                        <span className="absolute -left-[30px] sm:-left-[38px] top-3 w-3 h-3 rounded-full border-2 border-bg-app bg-[#6B7C73]" />
+                        <h2 className="text-text-muted text-xs font-black uppercase tracking-widest mb-3">Past Meetings</h2>
+                        <div className="space-y-4">
+                            {past.slice(0, 10).map(m => {
+                                const dotBg = m.outcome === 'success' ? 'bg-[#21D89A]' : m.outcome === 'failed' ? 'bg-[#EF476F]' : 'bg-[#6B7C73]';
+                                return (
+                                    <div key={m.id} className="relative">
+                                        <span className={`absolute -left-[30px] sm:-left-[38px] top-6 w-3 h-3 rounded-full border-2 border-bg-app ${dotBg}`} />
+                                        <MeetingCard meeting={m} now={now} onEdit={openEdit} onDelete={handleDelete} />
+                                    </div>
+                                );
+                            })}
+                        </div>
                     </div>
-                </div>
-            )}
+                )}
+            </div>
 
             {/* Empty */}
             {meetings.length === 0 && (
-                <div className="text-center py-20">
-                    <Calendar size={48} className="text-slate-700 mx-auto mb-3" />
-                    <p className="text-slate-400">No meetings scheduled yet</p>
-                    <button onClick={() => setShowForm(true)} className="mt-3 text-[#26f7b2] text-sm hover:text-[#26f7b2]/80">
+                <div className="text-center py-20 bg-white dark:bg-bg-card border border-border-card rounded-[22px] p-8 shadow-sm">
+                    <Calendar size={48} className="text-text-muted/40 mx-auto mb-3" />
+                    <p className="text-text-muted">No meetings scheduled yet</p>
+                    <button onClick={() => setShowForm(true)} className="mt-3 text-[#047857] hover:underline text-sm font-bold cursor-pointer">
                         Schedule your first meeting →
                     </button>
                 </div>

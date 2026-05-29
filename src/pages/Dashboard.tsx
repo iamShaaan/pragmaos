@@ -25,29 +25,29 @@ const StatCard = ({
     <div className="relative h-full flex flex-col">
         <Link to={to} className="flex-1 block h-full">
             <motion.div
-                whileHover={{ scale: 1.02, y: -2 }}
+                whileHover={{ scale: 1.01, y: -2 }}
                 transition={{ type: 'spring', stiffness: 400, damping: 25 }}
-                className="glass-card glass-card-hover rounded-3xl p-5 hover:shadow-[0_0_20px_rgba(38,247,178,0.12)] cursor-pointer group flex flex-col h-full justify-between"
+                className="bg-white dark:bg-bg-card border border-border-card rounded-[20px] p-5 shadow-[0_8px_24px_rgba(16,35,27,0.06)] cursor-pointer group flex flex-col h-full justify-between hover:border-glitch-emerald/50 transition-all"
             >
                 <div className="flex items-center justify-between mb-4">
-                    <div className={`p-2.5 rounded-xl ${color}`}><Icon size={18} /></div>
-                    <ArrowRight size={14} className="text-slate-600 group-hover:text-[#26f7b2] transition-colors" />
+                    <div className={`p-2.5 rounded-full ${color} flex items-center justify-center`}><Icon size={18} /></div>
+                    <ArrowRight size={14} className="text-text-muted group-hover:text-[#047857] dark:group-hover:text-glitch-emerald transition-colors" />
                 </div>
                 {loading ? (
-                    <Loader2 size={20} className="animate-spin text-slate-600 mb-1" />
+                    <Loader2 size={20} className="animate-spin text-text-muted mb-1" />
                 ) : (
-                    <p className="text-2xl sm:text-3xl font-extrabold text-[#f8fafc] tracking-tight font-display">{value}</p>
+                    <p className="text-[36px] font-extrabold text-text-main tracking-tight font-display mb-1">{value}</p>
                 )}
-                <div className="flex items-center justify-between mt-1">
-                    <p className="text-slate-400 text-xs sm:text-sm font-semibold">{label}</p>
-                    {sub && <p className="text-slate-500 text-xs font-semibold">{sub}</p>}
+                <div className="flex items-center justify-between">
+                    <p className="text-text-muted text-sm font-semibold">{label}</p>
+                    {sub && <p className="text-text-muted/75 text-xs font-semibold">{sub}</p>}
                 </div>
             </motion.div>
         </Link>
         {ActionIcon && onAction && (
             <button
                 onClick={(e) => { e.preventDefault(); e.stopPropagation(); onAction(e); }}
-                className="absolute top-5 right-12 p-2 rounded-xl bg-white/[0.02] border border-white/[0.08] hover:bg-white/[0.06] text-slate-400 hover:text-[#26f7b2] hover:border-[#26f7b2]/30 transition-all shadow-sm z-10 cursor-pointer"
+                className="absolute top-5 right-12 p-2 rounded-xl bg-bg-input border border-border-input hover:bg-bg-card text-text-muted hover:text-[#047857] dark:hover:text-glitch-emerald hover:border-glitch-emerald/30 transition-all z-10 cursor-pointer"
                 title={`Quick add ${label.toLowerCase()}`}
             >
                 <ActionIcon size={16} />
@@ -64,33 +64,33 @@ const ActiveTimerBoard = ({ task }: { task: import('../types').Task }) => {
         <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="bg-gradient-to-r from-[#26f7b2] to-[#009d9a] border border-[#26f7b2]/20 rounded-3xl p-5 shadow-lg shadow-[#26f7b2]/15 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-black"
+            className="bg-gradient-to-r from-[#21D89A] to-[#047857] border border-[#21D89A]/10 rounded-3xl p-5 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-[#053B2A] font-semibold"
         >
             <div className="flex items-center gap-4">
                 <div className="p-3 bg-black/10 rounded-xl relative overflow-hidden flex-shrink-0">
                     <div className="absolute inset-0 bg-black/5 animate-ping rounded-xl"></div>
-                    <Timer size={24} className="text-black relative z-10" />
+                    <Timer size={24} className="text-[#053B2A] relative z-10" />
                 </div>
                 <div>
-                    <h3 className="text-black font-extrabold text-lg leading-tight font-display">{task.title}</h3>
-                    <p className="text-black/80 text-xs flex items-center gap-2 mt-0.5 font-bold uppercase tracking-wider">
-                        {task.project_id && <span className="bg-black/10 px-2 py-0.5 rounded-md text-[9px] font-black tracking-widest">Project Task</span>}
-                        <span className="flex items-center gap-1"><Flame size={12} className="fill-current" /> Actively Tracking</span>
+                    <h3 className="text-[#053B2A] font-extrabold text-lg leading-tight font-display">{task.title}</h3>
+                    <p className="text-[#053B2A]/85 text-xs flex items-center gap-2 mt-0.5 font-bold uppercase tracking-wider">
+                        {task.project_id && <span className="bg-black/10 px-2 py-0.5 rounded-md text-[9px] font-black tracking-widest text-[#053B2A]">Project Task</span>}
+                        <span className="flex items-center gap-1"><Flame size={12} className="fill-current text-[#053B2A]" /> Actively Tracking</span>
                     </p>
                 </div>
             </div>
             <div className="flex items-center gap-4 sm:gap-6 mt-2 sm:mt-0 w-full sm:w-auto justify-between sm:justify-end">
                 <div className="text-right">
-                    <p className="text-3xl font-black text-black tabular-nums tracking-tight font-display">
+                    <p className="text-3xl font-black text-[#053B2A] tabular-nums tracking-tight font-display">
                         {formatDuration(elapsed)}
                     </p>
                 </div>
                 <button
                     onClick={stop}
-                    className="flex items-center justify-center p-3 rounded-xl bg-black/10 hover:bg-black/20 text-black border border-black/10 transition-all group shadow-sm flex-shrink-0 cursor-pointer"
+                    className="flex items-center justify-center p-3 rounded-xl bg-black/10 hover:bg-black/20 text-[#053B2A] border border-black/5 transition-all group shadow-sm flex-shrink-0 cursor-pointer"
                     title="Stop Timer"
                 >
-                    <Square size={20} className="fill-current" />
+                    <Square size={20} className="fill-current text-[#053B2A]" />
                 </button>
             </div>
         </motion.div>
@@ -99,14 +99,10 @@ const ActiveTimerBoard = ({ task }: { task: import('../types').Task }) => {
 
 // ─── Dashboard ────────────────────────────────────────────────────────────────
 export const Dashboard: React.FC = () => {
-    // ✅ Read from store only — App.tsx DataLoader owns all Firestore subscriptions.
     const { tasks, meetings, clients, projects, emis } = useAppStore();
     const [showClientForm, setShowClientForm] = React.useState(false);
 
-    // Loading: store starts as empty arrays; show skeleton state if nothing loaded yet
     const isLoading = tasks.length === 0 && meetings.length === 0 && clients.length === 0 && projects.length === 0;
-
-    // ─ Memoised derived values ─────────────────────────────────────────────────
     const now = useMemo(() => new Date(), []);
 
     const activeTask = useMemo(
@@ -201,18 +197,18 @@ export const Dashboard: React.FC = () => {
 
     return (
         <div className="space-y-6">
-            {/* ── Greeting header ────────────────────────────────────────────── */}
+            {/* ── Greeting header ── */}
             <div className="flex flex-col gap-1">
-                <h1 className="text-2xl sm:text-3xl font-extrabold text-[#f8fafc] tracking-tight font-display">
+                <h1 className="text-2xl sm:text-3xl font-extrabold text-text-main tracking-tight font-display">
                     {greeting}, <span className="text-gradient-glitch">{firstName}</span>
                 </h1>
-                <p className="text-slate-500 text-sm font-medium">Here's your productivity snapshot for today.</p>
+                <p className="text-text-muted text-sm font-medium">Here's your productivity snapshot for today.</p>
             </div>
 
-            {/* ── Active Task Timer Board ────────────────────────────────────── */}
+            {/* ── Active Task Timer Board ── */}
             {activeTask && <ActiveTimerBoard task={activeTask} />}
 
-            {/* ── Subscriptions Due Notification ─────────────────────────────── */}
+            {/* ── Subscriptions Due Notification ── */}
             {dueSubscriptions.length > 0 && (
                 <div className="space-y-3">
                     {dueSubscriptions.map(sub => {
@@ -224,20 +220,20 @@ export const Dashboard: React.FC = () => {
                             key={sub.id}
                             initial={{ opacity: 0, y: 10 }}
                             animate={{ opacity: 1, y: 0 }}
-                            className={`flex items-center gap-3 p-4 border rounded-2xl ${isLate ? 'bg-rose-500/10 border-rose-500/20' : 'bg-amber-500/5 border-amber-500/15'}`}
+                            className={`flex items-center gap-3 p-4 border rounded-2xl ${isLate ? 'bg-[#FFE4E8] border-transparent text-[#BE123C]' : 'bg-[#FEF3C7] border-transparent text-[#92400E]'}`}
                         >
-                            <AlertCircle size={18} className={`flex-shrink-0 ${isLate ? 'text-rose-400' : 'text-amber-400'}`} />
+                            <AlertCircle size={18} className="flex-shrink-0" />
                             <div className="flex-1 min-w-0">
-                                <p className={`text-sm font-bold ${isLate ? 'text-rose-300' : 'text-amber-300'}`}>
+                                <p className="text-sm font-bold">
                                     Subscription Due: {sub.title}
                                 </p>
-                                <p className={`text-xs truncate ${isLate ? 'text-rose-500/70' : 'text-amber-550/70'}`}>
+                                <p className="text-xs truncate opacity-80">
                                     {isLate ? 'Overdue!' : daysLeft === 0 ? 'Due Today' : `Due in ${daysLeft} day${daysLeft > 1 ? 's' : ''}`} • {format(sub.computedNextDate, 'dd MMM yyyy')}
                                 </p>
                             </div>
                             <button 
                                 onClick={() => handleMarkSubscriptionPaid(sub)}
-                                className={`text-xs font-bold flex-shrink-0 flex items-center gap-1 transition-colors px-3 py-1.5 rounded-lg cursor-pointer ${isLate ? 'bg-rose-500/20 text-rose-200 hover:bg-rose-550/40' : 'bg-amber-500/10 border border-amber-500/20 text-amber-400 hover:bg-amber-500 hover:text-black'}`}
+                                className={`text-xs font-bold flex-shrink-0 flex items-center gap-1 transition-colors px-3 py-1.5 rounded-lg cursor-pointer ${isLate ? 'bg-[#BE123C]/10 hover:bg-[#BE123C]/20 text-[#BE123C]' : 'bg-[#92400E]/10 hover:bg-[#92400E]/20 text-[#92400E]'}`}
                                 title="Mark as Paid"
                             >
                                 <CheckSquare size={14} /> Paid
@@ -247,26 +243,26 @@ export const Dashboard: React.FC = () => {
                 </div>
             )}
 
-            {/* ── Stat Cards ───────────────────────────────────────────────── */}
+            {/* ── Stat Cards ── */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 <StatCard
                     icon={CheckSquare} label="Open Tasks" to="/tasks"
                     value={openTasks.length}
                     sub={overdueTasks.length > 0 ? `${overdueTasks.length} overdue` : 'all on track'}
-                    color="bg-[#26f7b2]/10 text-[#26f7b2]"
+                    color="bg-[#DDFBF0] dark:bg-glitch-emerald/10 text-[#047857] dark:text-glitch-emerald"
                     loading={isLoading}
                 />
                 <StatCard
                     icon={Calendar} label="Upcoming Meetings" to="/meetings"
                     value={upcomingMeetings.length}
                     sub="next 30 days"
-                    color="bg-[#009d9a]/10 text-[#009d9a]"
+                    color="bg-[#E0F2FE] dark:bg-indigo-500/10 text-[#0369A1] dark:text-[#E0F2FE]"
                     loading={isLoading}
                 />
                 <StatCard
                     icon={Users} label="Clients" to="/user-data"
                     value={clients.length}
-                    color="bg-[#26f7b2]/10 text-[#26f7b2]"
+                    color="bg-[#DDFBF0] dark:bg-glitch-emerald/10 text-[#047857] dark:text-glitch-emerald"
                     loading={isLoading}
                     actionIcon={UserPlus}
                     onAction={() => setShowClientForm(true)}
@@ -275,33 +271,33 @@ export const Dashboard: React.FC = () => {
                     icon={FolderKanban} label="Active Projects" to="/projects"
                     value={activeProjects.length}
                     sub={`${projects.length} total`}
-                    color="bg-amber-500/10 text-amber-400"
+                    color="bg-[#FEF3C7] dark:bg-amber-500/10 text-[#92400E] dark:text-[#FEF3C7]"
                     loading={isLoading}
                 />
             </div>
 
-            {/* ── Progress + Priority Bars ──────────────────────────────────── */}
+            {/* ── Progress + Priority Bars ── */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 {/* Time tracked */}
-                <div className="glass-card rounded-3xl p-5">
+                <div className="bg-white dark:bg-bg-card border border-border-card rounded-[18px] p-5 shadow-[0_8px_24px_rgba(16,35,27,0.04)]">
                     <div className="flex items-center gap-2 mb-1">
-                        <Timer size={15} className="text-[#26f7b2]" />
-                        <span className="text-slate-400 text-[10px] sm:text-xs font-bold uppercase tracking-wider">Time Tracked Today</span>
+                        <Timer size={15} className="text-[#047857] dark:text-glitch-emerald" />
+                        <span className="text-text-muted text-[10px] sm:text-xs font-bold uppercase tracking-wider">Time Tracked Today</span>
                     </div>
-                    <p className="text-xl sm:text-2xl font-black text-[#26f7b2] mt-2 tracking-tight font-display">{formatDuration(totalTrackedTodayMs)}</p>
-                    <p className="text-slate-650 text-xs mt-1 font-semibold">across all tasks today</p>
+                    <p className="text-xl sm:text-2xl font-black text-[#047857] dark:text-glitch-emerald mt-2 tracking-tight font-display">{formatDuration(totalTrackedTodayMs)}</p>
+                    <p className="text-text-muted text-xs mt-1 font-semibold">across all tasks today</p>
                 </div>
 
                 {/* Completion rate */}
-                <div className="glass-card rounded-3xl p-5">
+                <div className="bg-white dark:bg-bg-card border border-border-card rounded-[18px] p-5 shadow-[0_8px_24px_rgba(16,35,27,0.04)]">
                     <div className="flex items-center gap-2 mb-1">
-                        <TrendingUp size={15} className="text-[#26f7b2]" />
-                        <span className="text-slate-400 text-[10px] sm:text-xs font-bold uppercase tracking-wider">Completion Rate</span>
+                        <TrendingUp size={15} className="text-[#047857] dark:text-glitch-emerald" />
+                        <span className="text-text-muted text-[10px] sm:text-xs font-bold uppercase tracking-wider">Completion Rate</span>
                     </div>
-                    <p className="text-xl sm:text-2xl font-black text-[#26f7b2] mt-2 tracking-tight font-display">{completionRate}%</p>
-                    <div className="mt-2.5 h-1.5 bg-white/[0.04] rounded-full overflow-hidden">
+                    <p className="text-xl sm:text-2xl font-black text-[#047857] dark:text-glitch-emerald mt-2 tracking-tight font-display">{completionRate}%</p>
+                    <div className="mt-2.5 h-1.5 bg-[#E7EEE9] dark:bg-bg-input rounded-full overflow-hidden">
                         <motion.div
-                            className="h-full bg-gradient-to-r from-[#26f7b2] to-[#009d9a] rounded-full"
+                            className="h-full bg-[#21D89A] rounded-full"
                             initial={{ width: 0 }}
                             animate={{ width: `${completionRate}%` }}
                             transition={{ duration: 0.8, ease: 'easeOut' }}
@@ -310,27 +306,27 @@ export const Dashboard: React.FC = () => {
                 </div>
 
                 {/* High priority alerts */}
-                <div className="glass-card rounded-3xl p-5">
+                <div className="bg-white dark:bg-bg-card border border-border-card rounded-[18px] p-5 shadow-[0_8px_24px_rgba(16,35,27,0.04)]">
                     <div className="flex items-center gap-2 mb-1">
-                        <Flame size={15} className={highPriorityOpen.length > 0 ? 'text-rose-450' : 'text-slate-500'} />
-                        <span className="text-slate-400 text-[10px] sm:text-xs font-bold uppercase tracking-wider">High Priority</span>
+                        <Flame size={15} className={highPriorityOpen.length > 0 ? 'text-[#EF476F]' : 'text-text-muted'} />
+                        <span className="text-text-muted text-[10px] sm:text-xs font-bold uppercase tracking-wider">High Priority</span>
                     </div>
-                    <p className={`text-xl sm:text-2xl font-black mt-2 tracking-tight font-display ${highPriorityOpen.length > 0 ? 'text-rose-400 animate-pulse' : 'text-slate-500'}`}>
+                    <p className={`text-xl sm:text-2xl font-black mt-2 tracking-tight font-display ${highPriorityOpen.length > 0 ? 'text-[#EF476F] animate-pulse' : 'text-text-muted'}`}>
                         {highPriorityOpen.length}
                     </p>
-                    <p className="text-slate-650 text-xs mt-1 font-semibold">
+                    <p className="text-text-muted text-xs mt-1 font-semibold">
                         {highPriorityOpen.length > 0 ? 'needs attention' : 'all clear'}
                     </p>
                 </div>
             </div>
 
-            {/* ── Main Content Grid ────────────────────────────────────────── */}
+            {/* ── Main Content Grid ── */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 {/* Recent Tasks */}
-                <div className="glass-card rounded-3xl p-5">
+                <div className="bg-white dark:bg-bg-card border border-border-card rounded-[22px] p-5 shadow-[0_8px_24px_rgba(16,35,27,0.05)]">
                     <div className="flex items-center justify-between mb-4">
-                        <h2 className="text-[#f8fafc] font-extrabold font-display">Recent Tasks</h2>
-                        <Link to="/tasks" className="text-[#26f7b2] text-xs hover:text-[#26f7b2]/80 transition-colors flex items-center gap-1 font-bold">
+                        <h2 className="text-text-main font-extrabold font-display">Recent Tasks</h2>
+                        <Link to="/tasks" className="text-[#047857] dark:text-glitch-emerald text-xs hover:opacity-80 transition-colors flex items-center gap-1 font-bold">
                             View all <ArrowRight size={12} />
                         </Link>
                     </div>
@@ -338,14 +334,14 @@ export const Dashboard: React.FC = () => {
                     {isLoading ? (
                         <div className="space-y-3">
                             {[1, 2, 3].map(i => (
-                                <div key={i} className="h-10 bg-white/[0.02] border border-white/[0.04] animate-pulse rounded-xl" />
+                                <div key={i} className="h-10 bg-bg-input border border-border-card animate-pulse rounded-xl" />
                             ))}
                         </div>
                     ) : recentTasks.length === 0 ? (
                         <div className="text-center py-10">
-                            <CircleCheck size={32} className="text-slate-700 mx-auto mb-2" />
-                            <p className="text-slate-500 text-sm font-semibold">No tasks yet</p>
-                            <Link to="/tasks" className="text-[#26f7b2] text-xs hover:underline mt-1.5 inline-block font-semibold">
+                            <CircleCheck size={32} className="text-text-muted opacity-30 mx-auto mb-2" />
+                            <p className="text-text-muted text-sm font-semibold">No tasks yet</p>
+                            <Link to="/tasks" className="text-[#047857] dark:text-glitch-emerald text-xs hover:underline mt-1.5 inline-block font-semibold">
                                 Create your first task →
                             </Link>
                         </div>
@@ -353,18 +349,18 @@ export const Dashboard: React.FC = () => {
                         <div className="space-y-1">
                             {recentTasks.map((task) => (
                                 <Link to="/tasks" key={task.id}>
-                                    <div className="flex items-center justify-between py-2.5 px-3 rounded-xl hover:bg-white/[0.03] transition-all group">
+                                    <div className="flex items-center justify-between py-2.5 px-3 rounded-xl hover:bg-bg-input transition-all group">
                                         <div className="min-w-0 flex-1 flex items-center gap-3">
-                                            <div className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${task.status === 'done' ? 'bg-[#26f7b2] shadow-[0_0_6px_#26f7b2]' :
-                                                task.status === 'in_progress' ? 'bg-[#009d9a]' :
-                                                    task.priority === 'high' ? 'bg-rose-450' : 'bg-slate-500'
+                                            <div className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${task.status === 'done' ? 'bg-[#21D89A]' :
+                                                task.status === 'in_progress' ? 'bg-[#0369A1]' :
+                                                    task.priority === 'high' ? 'bg-[#EF476F]' : 'bg-text-muted'
                                                 }`} />
                                             <div className="min-w-0">
-                                                <p className={`text-sm truncate font-semibold ${task.status === 'done' ? 'text-slate-500 line-through' : 'text-slate-200'}`}>
+                                                <p className={`text-sm truncate font-semibold ${task.status === 'done' ? 'text-text-muted line-through' : 'text-text-main'}`}>
                                                     {task.title}
                                                 </p>
                                                 {task.due_date && (
-                                                    <p className={`text-xs truncate font-medium mt-0.5 ${new Date(task.due_date) < now && task.status !== 'done' ? 'text-rose-400' : 'text-slate-500'}`}>
+                                                    <p className={`text-xs truncate font-medium mt-0.5 ${new Date(task.due_date) < now && task.status !== 'done' ? 'text-[#EF476F]' : 'text-text-muted'}`}>
                                                         {formatDateTime(task.due_date)}
                                                     </p>
                                                 )}
@@ -382,10 +378,10 @@ export const Dashboard: React.FC = () => {
                 </div>
 
                 {/* Upcoming Meetings */}
-                <div className="glass-card rounded-3xl p-5">
+                <div className="bg-white dark:bg-bg-card border border-border-card rounded-[22px] p-5 shadow-[0_8px_24px_rgba(16,35,27,0.05)]">
                     <div className="flex items-center justify-between mb-4">
-                        <h2 className="text-[#f8fafc] font-extrabold font-display">Upcoming Meetings</h2>
-                        <Link to="/meetings" className="text-[#26f7b2] text-xs hover:text-[#26f7b2]/80 transition-colors flex items-center gap-1 font-bold">
+                        <h2 className="text-text-main font-extrabold font-display">Upcoming Meetings</h2>
+                        <Link to="/meetings" className="text-[#047857] dark:text-glitch-emerald text-xs hover:opacity-80 transition-colors flex items-center gap-1 font-bold">
                             View all <ArrowRight size={12} />
                         </Link>
                     </div>
@@ -393,14 +389,14 @@ export const Dashboard: React.FC = () => {
                     {isLoading ? (
                         <div className="space-y-3">
                             {[1, 2, 3].map(i => (
-                                <div key={i} className="h-14 bg-white/[0.02] border border-white/[0.04] animate-pulse rounded-xl" />
+                                <div key={i} className="h-14 bg-bg-input border border-border-card animate-pulse rounded-xl" />
                             ))}
                         </div>
                     ) : upcomingMeetings.length === 0 ? (
                         <div className="text-center py-10">
-                            <Calendar size={32} className="text-slate-700 mx-auto mb-2" />
-                            <p className="text-slate-500 text-sm font-semibold">No upcoming meetings</p>
-                            <Link to="/meetings" className="text-[#26f7b2] text-xs hover:underline mt-1.5 inline-block font-semibold">
+                            <Calendar size={32} className="text-text-muted opacity-30 mx-auto mb-2" />
+                            <p className="text-text-muted text-sm font-semibold">No upcoming meetings</p>
+                            <Link to="/meetings" className="text-[#047857] dark:text-glitch-emerald text-xs hover:underline mt-1.5 inline-block font-semibold">
                                 Schedule one →
                             </Link>
                         </div>
@@ -410,22 +406,22 @@ export const Dashboard: React.FC = () => {
                                 const isTodayMeeting = new Date(m.start_time).toDateString() === now.toDateString();
                                 return (
                                     <Link to="/meetings" key={m.id}>
-                                        <div className="flex items-start gap-3 py-2.5 px-3 rounded-xl hover:bg-white/[0.03] transition-all">
-                                            <div className={`p-2 rounded-xl flex-shrink-0 ${isTodayMeeting ? 'bg-[#26f7b2]/20 border border-[#26f7b2]/20 shadow-[0_0_10px_rgba(38,247,178,0.1)]' : 'bg-white/[0.03] border border-white/[0.08]'}`}>
-                                                <Clock size={13} className={isTodayMeeting ? 'text-[#26f7b2]' : 'text-slate-400'} />
+                                        <div className="flex items-start gap-3 py-2.5 px-3 rounded-xl hover:bg-bg-input transition-all">
+                                            <div className={`p-2 rounded-xl flex-shrink-0 ${isTodayMeeting ? 'bg-[#DDFBF0] border border-[#B7F3DD]' : 'bg-bg-input border border-border-card'}`}>
+                                                <Clock size={13} className={isTodayMeeting ? 'text-[#047857]' : 'text-text-muted'} />
                                             </div>
                                             <div className="min-w-0 flex-1">
                                                 <div className="flex items-center gap-2">
-                                                    <p className="text-slate-200 text-sm font-bold truncate">{m.title}</p>
+                                                    <p className="text-text-main text-sm font-bold truncate">{m.title}</p>
                                                     {isTodayMeeting && (
-                                                        <span className="text-[9px] font-black uppercase tracking-wider text-black bg-[#26f7b2] px-1.5 py-0.5 rounded-full flex-shrink-0 shadow-sm shadow-[#26f7b2]/25">
+                                                        <span className="text-[9px] font-bold uppercase tracking-wider text-[#047857] bg-[#DDFBF0] border border-[#B7F3DD] px-1.5 py-0.5 rounded-full flex-shrink-0 shadow-sm">
                                                             TODAY
                                                         </span>
                                                     )}
                                                 </div>
-                                                <p className="text-slate-500 text-xs mt-0.5 font-medium">{formatDateTime(m.start_time)}</p>
+                                                <p className="text-text-muted text-xs mt-0.5 font-medium">{formatDateTime(m.start_time)}</p>
                                                 {m.participants?.length > 0 && (
-                                                    <p className="text-slate-600 text-xs truncate mt-0.5 font-medium">
+                                                    <p className="text-text-muted/80 text-xs truncate mt-0.5 font-medium">
                                                         {m.participants.slice(0, 3).join(', ')}{m.participants.length > 3 ? ` +${m.participants.length - 3}` : ''}
                                                     </p>
                                                 )}
@@ -439,24 +435,24 @@ export const Dashboard: React.FC = () => {
                 </div>
             </div>
 
-            {/* ── Overdue Alert strip (only shows if there are overdue tasks) ── */}
+            {/* ── Overdue Alert strip ── */}
             {overdueTasks.length > 0 && (
                 <motion.div
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="flex items-center gap-3 p-4 bg-rose-500/5 border border-rose-500/20 rounded-2xl"
+                    className="flex items-center gap-3 p-4 bg-[#FFE4E8] border border-transparent rounded-2xl"
                 >
-                    <AlertCircle size={18} className="text-rose-450 flex-shrink-0" />
+                    <AlertCircle size={18} className="text-[#BE123C] flex-shrink-0" />
                     <div className="flex-1 min-w-0">
-                        <p className="text-rose-300 text-sm font-bold">
+                        <p className="text-[#BE123C] text-sm font-bold">
                             {overdueTasks.length} overdue task{overdueTasks.length > 1 ? 's' : ''}
                         </p>
-                        <p className="text-rose-500/60 text-xs truncate font-medium">
+                        <p className="text-[#BE123C]/80 text-xs truncate font-medium">
                             {overdueTasks.slice(0, 3).map(t => t.title).join(' · ')}
                             {overdueTasks.length > 3 ? ` and ${overdueTasks.length - 3} more` : ''}
                         </p>
                     </div>
-                    <Link to="/tasks" className="text-rose-400 hover:text-rose-300 text-xs font-bold flex-shrink-0 flex items-center gap-1 transition-colors">
+                    <Link to="/tasks" className="text-[#BE123C] hover:opacity-80 text-xs font-bold flex-shrink-0 flex items-center gap-1 transition-colors">
                         Review <ArrowRight size={12} />
                     </Link>
                 </motion.div>

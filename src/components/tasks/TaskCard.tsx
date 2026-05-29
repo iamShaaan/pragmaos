@@ -40,7 +40,6 @@ export const TaskCard: React.FC<TaskCardProps> = ({ task, onEdit, compact = fals
         if (!confirm('Delete this task? You can restore it from Archive within 30 days.')) return;
         setDeleting(true);
         try {
-            // If task has no owner or wrong owner, claim it first so soft-delete updateDoc succeeds
             if (!task.owner_id && auth.currentUser) {
                 await updateDocById('tasks', task.id, { owner_id: auth.currentUser.uid });
             }
@@ -66,44 +65,43 @@ export const TaskCard: React.FC<TaskCardProps> = ({ task, onEdit, compact = fals
 
     const totalMs = task.total_time_ms + (isRunning ? elapsed : 0);
 
+    // Dynamic left border colors representing columns/states
+    const leftBorderColor = task.status === 'done' ? 'border-l-[#21D89A]' :
+        task.status === 'in_progress' ? 'border-l-[#0369A1]' :
+            overdue ? 'border-l-[#EF476F]' : 'border-l-[#6B7C73]';
+
     return (
         <motion.div
             layout
-            initial={{ opacity: 0, scale: 0.95 }}
+            initial={{ opacity: 0, scale: 0.98 }}
             animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.95 }}
-            whileHover={{ y: -4 }}
-            className={`group glass-card glass-card-hover rounded-xl p-5 relative overflow-hidden`}
+            exit={{ opacity: 0, scale: 0.98 }}
+            whileHover={{ y: -2 }}
+            className={`group bg-white dark:bg-bg-card border border-border-card ${leftBorderColor} border-l-4 rounded-2xl p-5 relative overflow-hidden shadow-[0_6px_18px_rgba(16,35,27,0.04)] hover:shadow-[0_8px_24px_rgba(16,35,27,0.06)] transition-all duration-300`}
         >
-            {/* Left Accent Strip */}
-            <div className={`absolute left-0 top-0 bottom-0 w-1 ${task.status === 'done' ? 'bg-[#26f7b2]' :
-                task.status === 'in_progress' ? 'bg-[#009d9a]' :
-                    task.status === 'overdue' ? 'bg-rose-500' : 'bg-slate-600'
-                } opacity-50 group-hover:opacity-100 transition-opacity`} />
-
             {/* Header */}
             <div className="flex items-start justify-between gap-3 mb-3">
                 <div className="flex-1">
                     <button
                         onClick={() => setShowDetails(true)}
-                        className="text-slate-50 font-semibold text-sm leading-relaxed line-clamp-2 hover:text-[#26f7b2] hover:drop-shadow-[0_0_8px_rgba(38,247,178,0.5)] transform transition-all duration-300 hover:-translate-y-0.5 text-left"
+                        className="text-text-main font-bold text-sm leading-relaxed line-clamp-2 hover:text-[#047857] dark:hover:text-glitch-emerald text-left transition-colors cursor-pointer"
                     >
                         {task.title}
                     </button>
                 </div>
-                <div className="flex items-center gap-1 transition-all">
+                <div className="flex items-center gap-1 transition-all opacity-80 group-hover:opacity-100">
                     {canInteract && (
-                        <button onClick={(e) => handleArchiveToggle(e)} className={`p-1.5 rounded-lg transition-all ${task.is_archived ? 'text-amber-400 bg-amber-500/10 hover:bg-amber-500/20' : 'text-slate-400 hover:text-amber-400 hover:bg-amber-500/10'}`} title={task.is_archived ? "Unarchive Task" : "Archive Task"}>
+                        <button onClick={(e) => handleArchiveToggle(e)} className={`p-1.5 rounded-lg transition-all cursor-pointer ${task.is_archived ? 'text-[#92400E] bg-[#FEF3C7] hover:bg-[#FEF3C7]/80' : 'text-text-muted hover:text-[#047857] hover:bg-[#DDFBF0]'}`} title={task.is_archived ? "Unarchive Task" : "Archive Task"}>
                             {task.is_archived ? <ArchiveRestore size={14} /> : <Archive size={14} />}
                         </button>
                     )}
                     {canInteract && (
-                        <button onClick={() => onEdit(task)} className="p-1.5 rounded-lg text-slate-400 hover:text-[#26f7b2] hover:bg-[#26f7b2]/10 transition-all">
+                        <button onClick={() => onEdit(task)} className="p-1.5 rounded-lg text-text-muted hover:text-[#047857] hover:bg-[#DDFBF0] transition-all cursor-pointer">
                             <Pencil size={14} />
                         </button>
                     )}
                     {canDelete && (
-                        <button onClick={handleDelete} disabled={deleting} className="p-1.5 rounded-lg text-slate-400 hover:text-rose-400 hover:bg-rose-500/10 transition-all disabled:opacity-40">
+                        <button onClick={handleDelete} disabled={deleting} className="p-1.5 rounded-lg text-text-muted hover:text-[#BE123C] hover:bg-[#FFE4E8] transition-all disabled:opacity-40 cursor-pointer">
                             {deleting ? <Loader2 size={14} className="animate-spin" /> : <Trash2 size={14} />}
                         </button>
                     )}
@@ -122,37 +120,37 @@ export const TaskCard: React.FC<TaskCardProps> = ({ task, onEdit, compact = fals
                 <div className="space-y-1.5 mb-4">
                     {/* Client */}
                     {clientName && (
-                        <div className="flex items-center gap-2 text-xs py-1 px-2 rounded-md text-emerald-300 bg-emerald-500/10 border border-emerald-500/10">
+                        <div className="flex items-center gap-2 text-xs py-1 px-2.5 rounded-lg text-[#0369A1] bg-[#E0F2FE] border border-transparent">
                             <Users size={11} className="flex-shrink-0" />
-                            <span className="font-medium truncate">{clientName}</span>
+                            <span className="font-bold truncate">{clientName}</span>
                         </div>
                     )}
                     {/* Project */}
                     {projectName && (
-                        <div className="flex items-center gap-2 text-xs py-1 px-2 rounded-md text-cyan-300 bg-[#009d9a]/10 border border-[#009d9a]/20">
+                        <div className="flex items-center gap-2 text-xs py-1 px-2.5 rounded-lg text-[#5B21B6] bg-[#EDE9FE] border border-transparent">
                             <FolderKanban size={11} className="flex-shrink-0" />
-                            <span className="font-medium truncate">{projectName}</span>
+                            <span className="font-bold truncate">{projectName}</span>
                         </div>
                     )}
                     {/* Assignee indicator for shared tasks */}
                     {task.assignee_name && (
-                        <div className="flex items-center gap-2 text-xs py-1 px-2 rounded-md text-purple-300 bg-purple-500/10 border border-purple-500/10">
+                        <div className="flex items-center gap-2 text-xs py-1 px-2.5 rounded-lg text-[#6B7C73] bg-[#F3F7F5] border border-transparent">
                             <Users size={11} className="flex-shrink-0" />
-                            <span className="font-medium truncate">Assigned: {task.assignee_name}{isAssignee ? ' (You)' : ''}</span>
+                            <span className="font-bold truncate">Assigned: {task.assignee_name}{isAssignee ? ' (You)' : ''}</span>
                         </div>
                     )}
                     {/* Due date */}
                     {task.due_date && (
-                        <div className={`flex items-center gap-2 text-xs py-1 px-2 rounded-md ${overdue ? 'text-red-300 bg-red-500/10' : 'text-slate-400 bg-slate-800/50'}`}>
+                        <div className={`flex items-center gap-2 text-xs py-1 px-2.5 rounded-lg ${overdue ? 'text-[#BE123C] bg-[#FFE4E8]' : 'text-text-muted bg-[#F3F7F5]'}`}>
                             <Calendar size={13} className={overdue ? 'animate-pulse' : ''} />
-                            <span className="font-medium">{overdue ? 'Overdue · ' : ''}{formatDate(task.due_date)}</span>
+                            <span className="font-bold">{overdue ? 'Overdue · ' : ''}{formatDate(task.due_date)}</span>
                         </div>
                     )}
                     {/* Tags */}
                     {task.tags?.length > 0 && (
                         <div className="flex items-center gap-1.5 flex-wrap pl-1">
                             {task.tags.map((t) => (
-                                <span key={t} className="text-[10px] text-slate-400 bg-slate-700/40 border border-slate-600/30 px-2 py-0.5 rounded-md flex items-center gap-1">
+                                <span key={t} className="text-[10px] text-text-muted bg-[#F3F7F5] border border-border-input px-2 py-0.5 rounded-md flex items-center gap-1">
                                     <Tag size={10} /> {t}
                                 </span>
                             ))}
@@ -162,32 +160,31 @@ export const TaskCard: React.FC<TaskCardProps> = ({ task, onEdit, compact = fals
             )}
 
             {/* Timer Row */}
-            <div className="flex items-center justify-between pt-4 border-t border-white/5">
+            <div className="flex items-center justify-between pt-4 border-t border-border-card">
                 <div className="flex items-center gap-2">
-                    <div className={`p-1.5 rounded-md ${isRunning ? 'bg-[#26f7b2]/15 text-[#26f7b2]' : 'bg-white/[0.04] text-slate-500'}`}>
+                    <div className={`p-1.5 rounded-md ${isRunning ? 'bg-[#DDFBF0] text-[#047857]' : 'bg-bg-input text-text-muted'}`}>
                         <Timer size={14} className={isRunning ? 'animate-spin-slow' : ''} />
                     </div>
-                    <span className={`text-xs font-mono font-bold tracking-tight ${isRunning ? 'text-[#26f7b2]' : 'text-slate-400'}`}>
+                    <span className={`text-xs font-mono font-bold tracking-tight ${isRunning ? 'text-[#047857] dark:text-glitch-emerald' : 'text-text-muted'}`}>
                         {totalMs > 0 ? formatDuration(totalMs) : '00:00:00'}
                     </span>
                 </div>
                 {canInteract ? (
                     <button
                         onClick={isRunning ? stop : start}
-                        className={`flex items-center gap-1.5 px-4 py-1.5 rounded-lg text-xs font-bold transition-all shadow-sm active:scale-95 ${isRunning
-                            ? 'bg-rose-500 text-white hover:bg-rose-600 shadow-rose-500/20'
-                            : 'bg-gradient-to-r from-[#26f7b2] to-[#009d9a] text-black hover:opacity-90 shadow-[#26f7b2]/20'
+                        className={`flex items-center gap-1.5 px-4 py-1.5 rounded-[10px] text-xs font-bold transition-all shadow-sm active:scale-95 cursor-pointer ${isRunning
+                            ? 'bg-[#EF476F] text-white hover:bg-opacity-90 shadow-sm'
+                            : 'bg-[#21D89A] text-[#053B2A] font-bold shadow-[0_4px_12px_rgba(33,216,154,0.2)] hover:opacity-90'
                             }`}
                     >
                         {isRunning ? <Square size={12} fill="currentColor" /> : <Play size={12} fill="currentColor" />}
                         {isRunning ? 'STOP' : 'START'}
                     </button>
                 ) : (
-                    <span className="text-[10px] text-slate-600 font-bold uppercase tracking-widest">View Only</span>
+                    <span className="text-[10px] text-text-muted/60 font-bold uppercase tracking-widest">View Only</span>
                 )}
             </div>
             {showDetails && <TaskDetailsModal task={task} onClose={() => setShowDetails(false)} />}
         </motion.div>
     );
 };
-

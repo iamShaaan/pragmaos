@@ -62,7 +62,7 @@ export const Sidebar: React.FC = () => {
             {/* Mobile Backdrop */}
             {sidebarOpen && (
                 <div
-                    className="fixed inset-0 bg-[var(--bg-modal-backdrop)] z-40 md:hidden backdrop-blur-md transition-opacity"
+                    className="fixed inset-0 bg-black/20 z-40 md:hidden backdrop-blur-sm transition-opacity"
                     onClick={() => setSidebarOpen(false)}
                 />
             )}
@@ -71,18 +71,18 @@ export const Sidebar: React.FC = () => {
                     fixed md:relative z-50
                     ${sidebarOpen ? 'translate-x-0 w-64' : '-translate-x-full md:translate-x-0 md:w-18'} 
                     transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] 
-                    bg-bg-sidebar border-r border-border-card backdrop-blur-xl flex flex-col h-screen top-0 left-0
+                    bg-bg-sidebar border-r border-border-card flex flex-col h-screen top-0 left-0
                 `}
             >
-                {/* Logo */}
+                {/* Logo - Calmer and cleaner */}
                 <div className="flex items-center gap-3 px-4 py-6 border-b border-border-card mb-4">
-                    <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#26f7b2] to-[#009d9a] flex items-center justify-center flex-shrink-0 shadow-lg shadow-[#26f7b2]/20 transition-transform duration-200 hover:scale-105">
-                        <Sparkles size={18} className="text-black" />
+                    <div className="w-9 h-9 rounded-xl bg-[#DDFBF0] border border-[#B7F3DD] flex items-center justify-center flex-shrink-0 transition-transform duration-200 hover:scale-105 shadow-sm">
+                        <Sparkles size={18} className="text-[#047857]" />
                     </div>
                     {sidebarOpen && (
                         <div className="flex flex-col leading-none transition-opacity duration-200">
-                            <span className="text-text-main font-extrabold text-lg tracking-tight font-display">TaskMaster</span>
-                            <span className="text-[#26f7b2]/70 text-[9px] font-bold uppercase tracking-[0.2em] mt-1">Project Ecosystem</span>
+                            <span className="text-text-main font-extrabold text-lg tracking-tight font-display">TaskMaster OS</span>
+                            <span className="text-[#047857]/70 text-[9px] font-bold uppercase tracking-[0.2em] mt-1">Light Nordic SaaS</span>
                         </div>
                     )}
                 </div>
@@ -99,9 +99,9 @@ export const Sidebar: React.FC = () => {
                             end={end}
                             title={label}
                             className={({ isActive }) =>
-                                `flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-200 group relative overflow-hidden ${isActive
-                                    ? 'bg-[#26f7b2]/10 text-[#26f7b2] border border-[#26f7b2]/20 shadow-[0_0_20px_rgba(38,247,178,0.12)]'
-                                    : 'text-text-muted hover:text-text-main hover:bg-bg-card hover:border-border-card border border-transparent'
+                                `flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-200 group relative border ${isActive
+                                    ? 'bg-[#DDFBF0] text-[#047857] border-[#B7F3DD]'
+                                    : 'text-[#6B7C73] border-transparent hover:text-text-main hover:bg-bg-card hover:border-border-card'
                                 }`
                             }
                         >
@@ -110,19 +110,19 @@ export const Sidebar: React.FC = () => {
                                     {/* Active left accent bar */}
                                     <span
                                         className={`absolute left-0 top-1/2 -translate-y-1/2 w-0.5 rounded-r-full transition-all duration-300 ${isActive
-                                            ? 'h-5 bg-[#26f7b2] shadow-[0_0_8px_rgba(38,247,178,0.8)]'
+                                            ? 'h-5 bg-[#047857]'
                                             : 'h-0 bg-transparent'
                                             }`}
                                     />
                                     <Icon
                                         size={19}
                                         className={`flex-shrink-0 transition-all duration-200 ${isActive
-                                            ? 'text-[#26f7b2]'
+                                            ? 'text-[#047857]'
                                             : 'group-hover:scale-110 group-hover:text-text-main'
                                             }`}
                                     />
                                     {sidebarOpen && (
-                                        <span className="text-sm font-semibold tracking-wide truncate">{label}</span>
+                                        <span className={`text-sm tracking-wide truncate ${isActive ? 'font-bold' : 'font-semibold'}`}>{label}</span>
                                     )}
                                 </>
                             )}
@@ -132,10 +132,10 @@ export const Sidebar: React.FC = () => {
 
                 {/* Active Timer Banner */}
                 {activeTimerId && activeTask && sidebarOpen && (
-                    <div className="mx-3 mb-4 p-4 rounded-xl bg-[#26f7b2]/5 border border-[#26f7b2]/20 backdrop-blur-sm shadow-[0_0_15px_rgba(38,247,178,0.05)]">
+                    <div className="mx-3 mb-4 p-4 rounded-xl bg-[#DDFBF0] border border-[#B7F3DD] shadow-sm">
                         <div className="flex items-center gap-2 mb-2">
-                            <div className="w-1.5 h-1.5 rounded-full bg-[#26f7b2] animate-pulse glow-emerald" />
-                            <span className="text-[#26f7b2] text-[10px] font-black uppercase tracking-widest">Live Timer</span>
+                            <div className="w-1.5 h-1.5 rounded-full bg-[#047857] animate-pulse" />
+                            <span className="text-[#047857] text-[10px] font-bold uppercase tracking-widest">Live Timer</span>
                         </div>
                         <p className="text-text-main text-xs font-semibold truncate">{activeTask.title}</p>
                     </div>
@@ -145,8 +145,8 @@ export const Sidebar: React.FC = () => {
                 <div className="mt-auto border-t border-border-card p-4 space-y-4">
                     {user && (
                         <div className="flex items-center gap-3">
-                            {/* Avatar: profile photo or initial */}
-                            <div className="w-9 h-9 rounded-xl overflow-hidden flex-shrink-0 border border-border-card shadow-inner transition-all duration-200 hover:border-[#26f7b2]/40 hover:shadow-[0_0_10px_rgba(38,247,178,0.15)]">
+                            {/* Avatar */}
+                            <div className="w-9 h-9 rounded-xl overflow-hidden flex-shrink-0 border border-border-card bg-bg-card flex items-center justify-center text-[#047857] font-extrabold text-sm font-display shadow-sm">
                                 {photoURL ? (
                                     <img
                                         src={photoURL}
@@ -154,9 +154,7 @@ export const Sidebar: React.FC = () => {
                                         className="w-full h-full object-cover"
                                     />
                                 ) : (
-                                    <div className="w-full h-full bg-bg-card flex items-center justify-center text-[#26f7b2] font-extrabold text-sm font-display">
-                                        {resolvedName.charAt(0).toUpperCase()}
-                                    </div>
+                                    resolvedName.charAt(0).toUpperCase()
                                 )}
                             </div>
                             {sidebarOpen && (
@@ -178,7 +176,7 @@ export const Sidebar: React.FC = () => {
                         {sidebarOpen && (
                             <button
                                 onClick={logout}
-                                className="p-2.5 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-400 hover:bg-rose-500 hover:text-white hover:border-rose-500 hover:shadow-[0_0_15px_rgba(244,63,94,0.3)] transition-all duration-200 cursor-pointer"
+                                className="p-2.5 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-450 hover:bg-rose-500 hover:text-white hover:border-rose-500 transition-all duration-200 cursor-pointer"
                                 title="Logout"
                             >
                                 <LogOut size={16} />

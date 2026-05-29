@@ -255,7 +255,7 @@ const NoteCard: React.FC<{
                         {isRevealed ? <EyeOff size={13} /> : <Eye size={13} />}
                     </button>
                     <button onClick={e => { e.stopPropagation(); onEdit(note); }}
-                        className="p-1.5 text-slate-500 hover:text-[#26f7b2] rounded-lg hover:bg-[#26f7b2]/10 transition-all">
+                        className="p-1.5 text-slate-500 hover:text-[#21D89A] rounded-lg hover:bg-[#21D89A]/10 transition-all">
                         <Pencil size={13} />
                     </button>
                     <button onClick={e => { e.stopPropagation(); onDelete(note.id); }}
@@ -277,7 +277,7 @@ const NoteCard: React.FC<{
                 </div>
             )}
             {project && (
-                <div className="mt-3 flex items-center gap-1.5 text-[10px] font-medium text-[#26f7b2] bg-[#26f7b2]/10 border border-[#26f7b2]/20 px-2 py-1 rounded-md w-fit">
+                <div className="mt-3 flex items-center gap-1.5 text-[10px] font-medium text-[#21D89A] bg-[#21D89A]/10 border border-[#21D89A]/20 px-2 py-1 rounded-md w-fit">
                     <FolderKanban size={10} /> {project.name}
                 </div>
             )}
@@ -392,7 +392,7 @@ const VaultNotes: React.FC<{ uid: string }> = () => {
                             </div>
                             <button
                                 onClick={() => { setEditNote(viewNote); setViewNote(undefined); setShowForm(true); }}
-                                className="px-3 py-1.5 bg-[#26f7b2]/10 text-[#26f7b2] hover:bg-[#26f7b2]/20 rounded-lg text-sm transition-colors flex items-center gap-1.5"
+                                className="px-3 py-1.5 bg-[#21D89A]/10 text-[#21D89A] hover:bg-[#21D89A]/20 rounded-lg text-sm transition-colors flex items-center gap-1.5"
                             >
                                 <Pencil size={14} /> Edit
                             </button>
@@ -577,7 +577,7 @@ const VaultFiles: React.FC<{ uid: string }> = ({ uid }) => {
                                         <Download size={13} />
                                     </a>
                                     <a href={f.url} target="_blank" rel="noopener noreferrer" title="Open"
-                                        className="p-1.5 text-slate-500 hover:text-[#26f7b2] transition-colors rounded-lg">
+                                        className="p-1.5 text-slate-500 hover:text-[#21D89A] transition-colors rounded-lg">
                                         <ExternalLink size={13} />
                                     </a>
                                     <button onClick={() => handleDelete(f)} disabled={deleting === f.id}
@@ -718,7 +718,7 @@ export const Vault: React.FC = () => {
                                     Vault: {formatBytes(stats.vaultSize)}
                                 </p>
                                 <span className="w-1 h-1 rounded-full bg-slate-700" />
-                                <p className="text-[#26f7b2] text-[10px] font-bold uppercase tracking-wider">
+                                <p className="text-[#21D89A] text-[10px] font-bold uppercase tracking-wider">
                                     Total App: {formatBytes(stats.appSize)}
                                 </p>
                             </div>

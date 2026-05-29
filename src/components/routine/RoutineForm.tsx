@@ -14,7 +14,7 @@ interface RoutineFormProps {
 const CATEGORIES: { value: RoutineCategory; label: string; color: string }[] = [
     { value: 'body', label: 'Body', color: 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30' },
     { value: 'mind', label: 'Mind', color: 'bg-purple-500/20 text-purple-400 border-purple-500/30' },
-    { value: 'office', label: 'Productivity/Office', color: 'bg-[#009d9a]/20 text-cyan-300 border-[#009d9a]/30' },
+    { value: 'office', label: 'Productivity/Office', color: 'bg-[#047857]/20 text-cyan-300 border-[#047857]/30' },
     { value: 'fun', label: 'Fun & Gaming', color: 'bg-pink-500/20 text-pink-400 border-pink-500/30' },
 ];
 
@@ -67,13 +67,13 @@ export const RoutineForm: React.FC<RoutineFormProps> = ({ onClose, initialData }
                     Task/Activity
                 </label>
                 <div className="relative group">
-                    <Type size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-[#26f7b2] transition-colors" />
+                    <Type size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-[#21D89A] transition-colors" />
                     <input
                         type="text"
                         value={title}
                         onChange={(e) => setTitle(e.target.value)}
                         placeholder="e.g., Morning Workout, Read 20 pages"
-                        className="w-full bg-slate-950 border border-white/[0.08] text-slate-100 rounded-xl pl-10 pr-4 py-3 focus:outline-none focus:border-[#26f7b2]/50 focus:ring-2 focus:ring-[#26f7b2]/20 transition-all placeholder:text-slate-600"
+                        className="w-full bg-slate-950 border border-white/[0.08] text-slate-100 rounded-xl pl-10 pr-4 py-3 focus:outline-none focus:border-[#21D89A]/50 focus:ring-2 focus:ring-[#21D89A]/20 transition-all placeholder:text-slate-600"
                         required
                     />
                 </div>
@@ -90,7 +90,7 @@ export const RoutineForm: React.FC<RoutineFormProps> = ({ onClose, initialData }
                         <select
                             value={category}
                             onChange={(e) => setCategory(e.target.value as RoutineCategory)}
-                            className="w-full bg-slate-950 border border-white/[0.08] text-slate-100 rounded-xl pl-10 pr-4 py-3 focus:outline-none focus:border-[#26f7b2]/50 focus:ring-2 focus:ring-[#26f7b2]/20 transition-all appearance-none cursor-pointer"
+                            className="w-full bg-slate-950 border border-white/[0.08] text-slate-100 rounded-xl pl-10 pr-4 py-3 focus:outline-none focus:border-[#21D89A]/50 focus:ring-2 focus:ring-[#21D89A]/20 transition-all appearance-none cursor-pointer"
                         >
                             {CATEGORIES.map(c => (
                                 <option key={c.value} value={c.value}>{c.label}</option>
@@ -127,7 +127,7 @@ export const RoutineForm: React.FC<RoutineFormProps> = ({ onClose, initialData }
                     whileTap={{ scale: 0.99 }}
                     type="submit"
                     disabled={isSubmitting}
-                    className="flex-[2] py-3 px-4 bg-gradient-to-r from-[#26f7b2] to-[#009d9a] hover:opacity-90 text-black font-bold rounded-xl transition-all flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed shadow-[0_0_20px_rgba(38,247,178,0.25)]"
+                    className="flex-[2] py-3 px-4 bg-gradient-to-r from-[#21D89A] to-[#047857] hover:opacity-90 text-black font-bold rounded-xl transition-all flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed shadow-[0_0_20px_rgba(38,247,178,0.25)]"
                 >
                     {isSubmitting ? (
                         <>

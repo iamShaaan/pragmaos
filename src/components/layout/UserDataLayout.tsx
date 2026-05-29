@@ -174,7 +174,7 @@ export const UserDataLayout: React.FC = () => {
 
     if (loading) return (
         <div className="flex h-screen items-center justify-center">
-            <div className="animate-spin rounded-full border-t-2 border-b-2 border-[#26f7b2] h-10 w-10"></div>
+            <div className="animate-spin rounded-full border-t-2 border-b-2 border-[#21D89A] h-10 w-10"></div>
         </div>
     );
 
@@ -225,14 +225,14 @@ export const UserDataLayout: React.FC = () => {
                             className={({ isActive }) =>
                                 `flex items-center gap-2 px-5 py-3 rounded-2xl whitespace-nowrap transition-all duration-300 flex-shrink-0 border font-bold text-sm shadow-sm snap-center group
                                 ${isActive
-                                    ? 'bg-gradient-to-r from-[#26f7b2]/20 to-[#009d9a]/20 text-[#26f7b2] border-[#26f7b2]/50 shadow-[0_0_15px_rgba(38,247,178,0.2)]'
+                                    ? 'bg-gradient-to-r from-[#21D89A]/20 to-[#047857]/20 text-[#21D89A] border-[#21D89A]/50 shadow-[0_0_15px_rgba(38,247,178,0.2)]'
                                     : 'bg-white/[0.03] border-white/5 text-slate-400 hover:text-slate-200 hover:bg-white/[0.06] hover:border-white/10'
                                 }`
                             }
                         >
                             {({ isActive }) => (
                                 <>
-                                    <Icon size={16} className={`transition-colors duration-300 ${isActive ? 'text-[#26f7b2]' : 'text-slate-500 group-hover:text-slate-400'}`} />
+                                    <Icon size={16} className={`transition-colors duration-300 ${isActive ? 'text-[#21D89A]' : 'text-slate-500 group-hover:text-slate-400'}`} />
                                     {label}
                                 </>
                             )}

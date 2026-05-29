@@ -4,7 +4,7 @@ import { useAuth } from '../hooks/useAuth';
 import { useAppStore } from '../store';
 import { format, addMonths, setDate as setDateFns } from 'date-fns';
 import {
-    Plus, DollarSign, TrendingUp, TrendingDown, Wallet,
+    Plus, TrendingUp, TrendingDown, Wallet,
     Loader2, Trash2, ChevronDown, ChevronUp, CalendarDays,
     ArrowRightLeft, Landmark, CreditCard, PieChart, Minus
 } from 'lucide-react';
@@ -83,7 +83,7 @@ const MonthCard: React.FC<{ month: string; entries: FinanceEntry[]; displayCurre
                 className="w-full flex items-center justify-between px-5 py-4 hover:bg-white/[0.04] transition-colors"
             >
                 <div className="flex items-center gap-3">
-                    <div className="p-2 rounded-lg bg-[#26f7b2]/15 text-[#26f7b2]">
+                    <div className="p-2 rounded-lg bg-[#21D89A]/15 text-[#21D89A]">
                         <CalendarDays size={16} />
                     </div>
                     <div className="text-left">
@@ -156,7 +156,7 @@ const InvoiceDetailsModal: React.FC<{ invoice: Invoice; profile: Partial<UserPro
                 exit={{ opacity: 0, scale: 0.9, y: 20 }}
                 className="relative w-full max-w-2xl bg-slate-950 border border-white/[0.08] rounded-[40px] shadow-2xl overflow-hidden flex flex-col max-h-[90vh]"
             >
-                <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-[#26f7b2] via-[#009d9a] to-[#26f7b2]" />
+                <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-[#21D89A] via-[#047857] to-[#21D89A]" />
                 
                 <div className="p-8 overflow-y-auto custom-scrollbar">
                     <div className="flex justify-between items-start mb-10">
@@ -222,7 +222,7 @@ const InvoiceDetailsModal: React.FC<{ invoice: Invoice; profile: Partial<UserPro
                     {invoice.note && (
                         <div className="mb-8 p-6 bg-white/[0.02] rounded-3xl border border-white/[0.08]">
                             <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2 flex items-center gap-2">
-                                <Sparkles size={12} className="text-[#26f7b2]" /> AI Generated Note
+                                <Sparkles size={12} className="text-[#21D89A]" /> AI Generated Note
                             </p>
                             <p className="text-sm text-slate-300 leading-relaxed whitespace-pre-wrap">{invoice.note}</p>
                         </div>
@@ -230,7 +230,7 @@ const InvoiceDetailsModal: React.FC<{ invoice: Invoice; profile: Partial<UserPro
 
                     <div className="flex flex-col items-end gap-2 mb-10">
                         <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Total Amount due</p>
-                        <p className="text-4xl font-black text-[#26f7b2] tabular-nums tracking-tighter">
+                        <p className="text-4xl font-black text-[#21D89A] tabular-nums tracking-tighter">
                             {formatCurrency(invoice.total_amount, invoice.currency)}
                         </p>
                     </div>
@@ -248,7 +248,7 @@ const InvoiceDetailsModal: React.FC<{ invoice: Invoice; profile: Partial<UserPro
                 <div className="p-8 bg-white/[0.02] border-t border-white/[0.08] flex gap-4">
                     <button 
                         onClick={() => generateInvoicePDF(invoice, profile)}
-                        className="flex-1 flex items-center justify-center gap-3 bg-gradient-to-r from-[#26f7b2] to-[#009d9a] hover:opacity-90 text-black font-black py-4 rounded-2xl transition-all shadow-xl shadow-[#26f7b2]/20"
+                        className="flex-1 flex items-center justify-center gap-3 bg-gradient-to-r from-[#21D89A] to-[#047857] hover:opacity-90 text-black font-black py-4 rounded-2xl transition-all shadow-xl shadow-[#21D89A]/20"
                     >
                         <Download size={20} /> DOWNLOAD PDF
                     </button>
@@ -370,7 +370,7 @@ const CreateInvoiceTab: React.FC<{ profile: Partial<UserProfile> }> = ({ profile
             </div>
 
             <form onSubmit={handleSubmit} className="bg-white/[0.02] border border-white/[0.08] rounded-3xl p-6 space-y-5 relative">
-                            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#26f7b2] to-[#009d9a]" />
+                            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#21D89A] to-[#047857]" />
                             
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <div className="space-y-2">
@@ -379,14 +379,14 @@ const CreateInvoiceTab: React.FC<{ profile: Partial<UserProfile> }> = ({ profile
                                         <button
                                             type="button"
                                             onClick={() => setType('client_bill')}
-                                            className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-lg text-[10px] font-black uppercase transition-all ${type === 'client_bill' ? 'bg-gradient-to-r from-[#26f7b2] to-[#009d9a] text-black' : 'text-slate-500'}`}
+                                            className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-lg text-[10px] font-black uppercase transition-all ${type === 'client_bill' ? 'bg-gradient-to-r from-[#21D89A] to-[#047857] text-black' : 'text-slate-500'}`}
                                         >
                                             <Briefcase size={12} /> Client Bill
                                         </button>
                                         <button
                                             type="button"
                                             onClick={() => setType('team_payout')}
-                                            className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-lg text-[10px] font-black uppercase transition-all ${type === 'team_payout' ? 'bg-gradient-to-r from-[#26f7b2] to-[#009d9a] text-black' : 'text-slate-500'}`}
+                                            className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-lg text-[10px] font-black uppercase transition-all ${type === 'team_payout' ? 'bg-gradient-to-r from-[#21D89A] to-[#047857] text-black' : 'text-slate-500'}`}
                                         >
                                             <User size={12} /> Team Payout
                                         </button>
@@ -403,7 +403,7 @@ const CreateInvoiceTab: React.FC<{ profile: Partial<UserProfile> }> = ({ profile
                                                 setRecipientId(e.target.value);
                                                 setRecipientName(c ? c.name : '');
                                             }}
-                                            className="w-full bg-slate-950 border border-white/[0.08] rounded-xl px-4 py-2.5 text-sm text-slate-200 outline-none focus:border-[#26f7b2]/50"
+                                            className="w-full bg-slate-950 border border-white/[0.08] rounded-xl px-4 py-2.5 text-sm text-slate-200 outline-none focus:border-[#21D89A]/50"
                                         >
                                             <option value="">Select Client</option>
                                             {clients.map(c => <option key={c.id} value={c.id}>{c.name} ({c.company})</option>)}
@@ -414,7 +414,7 @@ const CreateInvoiceTab: React.FC<{ profile: Partial<UserProfile> }> = ({ profile
                                             value={recipientName}
                                             onChange={e => setRecipientName(e.target.value)}
                                             placeholder="Recipient Name"
-                                            className="w-full bg-slate-950 border border-white/[0.08] rounded-xl px-4 py-2.5 text-sm text-slate-200 outline-none focus:border-[#26f7b2]/50"
+                                            className="w-full bg-slate-950 border border-white/[0.08] rounded-xl px-4 py-2.5 text-sm text-slate-200 outline-none focus:border-[#21D89A]/50"
                                         />
                                     )}
                                 </div>
@@ -426,7 +426,7 @@ const CreateInvoiceTab: React.FC<{ profile: Partial<UserProfile> }> = ({ profile
                                     <select
                                         value={currency}
                                         onChange={(e) => setCurrency(e.target.value as CurrencyCode)}
-                                        className="w-full bg-slate-950 border border-white/[0.08] rounded-xl px-4 py-2.5 text-sm text-slate-200 outline-none focus:border-[#26f7b2]/50"
+                                        className="w-full bg-slate-950 border border-white/[0.08] rounded-xl px-4 py-2.5 text-sm text-slate-200 outline-none focus:border-[#21D89A]/50"
                                     >
                                         {CURRENCIES.map(c => <option key={c} value={c}>{c}</option>)}
                                     </select>
@@ -439,7 +439,7 @@ const CreateInvoiceTab: React.FC<{ profile: Partial<UserProfile> }> = ({ profile
                                             setLinkedProjectId(e.target.value);
                                             setLinkedTaskIds([]); // Reset tasks when project changes
                                         }}
-                                        className="w-full bg-slate-950 border border-white/[0.08] rounded-xl px-4 py-2.5 text-sm text-slate-200 outline-none focus:border-[#26f7b2]/50"
+                                        className="w-full bg-slate-950 border border-white/[0.08] rounded-xl px-4 py-2.5 text-sm text-slate-200 outline-none focus:border-[#21D89A]/50"
                                     >
                                         <option value="">Select Project</option>
                                         {projects.map(p => <option key={p.id} value={p.id}>{p.name}</option>)}
@@ -451,7 +451,7 @@ const CreateInvoiceTab: React.FC<{ profile: Partial<UserProfile> }> = ({ profile
                                         type="date"
                                         value={dueDate}
                                         onChange={e => setDueDate(e.target.value)}
-                                        className="w-full bg-slate-950 border border-white/[0.08] rounded-xl px-4 py-2.5 text-sm text-slate-200 outline-none focus:border-[#26f7b2]/50"
+                                        className="w-full bg-slate-950 border border-white/[0.08] rounded-xl px-4 py-2.5 text-sm text-slate-200 outline-none focus:border-[#21D89A]/50"
                                     />
                                 </div>
                             </div>
@@ -468,7 +468,7 @@ const CreateInvoiceTab: React.FC<{ profile: Partial<UserProfile> }> = ({ profile
                                                     type="checkbox" 
                                                     checked={linkedTaskIds.includes(t.id)}
                                                     onChange={() => toggleTask(t.id)}
-                                                    className="w-4 h-4 rounded border-white/[0.1] text-[#26f7b2] focus:ring-[#26f7b2]/30 bg-slate-950"
+                                                    className="w-4 h-4 rounded border-white/[0.1] text-[#21D89A] focus:ring-[#21D89A]/30 bg-slate-950"
                                                 />
                                                 <span className="text-sm text-slate-300 truncate">{t.title}</span>
                                             </label>
@@ -483,7 +483,7 @@ const CreateInvoiceTab: React.FC<{ profile: Partial<UserProfile> }> = ({ profile
                                     <button
                                         type="button"
                                         onClick={handleGenerateNote}
-                                        className="text-[10px] font-black text-[#26f7b2] hover:text-[#26f7b2]/80 transition-colors flex items-center gap-1 uppercase tracking-widest"
+                                        className="text-[10px] font-black text-[#21D89A] hover:text-[#21D89A]/80 transition-colors flex items-center gap-1 uppercase tracking-widest"
                                     >
                                         <Sparkles size={12} /> Auto-Generate
                                     </button>
@@ -493,7 +493,7 @@ const CreateInvoiceTab: React.FC<{ profile: Partial<UserProfile> }> = ({ profile
                                     onChange={e => setNote(e.target.value)}
                                     placeholder="Thank you for your business..."
                                     rows={4}
-                                    className="w-full bg-slate-950 border border-white/[0.08] rounded-xl px-4 py-3 text-sm text-slate-200 outline-none focus:border-[#26f7b2]/50 custom-scrollbar resize-none"
+                                    className="w-full bg-slate-950 border border-white/[0.08] rounded-xl px-4 py-3 text-sm text-slate-200 outline-none focus:border-[#21D89A]/50 custom-scrollbar resize-none"
                                 />
                             </div>
 
@@ -506,7 +506,7 @@ const CreateInvoiceTab: React.FC<{ profile: Partial<UserProfile> }> = ({ profile
                                             value={item.description}
                                             onChange={e => handleItemChange(index, 'description', e.target.value)}
                                             placeholder="Description"
-                                            className="sm:col-span-3 bg-slate-950 border border-white/[0.08] rounded-xl px-4 py-2 text-sm text-slate-200 outline-none focus:border-[#26f7b2]/50"
+                                            className="sm:col-span-3 bg-slate-950 border border-white/[0.08] rounded-xl px-4 py-2 text-sm text-slate-200 outline-none focus:border-[#21D89A]/50"
                                         />
                                         <input
                                             required
@@ -535,7 +535,7 @@ const CreateInvoiceTab: React.FC<{ profile: Partial<UserProfile> }> = ({ profile
                                 <button
                                     type="button"
                                     onClick={handleAddItem}
-                                    className="text-[10px] font-black text-[#26f7b2] hover:text-[#26f7b2]/80 transition-colors flex items-center gap-1 uppercase tracking-widest"
+                                    className="text-[10px] font-black text-[#21D89A] hover:text-[#21D89A]/80 transition-colors flex items-center gap-1 uppercase tracking-widest"
                                 >
                                     <Plus size={12} /> Add Item
                                 </button>
@@ -544,11 +544,11 @@ const CreateInvoiceTab: React.FC<{ profile: Partial<UserProfile> }> = ({ profile
                             <div className="pt-4 border-t border-white/[0.08] flex flex-col sm:flex-row items-center justify-between gap-4">
                                 <div className="text-right sm:text-left">
                                     <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Total Amount</p>
-                                    <p className="text-2xl font-black text-[#26f7b2] tabular-nums">{formatCurrency(subtotal, currency)}</p>
+                                    <p className="text-2xl font-black text-[#21D89A] tabular-nums">{formatCurrency(subtotal, currency)}</p>
                                 </div>
                                 <button
                                     disabled={isSaving}
-                                    className="w-full sm:w-auto px-10 py-4 bg-gradient-to-r from-[#26f7b2] to-[#009d9a] hover:opacity-90 text-black font-black rounded-2xl transition-all shadow-xl shadow-[#26f7b2]/30 flex items-center justify-center gap-2"
+                                    className="w-full sm:w-auto px-10 py-4 bg-gradient-to-r from-[#21D89A] to-[#047857] hover:opacity-90 text-black font-black rounded-2xl transition-all shadow-xl shadow-[#21D89A]/30 flex items-center justify-center gap-2"
                                 >
                                     {isSaving ? <Loader2 size={18} className="animate-spin" /> : 'GENERATE INVOICE'}
                                 </button>
@@ -571,7 +571,7 @@ const InvoicesListTab: React.FC<{ profile: Partial<UserProfile> }> = ({ profile 
                     </div>
                 ) : (
                     invoices.map(inv => (
-                        <div key={inv.id} className="bg-white/[0.02] border border-white/[0.08] rounded-3xl p-5 flex flex-wrap sm:flex-nowrap justify-between items-center gap-4 group hover:border-[#26f7b2]/30 transition-all cursor-pointer" onClick={() => setSelectedInvoice(inv)}>
+                        <div key={inv.id} className="bg-white/[0.02] border border-white/[0.08] rounded-3xl p-5 flex flex-wrap sm:flex-nowrap justify-between items-center gap-4 group hover:border-[#21D89A]/30 transition-all cursor-pointer" onClick={() => setSelectedInvoice(inv)}>
                             <div className="flex items-center gap-4">
                                 <div className={`w-12 h-12 rounded-2xl flex items-center justify-center border ${inv.type === 'client_bill' ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400' : 'bg-rose-500/10 border-rose-500/20 text-rose-400'}`}>
                                     <FileText size={20} />
@@ -594,7 +594,7 @@ const InvoicesListTab: React.FC<{ profile: Partial<UserProfile> }> = ({ profile 
                                 <div className="flex items-center gap-2">
                                     <button 
                                         onClick={(e) => { e.stopPropagation(); generateInvoicePDF(inv, profile); }}
-                                        className="p-2.5 bg-slate-950 hover:bg-white/[0.08] text-[#26f7b2] rounded-xl transition-all"
+                                        className="p-2.5 bg-slate-950 hover:bg-white/[0.08] text-[#21D89A] rounded-xl transition-all"
                                         title="Download PDF"
                                     >
                                         <Download size={16} />
@@ -859,42 +859,42 @@ export const FinancePage: React.FC<FinancePageProps> = ({ viewMode = 'dashboard'
     };
 
     return (
-        <div className="max-w-4xl mx-auto space-y-6 pb-20 animate-fade-in px-4">
+        <div className="max-w-4xl mx-auto space-y-6 pb-20 px-4">
             {/* Header with Currency Selector */}
             <header className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 py-4">
                 <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-amber-400 to-orange-600 flex items-center justify-center shadow-lg shadow-amber-500/20">
-                        <Wallet size={24} className="text-white" />
+                    <div className="w-12 h-12 rounded-2xl bg-[#DDFBF0] border border-[#B7F3DD] flex items-center justify-center shadow-sm">
+                        <Wallet size={24} className="text-[#047857]" />
                     </div>
                     <div>
-                        <h1 className="text-3xl font-black text-slate-100 tracking-tight">Finance</h1>
-                        <p className="text-slate-500 text-xs font-bold uppercase tracking-widest flex items-center gap-2 mt-1">
-                            <Landmark size={12} className="text-[#26f7b2]" /> Smart Management System
+                        <h1 className="text-3xl font-black text-text-main tracking-tight">Finance</h1>
+                        <p className="text-text-muted text-xs font-bold uppercase tracking-widest flex items-center gap-2 mt-1">
+                            <Landmark size={12} className="text-[#047857]" /> Smart Management System
                         </p>
                     </div>
                 </div>
 
-                <div className="flex items-center gap-2 p-1 bg-white/[0.02] rounded-xl border border-white/[0.08]">
+                <div className="flex items-center gap-2 p-1 bg-[#F3F7F5] rounded-xl border border-border-input">
                     {CURRENCIES.map(c => (
                         <button
                             key={c}
                             onClick={() => setDisplayCurrency(c)}
-                            className={`px-3 py-1.5 rounded-lg text-[10px] font-black tracking-widest transition-all ${
+                            className={`px-3 py-1.5 rounded-lg text-[10px] font-black tracking-widest transition-all cursor-pointer ${
                                 displayCurrency === c
-                                    ? 'bg-gradient-to-r from-[#26f7b2] to-[#009d9a] text-black shadow-lg shadow-[#26f7b2]/30'
-                                    : 'text-slate-500 hover:text-slate-300'
+                                    ? 'bg-[#DDFBF0] text-[#047857] border border-[#B7F3DD]/40'
+                                    : 'text-text-muted hover:text-text-main'
                             }`}
                         >
                             {c}
                         </button>
                     ))}
-                    <div className="w-px h-4 bg-white/[0.1] mx-1" />
-                    <button className="p-1.5 text-slate-400 hover:text-amber-400" title="Daily Exchange Rates">
+                    <div className="w-px h-4 bg-border-input mx-1" />
+                    <button className="p-1.5 text-text-muted hover:text-[#047857] cursor-pointer" title="Daily Exchange Rates">
                         <ArrowRightLeft size={14} />
                     </button>
                     <button 
                         onClick={handleClearAll}
-                        className="p-1.5 text-slate-500 hover:text-rose-400 transition-colors" 
+                        className="p-1.5 text-text-muted hover:text-[#BE123C] transition-colors cursor-pointer" 
                         title="Clear All Finance Data"
                     >
                         <Trash2 size={14} />
@@ -911,10 +911,10 @@ export const FinancePage: React.FC<FinancePageProps> = ({ viewMode = 'dashboard'
                     <button
                         key={tab}
                         onClick={() => setActiveTab(tab)}
-                        className={`flex-shrink-0 px-5 py-2.5 rounded-2xl text-xs font-black uppercase tracking-widest transition-all ${
+                        className={`flex-shrink-0 px-5 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest transition-all border cursor-pointer ${
                             activeTab === tab
-                                ? 'bg-[#26f7b2]/15 text-[#26f7b2] border-2 border-[#26f7b2]/30 ring-4 ring-[#26f7b2]/5'
-                                : 'bg-white/[0.02] text-slate-500 border-2 border-transparent hover:bg-white/[0.04] hover:text-slate-300'
+                                ? 'bg-[#DDFBF0] text-[#047857] border-[#B7F3DD]'
+                                : 'bg-[#F3F7F5] text-[#6B7C73] border-transparent hover:bg-bg-card hover:text-text-main'
                         }`}
                     >
                         {tab === 'emis' ? 'Subscriptions' : tab === 'new_invoice' ? 'New Invoice' : tab}
@@ -922,45 +922,56 @@ export const FinancePage: React.FC<FinancePageProps> = ({ viewMode = 'dashboard'
                 ))}
             </div>
 
-            <AnimatePresence mode="wait">
-                {activeTab === 'today' && (
-                    <motion.div key="today" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="space-y-6">
-                        {/* Summary Cards */}
+            {/* Content Tabs */}
+            <div className="space-y-6">
+                <AnimatePresence mode="wait">
+                    {activeTab === 'today' && (
+                        <motion.div
+                            key="today"
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -10 }}
+                            className="space-y-6"
+                        >
+                        {/* Stats Row */}
                         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                             {[
-                                { label: 'Earned', val: todayStats.earned, icon: TrendingUp, color: 'emerald', bg: 'emerald-500/10' },
-                                { label: 'Spent', val: todayStats.spent, icon: TrendingDown, color: 'rose', bg: 'rose-500/10' },
-                                { label: 'Net Change', val: todayStats.net, icon: DollarSign, color: todayStats.net >= 0 ? 'emerald' : 'rose', bg: 'indigo-500/10' }
-                            ].map(card => (
-                                <div key={card.label} className="bg-white/[0.02] border border-white/[0.08] rounded-2xl p-4 overflow-hidden relative">
-                                    <div className="flex justify-between items-start mb-3">
-                                        <div className={`p-2 rounded-xl bg-${card.color}-500/15 text-${card.color}-400`}>
-                                            <card.icon size={16} />
+                                { title: 'Earned', amount: todayStats.earned, color: 'emerald', icon: TrendingUp },
+                                { title: 'Spent', amount: todayStats.spent, color: 'red', icon: TrendingDown },
+                                { title: 'Net Change', amount: todayStats.net, color: todayStats.net >= 0 ? 'emerald' : 'red', icon: Wallet }
+                            ].map((card, i) => (
+                                <div key={i} className="bg-white dark:bg-bg-card border border-border-card rounded-[18px] p-5 relative overflow-hidden shadow-sm">
+                                    <div className="flex justify-between items-center mb-2">
+                                        <p className="text-text-muted text-[10px] font-bold uppercase tracking-wider">{card.title}</p>
+                                        <div className={`p-2 rounded-lg ${
+                                            card.color === 'emerald' ? 'bg-[#DDFBF0] text-[#047857]' : 'bg-[#FFE4E8] text-[#BE123C]'
+                                        }`}>
+                                            <card.icon size={14} />
                                         </div>
-                                        <span className="text-[10px] font-black uppercase tracking-widest text-slate-500">{card.label}</span>
                                     </div>
-                                    <p className={`text-2xl font-black tabular-nums transition-colors duration-500 text-${card.color}-400`}>
-                                        {card.val >= 0 ? '+' : ''}{formatCurrency(card.val, displayCurrency)}
+                                    <p className={`text-2xl font-black tabular-nums tracking-tight font-display ${
+                                        card.color === 'emerald' ? 'text-[#047857]' : 'text-[#BE123C]'
+                                    }`}>
+                                        {card.amount >= 0 ? '+' : '-'}{formatCurrency(Math.abs(card.amount), displayCurrency)}
                                     </p>
-                                    <div className={`absolute right-0 bottom-0 w-16 h-16 bg-${card.color}-500/5 blur-2xl rounded-full`} />
                                 </div>
                             ))}
                         </div>
 
                         {/* Add Form */}
-                        <div className="bg-white/[0.02] border border-white/[0.08] rounded-3xl p-6 relative overflow-hidden ring-1 ring-white/5 shadow-2xl">
-                            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-amber-500/50 to-orange-500/50" />
+                        <div className="bg-white dark:bg-bg-card border border-border-card rounded-[22px] p-6 relative overflow-hidden shadow-sm">
+                            <div className="absolute top-0 left-0 w-full h-1 bg-[#21D89A]" />
                             <form onSubmit={handleAddEntry} className="space-y-5">
                                 <div className="flex items-center justify-between">
-                                    <label className="text-amber-400 text-xs font-black uppercase tracking-widest">Add Daily Record</label>
-                                    <div className="flex bg-black/20 p-1 rounded-xl">
+                                    <label className="text-text-main text-xs font-bold uppercase tracking-widest">Add Daily Record</label>
+                                    <div className="flex bg-[#F3F7F5] dark:bg-bg-input p-1 rounded-xl border border-border-input">
                                         {(['spent', 'earned'] as const).map(t => (
                                             <button
                                                 key={t}
                                                 type="button"
                                                 onClick={() => setType(t)}
-                                                className={`px-4 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all ${
-                                                    type === t ? 'bg-white/[0.1] text-white' : 'text-slate-500'
+                                                className={`px-4 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all cursor-pointer ${
+                                                    type === t ? 'bg-[#DDFBF0] text-[#047857]' : 'text-text-muted hover:text-text-main'
                                                 }`}
                                             >
                                                 {t}
@@ -976,17 +987,17 @@ export const FinancePage: React.FC<FinancePageProps> = ({ viewMode = 'dashboard'
                                             value={description}
                                             onChange={e => setDescription(e.target.value)}
                                             placeholder="What for?"
-                                            className="w-full bg-slate-950 border border-white/[0.08] rounded-xl px-4 py-3 text-sm focus:border-amber-500/40 focus:ring-4 focus:ring-amber-500/5 outline-none transition-all placeholder:text-slate-600 text-slate-100 font-medium"
+                                            className="w-full bg-bg-input border border-border-input rounded-xl px-4 py-3 text-sm focus:border-glitch-emerald focus:ring-4 focus:ring-glitch-emerald/5 outline-none transition-all placeholder:text-text-muted/65 text-text-main font-semibold"
                                         />
                                     </div>
                                     <div className="relative group">
-                                        <div className="absolute right-3 top-1/2 -translate-y-1/2 flex gap-1 items-center bg-white/[0.04] px-2 py-1 rounded-lg border border-white/[0.08] group-focus-within:border-amber-500/30 transition-all">
+                                        <div className="absolute right-3 top-1/2 -translate-y-1/2 flex gap-1 items-center bg-bg-input px-2 py-1 rounded-lg border border-border-input group-focus-within:border-glitch-emerald/40 transition-all">
                                             <select 
                                                 value={entryCurrency} 
                                                 onChange={e => setEntryCurrency(e.target.value as CurrencyCode)}
-                                                className="bg-transparent border-none outline-none text-[10px] font-black text-amber-400 cursor-pointer appearance-none"
+                                                className="bg-transparent border-none outline-none text-[10px] font-bold text-[#047857] cursor-pointer appearance-none"
                                             >
-                                                {CURRENCIES.map(c => <option key={c} value={c} className="bg-slate-950">{c}</option>)}
+                                                {CURRENCIES.map(c => <option key={c} value={c} className="bg-bg-card">{c}</option>)}
                                             </select>
                                         </div>
                                         <input
@@ -996,13 +1007,13 @@ export const FinancePage: React.FC<FinancePageProps> = ({ viewMode = 'dashboard'
                                             value={amount}
                                             onChange={e => setAmount(e.target.value)}
                                             placeholder="0.00"
-                                            className="w-full bg-slate-950 border border-white/[0.08] rounded-xl pl-4 pr-16 py-3 text-sm font-mono focus:border-amber-500/40 focus:ring-4 focus:ring-amber-500/5 outline-none transition-all text-slate-100"
+                                            className="w-full bg-bg-input border border-border-input rounded-xl pl-4 pr-16 py-3 text-sm font-mono focus:border-glitch-emerald focus:ring-4 focus:ring-glitch-emerald/5 outline-none transition-all text-text-main"
                                         />
                                     </div>
                                     <select
                                         value={category}
                                         onChange={e => setCategory(e.target.value)}
-                                        className="bg-slate-950 border border-white/[0.08] rounded-xl px-4 py-3 text-sm text-slate-400 outline-none focus:border-amber-500/40"
+                                        className="bg-bg-input border border-border-input rounded-xl px-4 py-3 text-sm text-text-main outline-none focus:border-glitch-emerald focus:ring-4 focus:ring-glitch-emerald/5"
                                     >
                                         {(type === 'spent' ? EXPENSE_CATEGORIES : INCOME_CATEGORIES).map(c => (
                                             <option key={c} value={c}>{c}</option>
@@ -1011,7 +1022,7 @@ export const FinancePage: React.FC<FinancePageProps> = ({ viewMode = 'dashboard'
                                 </div>
                                 <button
                                     disabled={isSaving}
-                                    className="w-full py-4 bg-gradient-to-r from-amber-500 to-orange-600 text-slate-900 font-black rounded-2xl hover:scale-[1.01] active:scale-[0.99] transition-all shadow-xl shadow-amber-500/20 disabled:opacity-50 flex items-center justify-center gap-2"
+                                    className="w-full py-4 bg-glitch-emerald text-[#053B2A] font-bold rounded-xl transition-all shadow-[0_8px_20px_rgba(33,216,154,0.15)] disabled:opacity-50 flex items-center justify-center gap-2 cursor-pointer"
                                 >
                                     {isSaving ? <Loader2 size={18} className="animate-spin" /> : <Plus size={18} />}
                                     CONFIRM TRANSACTION
@@ -1123,7 +1134,7 @@ export const FinancePage: React.FC<FinancePageProps> = ({ viewMode = 'dashboard'
                             {savings.map(s => (
                                 <div key={s.id} className="bg-white/[0.02] border border-white/[0.08] rounded-2xl p-4 flex justify-between items-center group">
                                     <div className="flex items-center gap-3">
-                                        <div className="p-2 rounded-xl bg-white/[0.06] text-[#26f7b2]">
+                                        <div className="p-2 rounded-xl bg-white/[0.06] text-[#21D89A]">
                                             {s.type === 'savings' ? <Landmark size={16} /> : <PieChart size={16} />}
                                         </div>
                                         <div>
@@ -1143,34 +1154,34 @@ export const FinancePage: React.FC<FinancePageProps> = ({ viewMode = 'dashboard'
 
                 {activeTab === 'emis' && (
                     <motion.div key="emis" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="space-y-6">
-                        <div className="bg-gradient-to-br from-[#26f7b2]/20 to-[#009d9a]/10 border border-[#26f7b2]/20 rounded-3xl p-6 relative overflow-hidden">
-                            <div className="flex justify-between items-center mb-4">
-                                <CreditCard className="text-[#26f7b2]" size={32} />
+                        <div className="bg-gradient-to-br from-white to-[#F0FFF8] dark:from-bg-card dark:to-bg-input border border-border-card rounded-[22px] p-6 relative overflow-hidden shadow-sm">
+                            <div className="flex justify-between items-center mb-4 relative z-10">
+                                <CreditCard className="text-[#047857] dark:text-glitch-emerald" size={32} />
                                 <div className="text-right">
-                                    <p className="text-[10px] font-black uppercase tracking-widest text-[#26f7b2]/60">Equivalent Monthly Load</p>
-                                    <p className="text-3xl font-black text-[#26f7b2] tabular-nums">{formatCurrency(emiMonthlyTotal, displayCurrency)}</p>
+                                    <p className="text-[10px] font-black uppercase tracking-widest text-text-muted">Equivalent Monthly Load</p>
+                                    <p className="text-3xl font-black text-[#047857] dark:text-glitch-emerald tabular-nums">{formatCurrency(emiMonthlyTotal, displayCurrency)}</p>
                                 </div>
                             </div>
-                            <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-[#26f7b2]/10 blur-[80px] rounded-full" />
+                            <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-[#21D89A]/5 blur-[80px] rounded-full" />
                         </div>
 
-                        <form onSubmit={handleAddEMI} className="space-y-4 bg-white/[0.02] p-5 sm:p-6 rounded-3xl border border-white/[0.08]">
-                            <p className="text-[#26f7b2] text-[10px] font-black uppercase tracking-tighter mb-2">New Subscription</p>
+                        <form onSubmit={handleAddEMI} className="space-y-4 bg-white dark:bg-bg-card p-5 sm:p-6 rounded-[22px] border border-border-card shadow-sm">
+                            <p className="text-[#047857] dark:text-glitch-emerald text-[10px] font-black uppercase tracking-tighter mb-2">New Subscription</p>
                             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-                                <input required value={emiTitle} onChange={e => setEmiTitle(e.target.value)} placeholder="Service Title (e.g., Netflix)" className="lg:col-span-2 bg-slate-950 border border-white/[0.08] rounded-xl px-4 py-2.5 text-sm text-slate-200 outline-none focus:border-[#26f7b2]/50" />
+                                <input required value={emiTitle} onChange={e => setEmiTitle(e.target.value)} placeholder="Service Title (e.g., Netflix)" className="lg:col-span-2 bg-bg-input border border-border-input rounded-xl px-4 py-2.5 text-sm text-text-main outline-none focus:border-glitch-emerald/50" />
                                 <div className="flex gap-2 w-full lg:col-span-2">
-                                    <input required type="number" step="0.01" value={emiAmount} onChange={e => setEmiAmount(e.target.value)} placeholder="Amount" className="flex-1 min-w-[100px] bg-slate-950 border border-white/[0.08] rounded-xl px-4 py-2.5 text-sm font-mono text-slate-200 outline-none focus:border-[#26f7b2]/50" />
-                                    <select value={emiCurrency} onChange={e => setEmiCurrency(e.target.value as CurrencyCode)} className="bg-slate-950 border border-white/[0.08] rounded-xl px-3 py-2 text-[10px] font-black uppercase text-slate-400 outline-none w-20 flex-shrink-0">
-                                        {CURRENCIES.map(c => <option key={c} value={c}>{c}</option>)}
+                                    <input required type="number" step="0.01" value={emiAmount} onChange={e => setEmiAmount(e.target.value)} placeholder="Amount" className="flex-1 min-w-[100px] bg-bg-input border border-border-input rounded-xl px-4 py-2.5 text-sm font-mono text-text-main outline-none focus:border-glitch-emerald/50" />
+                                    <select value={emiCurrency} onChange={e => setEmiCurrency(e.target.value as CurrencyCode)} className="bg-bg-input border border-border-input rounded-xl px-3 py-2 text-[10px] font-black uppercase text-text-muted outline-none w-20 flex-shrink-0">
+                                        {CURRENCIES.map(c => <option key={c} value={c} className="bg-bg-card">{c}</option>)}
                                     </select>
                                 </div>
-                                <select value={emiBillingCycle} onChange={e => setEmiBillingCycle(e.target.value as any)} className="bg-slate-950 border border-white/[0.08] rounded-xl px-4 py-2.5 text-sm text-slate-200 outline-none focus:border-[#26f7b2]/50">
-                                    <option value="1_month">Monthly (1 Month)</option>
-                                    <option value="3_months">Quarterly (3 Months)</option>
-                                    <option value="1_year">Yearly (1 Year)</option>
+                                <select value={emiBillingCycle} onChange={e => setEmiBillingCycle(e.target.value as any)} className="bg-bg-input border border-border-input rounded-xl px-4 py-2.5 text-sm text-text-main outline-none focus:border-glitch-emerald/50">
+                                    <option value="1_month" className="bg-bg-card">Monthly (1 Month)</option>
+                                    <option value="3_months" className="bg-bg-card">Quarterly (3 Months)</option>
+                                    <option value="1_year" className="bg-bg-card">Yearly (1 Year)</option>
                                 </select>
                                 <div className="relative">
-                                    <input list="payment-methods" required value={emiPaymentMethod} onChange={e => setEmiPaymentMethod(e.target.value)} placeholder="Payment Method" className="w-full bg-slate-950 border border-white/[0.08] rounded-xl px-4 py-2.5 text-sm text-slate-200 outline-none focus:border-[#26f7b2]/50" />
+                                    <input list="payment-methods" required value={emiPaymentMethod} onChange={e => setEmiPaymentMethod(e.target.value)} placeholder="Payment Method" className="w-full bg-bg-input border border-border-input rounded-xl px-4 py-2.5 text-sm text-text-main outline-none focus:border-glitch-emerald/50" />
                                     <datalist id="payment-methods">
                                         {Array.from(new Set(emis.map(e => e.payment_method).filter(Boolean))).map(pm => (
                                             <option key={pm} value={pm} />
@@ -1178,11 +1189,11 @@ export const FinancePage: React.FC<FinancePageProps> = ({ viewMode = 'dashboard'
                                     </datalist>
                                 </div>
                                 <div className="lg:col-span-2 flex flex-col justify-center">
-                                    <label className="text-[10px] font-black uppercase text-slate-500 mb-1">First Deadline / Next Billing Date</label>
-                                    <input required type="date" value={emiNextDate} onChange={e => setEmiNextDate(e.target.value)} className="w-full bg-slate-950 border border-white/[0.08] rounded-xl px-4 py-2 text-sm text-slate-200 outline-none focus:border-[#26f7b2]/50" />
+                                    <label className="text-[10px] font-bold uppercase text-text-muted mb-1">First Deadline / Next Billing Date</label>
+                                    <input required type="date" value={emiNextDate} onChange={e => setEmiNextDate(e.target.value)} className="w-full bg-bg-input border border-border-input rounded-xl px-4 py-2 text-sm text-text-main outline-none focus:border-glitch-emerald/50" />
                                 </div>
                             </div>
-                            <button className="w-full bg-gradient-to-r from-[#26f7b2] to-[#009d9a] hover:opacity-90 text-black font-black py-3 rounded-2xl text-xs transition-all shadow-lg shadow-[#26f7b2]/20 uppercase tracking-widest mt-2">Add Subscription</button>
+                            <button className="w-full bg-glitch-emerald text-[#053B2A] font-bold py-3 rounded-xl text-xs transition-all shadow-[0_4px_12px_rgba(33,216,154,0.15)] uppercase tracking-widest mt-2 cursor-pointer">Add Subscription</button>
                         </form>
 
                         <div className="space-y-3">
@@ -1196,7 +1207,7 @@ export const FinancePage: React.FC<FinancePageProps> = ({ viewMode = 'dashboard'
                                 return (
                                 <div key={e.id} className="bg-white/[0.02] border border-white/[0.08] rounded-3xl p-5 flex flex-wrap sm:flex-nowrap justify-between items-center gap-4 group">
                                     <div className="flex items-center gap-4">
-                                        <div className="w-12 h-12 rounded-2xl bg-[#26f7b2]/10 flex flex-col items-center justify-center border border-[#26f7b2]/20 text-[#26f7b2]">
+                                        <div className="w-12 h-12 rounded-2xl bg-[#21D89A]/10 flex flex-col items-center justify-center border border-[#21D89A]/20 text-[#21D89A]">
                                             <CalendarDays size={20} />
                                         </div>
                                         <div>
@@ -1226,10 +1237,10 @@ export const FinancePage: React.FC<FinancePageProps> = ({ viewMode = 'dashboard'
                     <motion.div key="history" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="space-y-4">
                         <header className="flex justify-between items-center mb-2 px-1">
                             <h3 className="text-slate-400 text-xs font-black uppercase tracking-widest flex items-center gap-2">
-                                <CalendarDays size={14} className="text-[#26f7b2]" /> Historical Logs
+                                <CalendarDays size={14} className="text-[#21D89A]" /> Historical Logs
                             </h3>
                             <div className="flex items-center gap-4">
-                                <button className="text-[10px] font-black uppercase text-[#26f7b2] hover:underline">Export CSV</button>
+                                <button className="text-[10px] font-black uppercase text-[#21D89A] hover:underline">Export CSV</button>
                                 {entries.length > 0 && (
                                     <button
                                         onClick={handleClearHistory}
@@ -1251,5 +1262,6 @@ export const FinancePage: React.FC<FinancePageProps> = ({ viewMode = 'dashboard'
                 )}
             </AnimatePresence>
         </div>
-    );
+    </div>
+);
 };

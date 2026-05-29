@@ -1,54 +1,82 @@
 @import "tailwindcss";
 
 :root {
-  /* Default: Dark Mode (Dark gray backdrop) */
-  --bg-app: #121214;
-  --text-main: #f8fafc;
-  --text-muted: #94a3b8;
-  --bg-card: rgba(255, 255, 255, 0.03);
-  --bg-card-strong: rgba(18, 18, 20, 0.75);
-  --border-card: rgba(255, 255, 255, 0.08);
-  --bg-sidebar: rgba(18, 18, 20, 0.4);
-  --bg-input: rgba(0, 0, 0, 0.25);
-  --border-input: rgba(255, 255, 255, 0.08);
-  --text-input: #f8fafc;
-  --bg-scrollbar-track: #121214;
-  --bg-scrollbar-thumb: rgba(38, 247, 178, 0.15);
-  --bg-scrollbar-thumb-hover: rgba(38, 247, 178, 0.35);
-  --shadow-card: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-  --shadow-strong: 0 12px 40px 0 rgba(0, 0, 0, 0.5);
-  --ambient-gradient-1: rgba(38, 247, 178, 0.07);
-  --ambient-gradient-2: rgba(0, 157, 154, 0.07);
-  --invert-calendar: invert(0.8) sepia(1) saturate(5) hue-rotate(110deg);
+  /* Default: Light Mode (Nordic SaaS Theme) */
+  --bg-app: #F7FAF8;
+  --text-main: #10231B;
+  --text-muted: #6B7C73;
+  --bg-card: #FFFFFF;
+  --bg-card-strong: #FFFFFF;
+  --border-card: #DDE8E2;
+  --bg-sidebar: #EEF7F2;
+  --bg-input: #F3F7F5;
+  --border-input: #DDE8E2;
+  --text-input: #10231B;
+  --bg-scrollbar-track: #F7FAF8;
+  --bg-scrollbar-thumb: rgba(33, 216, 154, 0.3);
+  --bg-scrollbar-thumb-hover: rgba(4, 120, 87, 0.5);
+  --shadow-card: 0 8px 24px rgba(16, 35, 27, 0.06);
+  --shadow-strong: 0 12px 36px rgba(16, 35, 27, 0.08);
+  --ambient-gradient-1: rgba(33, 216, 154, 0.08);
+  --ambient-gradient-2: rgba(4, 120, 87, 0.01);
+  --invert-calendar: none;
 }
 
 html.light {
-  /* Light Mode (White background) */
-  --bg-app: #ffffff;
-  --text-main: #0f172a;
-  --text-muted: #475569;
-  --bg-card: rgba(0, 0, 0, 0.02);
-  --bg-card-strong: rgba(255, 255, 255, 0.9);
-  --border-card: rgba(0, 0, 0, 0.08);
-  --bg-sidebar: rgba(244, 244, 245, 0.8);
-  --bg-input: #f4f4f5;
-  --border-input: rgba(0, 0, 0, 0.08);
-  --text-input: #0f172a;
-  --bg-scrollbar-track: #ffffff;
-  --bg-scrollbar-thumb: rgba(38, 247, 178, 0.3);
-  --bg-scrollbar-thumb-hover: rgba(38, 247, 178, 0.5);
-  --shadow-card: 0 8px 32px 0 rgba(0, 0, 0, 0.06);
-  --shadow-strong: 0 12px 40px 0 rgba(0, 0, 0, 0.08);
-  --ambient-gradient-1: rgba(38, 247, 178, 0.04);
-  --ambient-gradient-2: rgba(0, 157, 154, 0.04);
-  --invert-calendar: invert(0.2) sepia(1) saturate(5) hue-rotate(110deg);
+  /* Explicit Light Mode */
+  --bg-app: #F7FAF8;
+  --text-main: #10231B;
+  --text-muted: #6B7C73;
+  --bg-card: #FFFFFF;
+  --bg-card-strong: #FFFFFF;
+  --border-card: #DDE8E2;
+  --bg-sidebar: #EEF7F2;
+  --bg-input: #F3F7F5;
+  --border-input: #DDE8E2;
+  --text-input: #10231B;
+  --bg-scrollbar-track: #F7FAF8;
+  --bg-scrollbar-thumb: rgba(33, 216, 154, 0.3);
+  --bg-scrollbar-thumb-hover: rgba(4, 120, 87, 0.5);
+  --shadow-card: 0 8px 24px rgba(16, 35, 27, 0.06);
+  --shadow-strong: 0 12px 36px rgba(16, 35, 27, 0.08);
+  --ambient-gradient-1: rgba(33, 216, 154, 0.08);
+  --ambient-gradient-2: rgba(4, 120, 87, 0.01);
+  --invert-calendar: none;
+}
+
+html.dark {
+  /* Refined Corporate Dark-Mint Theme */
+  --bg-app: #0D1612;
+  --text-main: #E2ECE7;
+  --text-muted: #8FA297;
+  --bg-card: #15221C;
+  --bg-card-strong: #1A2B23;
+  --border-card: #22372D;
+  --bg-sidebar: #111D17;
+  --bg-input: #15221C;
+  --border-input: #22372D;
+  --text-input: #E2ECE7;
+  --bg-scrollbar-track: #0D1612;
+  --bg-scrollbar-thumb: rgba(33, 216, 154, 0.25);
+  --bg-scrollbar-thumb-hover: rgba(33, 216, 154, 0.45);
+  --shadow-card: 0 8px 32px 0 rgba(0, 0, 0, 0.25);
+  --shadow-strong: 0 12px 40px 0 rgba(0, 0, 0, 0.35);
+  --ambient-gradient-1: rgba(33, 216, 154, 0.04);
+  --ambient-gradient-2: rgba(4, 120, 87, 0.04);
+  --invert-calendar: invert(0.8) sepia(1) saturate(5) hue-rotate(110deg);
 }
 
 @theme {
-  --color-slate-950: #060d11;
-  --color-glitch-bg: #060d11;
-  --color-glitch-emerald: #26f7b2;
-  --color-glitch-cyan: #009d9a;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 22px;
+  --radius-2xl: 28px;
+
+  --color-slate-950: var(--bg-app);
+  --color-glitch-bg: var(--bg-app);
+  --color-glitch-emerald: #21D89A;
+  --color-glitch-cyan: #047857;
   
   /* Registered dynamic colors mapped to custom properties */
   --color-bg-app: var(--bg-app);
@@ -62,8 +90,8 @@ html.light {
   --color-border-input: var(--border-input);
   --color-text-input: var(--text-input);
   
-  --font-family-sans: 'Inter', system-ui, -apple-system, sans-serif;
-  --font-family-display: 'Outfit', system-ui, -apple-system, sans-serif;
+  --font-family-sans: 'Geist', 'Inter', system-ui, -apple-system, sans-serif;
+  --font-family-display: 'Geist', 'Inter', system-ui, -apple-system, sans-serif;
   
   --animate-spin-slow: spin-slow 15s linear infinite;
   --animate-glow-pulse: glow-pulse 3s ease-in-out infinite;
@@ -87,7 +115,7 @@ html.light {
   body {
     background-color: var(--bg-app);
     color: var(--text-main);
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-family: 'Geist', 'Inter', system-ui, -apple-system, sans-serif;
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
     transition: background-color 0.3s ease, color 0.3s ease;
@@ -95,8 +123,8 @@ html.light {
 
   /* Selection styling */
   ::selection {
-    background: rgba(38, 247, 178, 0.25);
-    color: #ffffff;
+    background: rgba(33, 216, 154, 0.25);
+    color: #10231B;
   }
 
   /* Scrollbar styling */
@@ -130,7 +158,7 @@ html.light {
 
   /* Select arrow */
   select {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2326f7b2' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23047857' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
     background-position: right 12px center;
     appearance: none;
@@ -229,11 +257,9 @@ html.light {
     -webkit-box-orient: vertical;
   }
 
-  /* Glassmorphism Styles */
+  /* Clean Corporate Cards Styles */
   .glass-card {
     background: var(--bg-card);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
     border: 1px solid var(--border-card);
     box-shadow: var(--shadow-card);
     transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
@@ -241,8 +267,6 @@ html.light {
 
   .glass-card-strong {
     background: var(--bg-card-strong);
-    backdrop-filter: blur(30px);
-    -webkit-backdrop-filter: blur(30px);
     border: 1px solid var(--border-card);
     box-shadow: var(--shadow-strong);
     transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
@@ -254,21 +278,21 @@ html.light {
 
   .glass-card-hover:hover {
     background: var(--bg-card-strong);
-    border-color: rgba(38, 247, 178, 0.3);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15), 0 0 20px rgba(38, 247, 178, 0.12);
+    border-color: rgba(33, 216, 154, 0.4);
+    box-shadow: 0 12px 28px rgba(16, 35, 27, 0.08);
     transform: translateY(-2px);
   }
 
   /* Gradient Text */
   .text-gradient-glitch {
-    background: linear-gradient(135deg, #26f7b2, #009d9a);
+    background: linear-gradient(135deg, #047857, #21D89A);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
   .text-gradient-vivid {
-    background: linear-gradient(135deg, #26f7b2, #009d9a, #26f7b2);
+    background: linear-gradient(135deg, #047857, #21D89A, #047857);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -276,32 +300,25 @@ html.light {
     animation: gradient-shift 4s ease infinite;
   }
 
-  /* Neon Glow Utilities */
+  /* Neon Glow Utilities - Clean indicators */
   .glow-emerald {
-    box-shadow: 0 0 25px rgba(38, 247, 178, 0.25), 0 0 50px rgba(38, 247, 178, 0.05);
+    box-shadow: 0 2px 10px rgba(33, 216, 154, 0.15);
   }
 
   .glow-cyan {
-    box-shadow: 0 0 25px rgba(0, 157, 154, 0.25), 0 0 50px rgba(0, 157, 154, 0.05);
+    box-shadow: 0 2px 10px rgba(4, 120, 87, 0.15);
   }
 
-  /* Grid overlay background */
+  /* Grid overlay background - Cleaned */
   .grid-bg {
-    background-image:
-      linear-gradient(to right, var(--border-card) 1px, transparent 1px),
-      linear-gradient(to bottom, var(--border-card) 1px, transparent 1px);
-    background-size: 50px 50px;
-    transition: background-image 0.3s ease;
+    background: transparent;
+    transition: background 0.3s ease;
   }
 
-  /* Noise Overlay */
+  /* Noise Overlay - Cleaned */
   .noise-overlay::before {
     content: '';
-    position: absolute;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.02'/%3E%3C/svg%3E");
-    pointer-events: none;
-    z-index: 1;
+    display: none;
   }
 
   /* Ambient radial glow backdrop for app shells (premium depth) */
@@ -312,8 +329,8 @@ html.light {
     pointer-events: none;
     z-index: 0;
     background:
-      radial-gradient(45rem 45rem at 8% -8%, var(--ambient-gradient-1), transparent 60%),
-      radial-gradient(40rem 40rem at 105% 108%, var(--ambient-gradient-2), transparent 60%);
+      radial-gradient(circle at 15% 15%, var(--ambient-gradient-1), transparent 30%),
+      radial-gradient(circle at 85% 85%, var(--ambient-gradient-2), transparent 30%);
     transition: background 0.3s ease;
   }
 }

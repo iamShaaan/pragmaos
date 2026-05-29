@@ -161,7 +161,7 @@ export const TeamMembers: React.FC = () => {
                 </div>
                 <button
                     onClick={() => { if (showForm) resetForm(); else setShowForm(true); }}
-                    className="bg-gradient-to-r from-[#26f7b2] to-[#009d9a] hover:opacity-90 text-black px-6 py-3 rounded-2xl font-black transition-all shadow-lg shadow-[#26f7b2]/20 active:scale-95 flex items-center gap-2 text-sm"
+                    className="bg-gradient-to-r from-[#21D89A] to-[#047857] hover:opacity-90 text-black px-6 py-3 rounded-2xl font-black transition-all shadow-lg shadow-[#21D89A]/20 active:scale-95 flex items-center gap-2 text-sm"
                 >
                     <UserPlus size={16} />
                     {showForm ? 'Cancel' : 'Add Member'}
@@ -220,7 +220,7 @@ export const TeamMembers: React.FC = () => {
                         <button
                             onClick={saveTeamMember}
                             disabled={saving || (!name.trim() && !email.trim() && !userCode.trim() && !whatsappNumber.trim())}
-                            className="bg-gradient-to-r from-[#26f7b2] to-[#009d9a] hover:opacity-90 disabled:opacity-40 text-black px-8 py-3 rounded-2xl font-black transition-all shadow-lg shadow-[#26f7b2]/20 active:scale-95 text-sm flex items-center gap-2"
+                            className="bg-gradient-to-r from-[#21D89A] to-[#047857] hover:opacity-90 disabled:opacity-40 text-black px-8 py-3 rounded-2xl font-black transition-all shadow-lg shadow-[#21D89A]/20 active:scale-95 text-sm flex items-center gap-2"
                         >
                             {saving ? 'Saving...' : (editingIdx !== null ? 'Update Member' : 'Save Member')}
                         </button>
@@ -239,7 +239,7 @@ export const TeamMembers: React.FC = () => {
                 ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         {profile.teamMembers.map((member, idx) => (
-                            <div key={idx} className="flex items-center justify-between bg-white/[0.02] p-4 rounded-2xl border border-white/[0.08] group hover:border-[#26f7b2]/30 transition-all">
+                            <div key={idx} className="flex items-center justify-between bg-white/[0.02] p-4 rounded-2xl border border-white/[0.08] group hover:border-[#21D89A]/30 transition-all">
                                 <div className="flex items-center gap-4">
                                     <div className="w-10 h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-400 font-black border border-emerald-500/20">
                                         {(member.name || member.email || '?').charAt(0).toUpperCase()}
@@ -276,7 +276,7 @@ export const TeamMembers: React.FC = () => {
                                 <div className="flex items-center gap-2">
                                     <button
                                         onClick={() => handleEdit(idx)}
-                                        className="p-2 bg-white/[0.03] border border-white/[0.08] rounded-xl text-slate-600 hover:text-[#26f7b2] hover:border-[#26f7b2]/30 transition-all"
+                                        className="p-2 bg-white/[0.03] border border-white/[0.08] rounded-xl text-slate-600 hover:text-[#21D89A] hover:border-[#21D89A]/30 transition-all"
                                         title="Edit member"
                                     >
                                         <Users size={16} />

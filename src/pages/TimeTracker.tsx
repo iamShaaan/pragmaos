@@ -59,7 +59,7 @@ export const TimeTracker: React.FC = () => {
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
                 <div>
                     <h2 className="text-white text-xl font-black flex items-center gap-3">
-                        <div className="p-2.5 bg-[#26f7b2]/15 rounded-xl"><Clock size={20} className="text-[#26f7b2]" /></div>
+                        <div className="p-2.5 bg-[#21D89A]/15 rounded-xl"><Clock size={20} className="text-[#21D89A]" /></div>
                         Time Tracker
                     </h2>
                     <p className="text-slate-500 text-xs font-bold uppercase tracking-widest mt-2">
@@ -75,7 +75,7 @@ export const TimeTracker: React.FC = () => {
                         placeholder="Search date or task..."
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
-                        className="w-full bg-white/[0.03] border border-white/[0.08] rounded-2xl pl-10 pr-4 py-3 text-sm text-white focus:border-[#26f7b2] focus:ring-4 focus:ring-[#26f7b2]/5 outline-none transition-all"
+                        className="w-full bg-white/[0.03] border border-white/[0.08] rounded-2xl pl-10 pr-4 py-3 text-sm text-white focus:border-[#21D89A] focus:ring-4 focus:ring-[#21D89A]/5 outline-none transition-all"
                     />
                 </div>
             </div>
@@ -97,8 +97,8 @@ export const TimeTracker: React.FC = () => {
                             {/* Day Header */}
                             <div className="flex items-center justify-between p-5 bg-white/[0.02] border-b border-white/[0.08] group-hover:bg-white/[0.04] transition-colors">
                                 <div className="flex items-center gap-3 pr-4">
-                                    <div className="p-2 bg-[#26f7b2]/10 rounded-lg shrink-0">
-                                        <CalendarIcon size={16} className="text-[#26f7b2]" />
+                                    <div className="p-2 bg-[#21D89A]/10 rounded-lg shrink-0">
+                                        <CalendarIcon size={16} className="text-[#21D89A]" />
                                     </div>
                                     <div>
                                         <p className="text-white font-bold text-sm tracking-wide">

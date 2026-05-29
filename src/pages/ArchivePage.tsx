@@ -19,7 +19,7 @@ interface ArchivedItem {
 const COLLECTIONS = ['tasks', 'clients', 'projects', 'meetings', 'notes'] as const;
 
 const ICON_MAP: Record<string, React.ReactNode> = {
-    tasks: <CheckSquare size={14} className="text-[#26f7b2]" />,
+    tasks: <CheckSquare size={14} className="text-[#21D89A]" />,
     clients: <Users size={14} className="text-emerald-400" />,
     projects: <FolderKanban size={14} className="text-cyan-300" />,
     meetings: <Calendar size={14} className="text-amber-400" />,
@@ -126,7 +126,7 @@ export const ArchivePage: React.FC = () => {
                         key={col}
                         onClick={() => setFilter(col)}
                         className={`px-4 py-2 rounded-2xl text-xs font-bold transition-all duration-300 capitalize border ${filter === col
-                            ? 'bg-gradient-to-r from-[#26f7b2]/20 to-[#009d9a]/20 text-[#26f7b2] border-[#26f7b2]/50 shadow-[0_0_15px_rgba(38,247,178,0.2)]'
+                            ? 'bg-gradient-to-r from-[#21D89A]/20 to-[#047857]/20 text-[#21D89A] border-[#21D89A]/50 shadow-[0_0_15px_rgba(38,247,178,0.2)]'
                             : 'bg-white/[0.03] border-white/5 text-slate-400 hover:text-slate-200 hover:bg-white/[0.06] hover:border-white/10'
                             }`}
                     >
