@@ -16,6 +16,13 @@ const PAGE_TITLES: Record<string, string> = {
     '/files': 'Files',
     '/profile': 'My Profile',
     '/routine': 'Checklist',
+    '/finance': 'Finance',
+    '/user-data': 'User Data',
+    '/user-data/team': 'Team Members',
+    '/user-data/archive': 'Archive',
+    '/user-data/time-tracker': 'Time Tracker',
+    '/user-data/vault': 'Secure Vault',
+    '/user-data/finance': 'Finance History',
 };
 
 export const AppShell: React.FC = () => {
@@ -42,7 +49,20 @@ export const AppShell: React.FC = () => {
         setTheme(t => t === 'light' ? 'dark' : 'light');
     };
 
-    const title = PAGE_TITLES[location.pathname] || 'PragmaOS';
+    const getPageTitle = (pathname: string): string => {
+        if (PAGE_TITLES[pathname]) {
+            return PAGE_TITLES[pathname];
+        }
+        if (pathname.startsWith('/projects/')) {
+            return 'Project Details';
+        }
+        if (pathname.startsWith('/user-data/clients/')) {
+            return 'Client Details';
+        }
+        return 'PragmaOS';
+    };
+
+    const title = getPageTitle(location.pathname);
     const today = new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
 
     // Close notifications when clicking outside
