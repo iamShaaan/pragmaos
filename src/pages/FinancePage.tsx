@@ -35,23 +35,23 @@ const EntryRow: React.FC<{ entry: FinanceEntry; onDelete: (id: string) => void }
         initial={{ opacity: 0, y: -8 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -8 }}
-        className="flex items-center gap-3 p-3 rounded-xl bg-white/[0.02] border border-white/[0.08] group"
+        className="flex items-center gap-3 p-3 rounded-xl bg-bg-card border border-border-card shadow-sm group"
     >
         <div className={`w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 ${
-            entry.type === 'earned' ? 'bg-emerald-500/15 text-emerald-400' : 'bg-rose-500/15 text-rose-400'
+            entry.type === 'earned' ? 'bg-emerald-500/15 text-emerald-500 dark:text-emerald-450' : 'bg-rose-500/15 text-rose-500 dark:text-rose-450'
         }`}>
             {entry.type === 'earned' ? <TrendingUp size={15} /> : <TrendingDown size={15} />}
         </div>
         <div className="flex-1 min-w-0">
-            <p className="text-slate-200 text-sm font-semibold truncate">{entry.description}</p>
-            <p className="text-slate-500 text-[10px] uppercase font-bold">{entry.category}</p>
+            <p className="text-text-main text-sm font-semibold truncate">{entry.description}</p>
+            <p className="text-text-muted text-[10px] uppercase font-bold">{entry.category}</p>
         </div>
-        <p className={`font-black text-sm tabular-nums ${entry.type === 'earned' ? 'text-emerald-400' : 'text-rose-400'}`}>
+        <p className={`font-black text-sm tabular-nums ${entry.type === 'earned' ? 'text-emerald-500 dark:text-emerald-400' : 'text-rose-500 dark:text-rose-400'}`}>
             {entry.type === 'earned' ? '+' : '-'}{formatCurrency(entry.amount, entry.currency || 'EUR')}
         </p>
         <button
             onClick={() => onDelete(entry.id)}
-            className="opacity-0 group-hover:opacity-100 p-1.5 text-slate-600 hover:text-rose-400 hover:bg-rose-500/10 rounded-lg transition-all"
+            className="opacity-0 group-hover:opacity-100 p-1.5 text-text-muted hover:text-rose-500 hover:bg-rose-500/10 rounded-lg transition-all"
             title="Delete"
         >
             <Trash2 size={13} />
@@ -77,29 +77,29 @@ const MonthCard: React.FC<{ month: string; entries: FinanceEntry[]; displayCurre
     }, [entries, displayCurrency, rates]);
 
     return (
-        <div className="bg-white/[0.02] border border-white/[0.08] rounded-2xl overflow-hidden">
+        <div className="bg-bg-card border border-border-card rounded-2xl overflow-hidden shadow-sm">
             <button
                 onClick={() => setOpen(o => !o)}
-                className="w-full flex items-center justify-between px-5 py-4 hover:bg-white/[0.04] transition-colors"
+                className="w-full flex items-center justify-between px-5 py-4 hover:bg-bg-input transition-colors"
             >
                 <div className="flex items-center gap-3">
                     <div className="p-2 rounded-lg bg-[#21D89A]/15 text-[#21D89A]">
                         <CalendarDays size={16} />
                     </div>
                     <div className="text-left">
-                        <p className="text-slate-200 font-bold text-sm">{month}</p>
-                        <p className="text-slate-500 text-xs">{entries.length} entries</p>
+                        <p className="text-text-main font-bold text-sm">{month}</p>
+                        <p className="text-text-muted text-xs">{entries.length} entries</p>
                     </div>
                 </div>
                 <div className="flex items-center gap-6">
                     <div className="text-right hidden sm:block">
-                        <p className="text-emerald-400 text-[10px] font-bold">+{formatCurrency(totals.earned, displayCurrency)}</p>
-                        <p className="text-rose-400 text-[10px] font-bold">-{formatCurrency(totals.spent, displayCurrency)}</p>
+                        <p className="text-emerald-500 dark:text-emerald-400 text-[10px] font-bold">+{formatCurrency(totals.earned, displayCurrency)}</p>
+                        <p className="text-rose-500 dark:text-rose-400 text-[10px] font-bold">-{formatCurrency(totals.spent, displayCurrency)}</p>
                     </div>
-                    <p className={`font-black text-sm tabular-nums ${totals.net >= 0 ? 'text-emerald-400' : 'text-rose-400'}`}>
+                    <p className={`font-black text-sm tabular-nums ${totals.net >= 0 ? 'text-emerald-500 dark:text-emerald-400' : 'text-rose-500 dark:text-rose-400'}`}>
                         {totals.net >= 0 ? '+' : '-'}{formatCurrency(totals.net, displayCurrency)}
                     </p>
-                    {open ? <ChevronUp size={16} className="text-slate-500" /> : <ChevronDown size={16} className="text-slate-500" />}
+                    {open ? <ChevronUp size={16} className="text-text-muted" /> : <ChevronDown size={16} className="text-text-muted" />}
                 </div>
             </button>
             <AnimatePresence>
@@ -108,18 +108,18 @@ const MonthCard: React.FC<{ month: string; entries: FinanceEntry[]; displayCurre
                         initial={{ height: 0, opacity: 0 }}
                         animate={{ height: 'auto', opacity: 1 }}
                         exit={{ height: 0, opacity: 0 }}
-                        className="overflow-hidden bg-black/20"
+                        className="overflow-hidden bg-bg-app border-t border-border-card"
                     >
                         <div className="p-4 space-y-2">
                             {entries.map(e => (
                                 <div key={e.id} className="group flex items-center justify-between text-xs">
                                     <div className="flex items-center gap-2">
-                                        <span className={`w-1.5 h-1.5 rounded-full ${e.type === 'earned' ? 'bg-emerald-400' : 'bg-rose-400'}`} />
-                                        <span className="text-slate-300">{e.description}</span>
-                                        <span className="text-slate-600 font-medium tracking-tight">({formatCurrency(e.amount, e.currency || 'EUR')})</span>
+                                        <span className={`w-1.5 h-1.5 rounded-full ${e.type === 'earned' ? 'bg-emerald-500' : 'bg-rose-500'}`} />
+                                        <span className="text-text-main font-semibold">{e.description}</span>
+                                        <span className="text-text-muted font-medium tracking-tight">({formatCurrency(e.amount, e.currency || 'EUR')})</span>
                                     </div>
                                     <div className="flex items-center gap-4">
-                                        <span className={`font-bold tabular-nums ${e.type === 'earned' ? 'text-emerald-400' : 'text-rose-400'}`}>
+                                        <span className={`font-bold tabular-nums ${e.type === 'earned' ? 'text-emerald-500 dark:text-emerald-400' : 'text-rose-500 dark:text-rose-400'}`}>
                                             {rates ? formatCurrency(convertCurrency(e.amount, e.currency || 'EUR', displayCurrency, rates), displayCurrency) : formatCurrency(e.amount, e.currency || 'EUR')}
                                         </span>
                                         <button 
@@ -151,20 +151,20 @@ const InvoiceDetailsModal: React.FC<{ invoice: Invoice; profile: Partial<UserPro
                 className="absolute inset-0 bg-slate-950/80 backdrop-blur-sm" 
             />
             <motion.div 
-                initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                initial={{ opacity: 0, scale: 0.95, y: 20 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.9, y: 20 }}
-                className="relative w-full max-w-2xl bg-slate-950 border border-white/[0.08] rounded-[40px] shadow-2xl overflow-hidden flex flex-col max-h-[90vh]"
+                exit={{ opacity: 0, scale: 0.95, y: 20 }}
+                className="relative w-full max-w-2xl bg-bg-card border border-border-card rounded-[40px] shadow-2xl overflow-hidden flex flex-col max-h-[90vh]"
             >
                 <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-[#21D89A] via-[#047857] to-[#21D89A]" />
                 
                 <div className="p-8 overflow-y-auto custom-scrollbar">
                     <div className="flex justify-between items-start mb-10">
                         <div>
-                            <h2 className="text-3xl font-black text-white tracking-tighter mb-1">INVOICE</h2>
-                            <p className="text-slate-500 text-[10px] font-black uppercase tracking-widest">{invoice.invoice_number}</p>
+                            <h2 className="text-3xl font-black text-text-main tracking-tighter mb-1">INVOICE</h2>
+                            <p className="text-text-muted text-[10px] font-black uppercase tracking-widest">{invoice.invoice_number}</p>
                         </div>
-                        <button onClick={onClose} className="p-2 bg-white/[0.04] hover:bg-white/[0.08] text-slate-400 rounded-full transition-colors">
+                        <button onClick={onClose} className="p-2 bg-bg-input hover:bg-border-card text-text-muted rounded-full transition-colors">
                             <Minus size={20} className="rotate-45" />
                         </button>
                     </div>
@@ -172,45 +172,45 @@ const InvoiceDetailsModal: React.FC<{ invoice: Invoice; profile: Partial<UserPro
                     <div className="grid grid-cols-2 gap-12 mb-12">
                         <div className="space-y-4">
                             <div>
-                                <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1">Sender</p>
-                                <p className="text-sm font-bold text-slate-100">{profile.companyName || 'TaskMaster'}</p>
-                                <p className="text-[10px] text-slate-400">{profile.fullName || profile.displayName}</p>
+                                <p className="text-[10px] font-black text-text-muted uppercase tracking-widest mb-1">Sender</p>
+                                <p className="text-sm font-bold text-text-main">{profile.companyName || 'TaskMaster'}</p>
+                                <p className="text-[10px] text-text-muted">{profile.fullName || profile.displayName}</p>
                             </div>
                             <div>
-                                <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1">Recipient</p>
-                                <p className="text-sm font-bold text-slate-100">{invoice.recipient_name}</p>
-                                <p className="text-[10px] text-slate-400 capitalize">{invoice.type.replace('_', ' ')}</p>
+                                <p className="text-[10px] font-black text-text-muted uppercase tracking-widest mb-1">Recipient</p>
+                                <p className="text-sm font-bold text-text-main">{invoice.recipient_name}</p>
+                                <p className="text-[10px] text-text-muted capitalize">{invoice.type.replace('_', ' ')}</p>
                             </div>
                         </div>
                         <div className="text-right space-y-4">
                             <div>
-                                <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1">Date Issued</p>
-                                <p className="text-sm font-bold text-slate-100">{format(new Date(invoice.date), 'dd MMMM yyyy')}</p>
+                                <p className="text-[10px] font-black text-text-muted uppercase tracking-widest mb-1">Date Issued</p>
+                                <p className="text-sm font-bold text-text-main">{format(new Date(invoice.date), 'dd MMMM yyyy')}</p>
                             </div>
                             {invoice.due_date && (
                                 <div>
-                                    <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1">Due Date</p>
-                                    <p className="text-sm font-bold text-rose-400">{format(new Date(invoice.due_date), 'dd MMMM yyyy')}</p>
+                                    <p className="text-[10px] font-black text-text-muted uppercase tracking-widest mb-1">Due Date</p>
+                                    <p className="text-sm font-bold text-rose-500 dark:text-rose-400">{format(new Date(invoice.due_date), 'dd MMMM yyyy')}</p>
                                 </div>
                             )}
                         </div>
                     </div>
 
-                    <div className="bg-white/[0.02] rounded-3xl border border-white/[0.08] overflow-hidden mb-8">
+                    <div className="bg-bg-app rounded-3xl border border-border-card overflow-hidden mb-8 shadow-sm">
                         <table className="w-full text-left text-sm">
                             <thead>
-                                <tr className="border-b border-white/[0.08] bg-white/[0.02]">
-                                    <th className="px-6 py-4 text-[10px] font-black text-slate-500 uppercase tracking-widest">Description</th>
-                                    <th className="px-6 py-4 text-[10px] font-black text-slate-500 uppercase tracking-widest text-center">Qty</th>
-                                    <th className="px-6 py-4 text-[10px] font-black text-slate-500 uppercase tracking-widest text-right">Total</th>
+                                <tr className="border-b border-border-card bg-bg-input">
+                                    <th className="px-6 py-4 text-[10px] font-black text-text-muted uppercase tracking-widest">Description</th>
+                                    <th className="px-6 py-4 text-[10px] font-black text-text-muted uppercase tracking-widest text-center">Qty</th>
+                                    <th className="px-6 py-4 text-[10px] font-black text-text-muted uppercase tracking-widest text-right">Total</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {invoice.items.map((item, i) => (
-                                    <tr key={i} className="border-b border-white/5 last:border-0">
-                                        <td className="px-6 py-4 font-bold text-slate-200">{item.description}</td>
-                                        <td className="px-6 py-4 text-center font-mono text-slate-400">{item.quantity}</td>
-                                        <td className="px-6 py-4 text-right font-black text-slate-100 tabular-nums">
+                                    <tr key={i} className="border-b border-border-card/40 last:border-0">
+                                        <td className="px-6 py-4 font-bold text-text-main">{item.description}</td>
+                                        <td className="px-6 py-4 text-center font-mono text-text-muted">{item.quantity}</td>
+                                        <td className="px-6 py-4 text-right font-black text-text-main tabular-nums">
                                             {formatCurrency(item.price * item.quantity, invoice.currency)}
                                         </td>
                                     </tr>
@@ -220,39 +220,39 @@ const InvoiceDetailsModal: React.FC<{ invoice: Invoice; profile: Partial<UserPro
                     </div>
 
                     {invoice.note && (
-                        <div className="mb-8 p-6 bg-white/[0.02] rounded-3xl border border-white/[0.08]">
-                            <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2 flex items-center gap-2">
+                        <div className="mb-8 p-6 bg-bg-app rounded-3xl border border-border-card shadow-sm">
+                            <p className="text-[10px] font-black text-[#047857] dark:text-[#21D89A] uppercase tracking-widest mb-2 flex items-center gap-2">
                                 <Sparkles size={12} className="text-[#21D89A]" /> AI Generated Note
                             </p>
-                            <p className="text-sm text-slate-300 leading-relaxed whitespace-pre-wrap">{invoice.note}</p>
+                            <p className="text-sm text-text-main leading-relaxed whitespace-pre-wrap">{invoice.note}</p>
                         </div>
                     )}
 
                     <div className="flex flex-col items-end gap-2 mb-10">
-                        <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Total Amount due</p>
-                        <p className="text-4xl font-black text-[#21D89A] tabular-nums tracking-tighter">
+                        <p className="text-[10px] font-black text-text-muted uppercase tracking-widest">Total Amount due</p>
+                        <p className="text-4xl font-black text-[#047857] dark:text-[#21D89A] tabular-nums tracking-tighter">
                             {formatCurrency(invoice.total_amount, invoice.currency)}
                         </p>
                     </div>
 
                     {profile.signatureURL && (
-                        <div className="pt-8 border-t border-white/[0.08]">
-                            <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-4">Authorized Signature</p>
-                            <img src={profile.signatureURL} alt="Signature" className="h-16 w-auto opacity-80 invert brightness-200 grayscale" />
-                            <div className="w-48 h-px bg-white/[0.04] mt-2" />
-                            <p className="text-[10px] font-bold text-slate-400 mt-2">{profile.fullName || profile.displayName}</p>
+                        <div className="pt-8 border-t border-border-card">
+                            <p className="text-[10px] font-black text-text-muted uppercase tracking-widest mb-4">Authorized Signature</p>
+                            <img src={profile.signatureURL} alt="Signature" className="h-16 w-auto opacity-90 dark:invert" />
+                            <div className="w-48 h-px bg-border-card mt-2" />
+                            <p className="text-[10px] font-bold text-text-muted mt-2">{profile.fullName || profile.displayName}</p>
                         </div>
                     )}
                 </div>
 
-                <div className="p-8 bg-white/[0.02] border-t border-white/[0.08] flex gap-4">
+                <div className="p-8 bg-bg-app border-t border-border-card flex gap-4">
                     <button 
                         onClick={() => generateInvoicePDF(invoice, profile)}
-                        className="flex-1 flex items-center justify-center gap-3 bg-gradient-to-r from-[#21D89A] to-[#047857] hover:opacity-90 text-black font-black py-4 rounded-2xl transition-all shadow-xl shadow-[#21D89A]/20"
+                        className="flex-1 flex items-center justify-center gap-3 bg-gradient-to-r from-[#21D89A] to-[#047857] hover:opacity-90 text-white font-black py-4 rounded-2xl transition-all shadow-xl shadow-[#21D89A]/10 cursor-pointer"
                     >
                         <Download size={20} /> DOWNLOAD PDF
                     </button>
-                    <button onClick={onClose} className="flex-1 bg-white/[0.04] hover:bg-white/[0.08] text-slate-200 font-black py-4 rounded-2xl transition-all">
+                    <button onClick={onClose} className="flex-1 bg-bg-input hover:bg-border-card text-text-main font-black py-4 rounded-2xl transition-all cursor-pointer">
                         CLOSE
                     </button>
                 </div>
@@ -369,24 +369,24 @@ const CreateInvoiceTab: React.FC<{ profile: Partial<UserProfile> }> = ({ profile
                 <h3 className="text-slate-400 text-xs font-black uppercase tracking-widest pl-1">Create New Invoice</h3>
             </div>
 
-            <form onSubmit={handleSubmit} className="bg-white/[0.02] border border-white/[0.08] rounded-3xl p-6 space-y-5 relative">
+            <form onSubmit={handleSubmit} className="bg-bg-card border border-border-card rounded-3xl p-6 space-y-5 relative shadow-sm">
                             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#21D89A] to-[#047857]" />
                             
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <div className="space-y-2">
-                                    <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Invoice Type</label>
-                                    <div className="flex bg-black/20 p-1 rounded-xl border border-white/[0.08]">
+                                    <label className="text-[10px] font-black text-text-muted uppercase tracking-widest">Invoice Type</label>
+                                    <div className="flex bg-bg-input p-1 rounded-xl border border-border-input">
                                         <button
                                             type="button"
                                             onClick={() => setType('client_bill')}
-                                            className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-lg text-[10px] font-black uppercase transition-all ${type === 'client_bill' ? 'bg-gradient-to-r from-[#21D89A] to-[#047857] text-black' : 'text-slate-500'}`}
+                                            className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-lg text-[10px] font-black uppercase transition-all cursor-pointer ${type === 'client_bill' ? 'bg-[#DDFBF0] text-[#047857]' : 'text-text-muted hover:text-text-main'}`}
                                         >
                                             <Briefcase size={12} /> Client Bill
                                         </button>
                                         <button
                                             type="button"
                                             onClick={() => setType('team_payout')}
-                                            className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-lg text-[10px] font-black uppercase transition-all ${type === 'team_payout' ? 'bg-gradient-to-r from-[#21D89A] to-[#047857] text-black' : 'text-slate-500'}`}
+                                            className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-lg text-[10px] font-black uppercase transition-all cursor-pointer ${type === 'team_payout' ? 'bg-[#DDFBF0] text-[#047857]' : 'text-text-muted hover:text-text-main'}`}
                                         >
                                             <User size={12} /> Team Payout
                                         </button>
@@ -394,7 +394,7 @@ const CreateInvoiceTab: React.FC<{ profile: Partial<UserProfile> }> = ({ profile
                                 </div>
 
                                 <div className="space-y-2">
-                                    <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Recipient</label>
+                                    <label className="text-[10px] font-black text-text-muted uppercase tracking-widest">Recipient</label>
                                     {type === 'client_bill' ? (
                                         <select
                                             value={recipientId}
@@ -403,10 +403,10 @@ const CreateInvoiceTab: React.FC<{ profile: Partial<UserProfile> }> = ({ profile
                                                 setRecipientId(e.target.value);
                                                 setRecipientName(c ? c.name : '');
                                             }}
-                                            className="w-full bg-slate-950 border border-white/[0.08] rounded-xl px-4 py-2.5 text-sm text-slate-200 outline-none focus:border-[#21D89A]/50"
+                                            className="w-full bg-bg-input border border-border-input rounded-xl px-4 py-2.5 text-sm text-text-main outline-none focus:border-[#21D89A] transition-colors"
                                         >
                                             <option value="">Select Client</option>
-                                            {clients.map(c => <option key={c.id} value={c.id}>{c.name} ({c.company})</option>)}
+                                            {clients.map(c => <option key={c.id} value={c.id} className="bg-bg-card">{c.name} ({c.company})</option>)}
                                         </select>
                                     ) : (
                                         <input
@@ -414,7 +414,7 @@ const CreateInvoiceTab: React.FC<{ profile: Partial<UserProfile> }> = ({ profile
                                             value={recipientName}
                                             onChange={e => setRecipientName(e.target.value)}
                                             placeholder="Recipient Name"
-                                            className="w-full bg-slate-950 border border-white/[0.08] rounded-xl px-4 py-2.5 text-sm text-slate-200 outline-none focus:border-[#21D89A]/50"
+                                            className="w-full bg-bg-input border border-border-input rounded-xl px-4 py-2.5 text-sm text-text-main outline-none focus:border-[#21D89A] transition-colors"
                                         />
                                     )}
                                 </div>
@@ -422,55 +422,55 @@ const CreateInvoiceTab: React.FC<{ profile: Partial<UserProfile> }> = ({ profile
 
                             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                                 <div className="space-y-2">
-                                    <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Currency</label>
+                                    <label className="text-[10px] font-black text-text-muted uppercase tracking-widest">Currency</label>
                                     <select
                                         value={currency}
                                         onChange={(e) => setCurrency(e.target.value as CurrencyCode)}
-                                        className="w-full bg-slate-950 border border-white/[0.08] rounded-xl px-4 py-2.5 text-sm text-slate-200 outline-none focus:border-[#21D89A]/50"
+                                        className="w-full bg-bg-input border border-border-input rounded-xl px-4 py-2.5 text-sm text-text-main outline-none focus:border-[#21D89A] transition-colors"
                                     >
-                                        {CURRENCIES.map(c => <option key={c} value={c}>{c}</option>)}
+                                        {CURRENCIES.map(c => <option key={c} value={c} className="bg-bg-card">{c}</option>)}
                                     </select>
                                 </div>
                                 <div className="space-y-2">
-                                    <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Project (Optional)</label>
+                                    <label className="text-[10px] font-black text-text-muted uppercase tracking-widest">Project (Optional)</label>
                                     <select
                                         value={linkedProjectId}
                                         onChange={e => {
                                             setLinkedProjectId(e.target.value);
                                             setLinkedTaskIds([]); // Reset tasks when project changes
                                         }}
-                                        className="w-full bg-slate-950 border border-white/[0.08] rounded-xl px-4 py-2.5 text-sm text-slate-200 outline-none focus:border-[#21D89A]/50"
+                                        className="w-full bg-bg-input border border-border-input rounded-xl px-4 py-2.5 text-sm text-text-main outline-none focus:border-[#21D89A] transition-colors"
                                     >
                                         <option value="">Select Project</option>
-                                        {projects.map(p => <option key={p.id} value={p.id}>{p.name}</option>)}
+                                        {projects.map(p => <option key={p.id} value={p.id} className="bg-bg-card">{p.name}</option>)}
                                     </select>
                                 </div>
                                 <div className="space-y-2">
-                                    <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Due Date (Optional)</label>
+                                    <label className="text-[10px] font-black text-text-muted uppercase tracking-widest">Due Date (Optional)</label>
                                     <input
                                         type="date"
                                         value={dueDate}
                                         onChange={e => setDueDate(e.target.value)}
-                                        className="w-full bg-slate-950 border border-white/[0.08] rounded-xl px-4 py-2.5 text-sm text-slate-200 outline-none focus:border-[#21D89A]/50"
+                                        className="w-full bg-bg-input border border-border-input rounded-xl px-4 py-2.5 text-sm text-text-main outline-none focus:border-[#21D89A] transition-colors"
                                     />
                                 </div>
                             </div>
 
                             <div className="space-y-2">
-                                <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Linked Tasks (Optional)</label>
-                                <div className="bg-black/20 border border-white/[0.08] rounded-xl p-3 max-h-32 overflow-y-auto custom-scrollbar flex flex-col gap-2">
+                                <label className="text-[10px] font-black text-text-muted uppercase tracking-widest">Linked Tasks (Optional)</label>
+                                <div className="bg-bg-app border border-border-card rounded-xl p-3 max-h-32 overflow-y-auto custom-scrollbar flex flex-col gap-2 shadow-inner">
                                     {tasks.filter(t => t.status !== 'done' && (!linkedProjectId || t.project_id === linkedProjectId)).length === 0 ? (
-                                        <p className="text-xs text-slate-500 italic px-2 py-1">No pending tasks found.</p>
+                                        <p className="text-xs text-text-muted italic px-2 py-1">No pending tasks found.</p>
                                     ) : (
                                         tasks.filter(t => t.status !== 'done' && (!linkedProjectId || t.project_id === linkedProjectId)).map(t => (
-                                            <label key={t.id} className="flex items-center gap-3 p-2 hover:bg-white/[0.04] rounded-lg cursor-pointer transition-colors border border-transparent hover:border-white/[0.08]">
+                                            <label key={t.id} className="flex items-center gap-3 p-2 hover:bg-bg-input rounded-lg cursor-pointer transition-colors border border-transparent hover:border-border-card">
                                                 <input 
                                                     type="checkbox" 
                                                     checked={linkedTaskIds.includes(t.id)}
                                                     onChange={() => toggleTask(t.id)}
-                                                    className="w-4 h-4 rounded border-white/[0.1] text-[#21D89A] focus:ring-[#21D89A]/30 bg-slate-950"
+                                                    className="w-4 h-4 rounded border-border-input text-[#21D89A] focus:ring-[#21D89A]/30 bg-bg-input"
                                                 />
-                                                <span className="text-sm text-slate-300 truncate">{t.title}</span>
+                                                <span className="text-sm text-text-main truncate font-medium">{t.title}</span>
                                             </label>
                                         ))
                                     )}
@@ -479,11 +479,11 @@ const CreateInvoiceTab: React.FC<{ profile: Partial<UserProfile> }> = ({ profile
 
                             <div className="space-y-2 relative">
                                 <div className="flex items-center justify-between">
-                                    <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Invoice Note</label>
+                                    <label className="text-[10px] font-black text-text-muted uppercase tracking-widest">Invoice Note</label>
                                     <button
                                         type="button"
                                         onClick={handleGenerateNote}
-                                        className="text-[10px] font-black text-[#21D89A] hover:text-[#21D89A]/80 transition-colors flex items-center gap-1 uppercase tracking-widest"
+                                        className="text-[10px] font-black text-[#047857] dark:text-[#21D89A] hover:text-[#047857]/80 dark:hover:text-[#21D89A]/80 transition-colors flex items-center gap-1 uppercase tracking-widest cursor-pointer"
                                     >
                                         <Sparkles size={12} /> Auto-Generate
                                     </button>
@@ -493,12 +493,12 @@ const CreateInvoiceTab: React.FC<{ profile: Partial<UserProfile> }> = ({ profile
                                     onChange={e => setNote(e.target.value)}
                                     placeholder="Thank you for your business..."
                                     rows={4}
-                                    className="w-full bg-slate-950 border border-white/[0.08] rounded-xl px-4 py-3 text-sm text-slate-200 outline-none focus:border-[#21D89A]/50 custom-scrollbar resize-none"
+                                    className="w-full bg-bg-input border border-border-input rounded-xl px-4 py-3 text-sm text-text-main outline-none focus:border-[#21D89A] custom-scrollbar resize-none placeholder:text-text-muted/40 transition-colors"
                                 />
                             </div>
 
                             <div className="space-y-3">
-                                <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Items</label>
+                                <label className="text-[10px] font-black text-text-muted uppercase tracking-widest">Items</label>
                                 {items.map((item, index) => (
                                     <div key={index} className="grid grid-cols-1 sm:grid-cols-6 gap-2">
                                         <input
@@ -506,27 +506,27 @@ const CreateInvoiceTab: React.FC<{ profile: Partial<UserProfile> }> = ({ profile
                                             value={item.description}
                                             onChange={e => handleItemChange(index, 'description', e.target.value)}
                                             placeholder="Description"
-                                            className="sm:col-span-3 bg-slate-950 border border-white/[0.08] rounded-xl px-4 py-2 text-sm text-slate-200 outline-none focus:border-[#21D89A]/50"
+                                            className="sm:col-span-3 bg-bg-input border border-border-input rounded-xl px-4 py-2 text-sm text-text-main outline-none focus:border-[#21D89A] transition-colors"
                                         />
                                         <input
                                             required
                                             type="number"
                                             value={item.quantity}
                                             onChange={e => handleItemChange(index, 'quantity', parseInt(e.target.value) || 0)}
-                                            className="bg-slate-950 border border-white/[0.08] rounded-xl px-3 py-2 text-sm text-center font-mono text-slate-200 outline-none"
+                                            className="bg-bg-input border border-border-input rounded-xl px-3 py-2 text-sm text-center font-mono text-text-main outline-none focus:border-[#21D89A] transition-colors"
                                         />
                                         <input
                                             required
                                             type="number"
                                             value={item.price}
                                             onChange={e => handleItemChange(index, 'price', parseFloat(e.target.value) || 0)}
-                                            className="bg-slate-950 border border-white/[0.08] rounded-xl px-3 py-2 text-sm text-center font-mono text-slate-200 outline-none"
+                                            className="bg-bg-input border border-border-input rounded-xl px-3 py-2 text-sm text-center font-mono text-text-main outline-none focus:border-[#21D89A] transition-colors"
                                         />
                                         <button
                                             type="button"
                                             onClick={() => handleRemoveItem(index)}
                                             disabled={items.length === 1}
-                                            className="p-2 text-slate-600 hover:text-rose-400 disabled:opacity-30 transition-colors"
+                                            className="p-2 text-text-muted hover:text-rose-500 disabled:opacity-30 transition-colors"
                                         >
                                             <Trash2 size={16} />
                                         </button>
@@ -566,42 +566,42 @@ const InvoicesListTab: React.FC<{ profile: Partial<UserProfile> }> = ({ profile 
         <div className="space-y-6">
             <div className="space-y-3">
                 {invoices.length === 0 ? (
-                    <div className="bg-white/[0.02] border-2 border-dashed border-white/[0.08] rounded-3xl p-12 text-center text-slate-600 italic text-sm">
+                    <div className="bg-border-card border border-border-card/50 rounded-3xl p-12 text-center text-text-muted italic text-sm border-dashed">
                         No invoices generated yet.
                     </div>
                 ) : (
                     invoices.map(inv => (
-                        <div key={inv.id} className="bg-white/[0.02] border border-white/[0.08] rounded-3xl p-5 flex flex-wrap sm:flex-nowrap justify-between items-center gap-4 group hover:border-[#21D89A]/30 transition-all cursor-pointer" onClick={() => setSelectedInvoice(inv)}>
+                        <div key={inv.id} className="bg-bg-card border border-border-card rounded-3xl p-5 flex flex-wrap sm:flex-nowrap justify-between items-center gap-4 group hover:border-[#21D89A]/50 transition-all cursor-pointer shadow-sm" onClick={() => setSelectedInvoice(inv)}>
                             <div className="flex items-center gap-4">
-                                <div className={`w-12 h-12 rounded-2xl flex items-center justify-center border ${inv.type === 'client_bill' ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400' : 'bg-rose-500/10 border-rose-500/20 text-rose-400'}`}>
+                                <div className={`w-12 h-12 rounded-2xl flex items-center justify-center border ${inv.type === 'client_bill' ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-500 dark:text-emerald-400' : 'bg-rose-500/10 border-rose-500/20 text-rose-500 dark:text-rose-450'}`}>
                                     <FileText size={20} />
                                 </div>
                                 <div>
                                     <div className="flex items-center gap-2">
-                                        <p className="font-bold text-slate-100">{inv.invoice_number}</p>
-                                        <span className={`px-2 py-0.5 rounded-full text-[8px] font-black uppercase tracking-widest ${inv.type === 'client_bill' ? 'bg-emerald-500/15 text-emerald-400' : 'bg-rose-500/15 text-rose-400'}`}>
+                                        <p className="font-bold text-text-main">{inv.invoice_number}</p>
+                                        <span className={`px-2 py-0.5 rounded-full text-[8px] font-black uppercase tracking-widest ${inv.type === 'client_bill' ? 'bg-emerald-500/15 text-emerald-500 dark:text-emerald-400' : 'bg-rose-500/15 text-rose-500 dark:text-rose-450'}`}>
                                             {inv.type === 'client_bill' ? 'Bill' : 'Payout'}
                                         </span>
                                     </div>
-                                    <p className="text-[10px] text-slate-500 font-bold uppercase tracking-tight">{inv.recipient_name} • {format(new Date(inv.date), 'dd MMM yyyy')}</p>
+                                    <p className="text-[10px] text-text-muted font-bold uppercase tracking-tight">{inv.recipient_name} • {format(new Date(inv.date), 'dd MMM yyyy')}</p>
                                 </div>
                             </div>
                             <div className="flex items-center gap-6 w-full sm:w-auto justify-between sm:justify-end">
                                 <div className="text-right">
-                                    <p className="text-slate-100 font-black tabular-nums">{formatCurrency(inv.total_amount, inv.currency)}</p>
-                                    <p className={`text-[10px] font-black uppercase tracking-widest ${inv.status === 'paid' ? 'text-emerald-400' : 'text-amber-400'}`}>{inv.status}</p>
+                                    <p className="text-text-main font-black tabular-nums">{formatCurrency(inv.total_amount, inv.currency)}</p>
+                                    <p className={`text-[10px] font-black uppercase tracking-widest ${inv.status === 'paid' ? 'text-emerald-500 dark:text-emerald-400' : 'text-amber-500 dark:text-amber-450'}`}>{inv.status}</p>
                                 </div>
                                 <div className="flex items-center gap-2">
                                     <button 
                                         onClick={(e) => { e.stopPropagation(); generateInvoicePDF(inv, profile); }}
-                                        className="p-2.5 bg-slate-950 hover:bg-white/[0.08] text-[#21D89A] rounded-xl transition-all"
+                                        className="p-2.5 bg-bg-input hover:bg-border-card border border-border-card text-[#047857] dark:text-[#21D89A] rounded-xl transition-all cursor-pointer"
                                         title="Download PDF"
                                     >
                                         <Download size={16} />
                                     </button>
                                     <button 
                                         onClick={(e) => { e.stopPropagation(); deleteDocById('invoices', inv.id); }} 
-                                        className="opacity-0 group-hover:opacity-100 p-2.5 bg-slate-950 hover:bg-rose-500/20 text-slate-600 hover:text-rose-400 rounded-xl transition-all"
+                                        className="opacity-0 group-hover:opacity-100 p-2.5 bg-bg-input hover:bg-rose-500/10 border border-border-card text-text-muted hover:text-rose-500 rounded-xl transition-all cursor-pointer"
                                         title="Delete"
                                     >
                                         <Trash2 size={16} />
@@ -1121,30 +1121,30 @@ export const FinancePage: React.FC<FinancePageProps> = ({ viewMode = 'dashboard'
                             <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-emerald-500/10 blur-[80px] rounded-full" />
                         </div>
 
-                        <form onSubmit={handleAddSaving} className="grid grid-cols-1 sm:grid-cols-5 gap-3 bg-white/[0.02] p-4 rounded-3xl border border-white/[0.08]">
-                            <input required value={savTitle} onChange={e => setSavTitle(e.target.value)} placeholder="Asset Name" className="sm:col-span-2 bg-slate-950 border border-white/[0.08] rounded-xl px-4 py-2 text-sm text-slate-200 outline-none focus:border-emerald-500/50" />
-                            <input required type="number" step="0.01" value={savAmount} onChange={e => setSavAmount(e.target.value)} placeholder="Value" className="bg-slate-950 border border-white/[0.08] rounded-xl px-4 py-2 text-sm font-mono text-slate-200 outline-none focus:border-emerald-500/50" />
-                            <select value={savCurrency} onChange={e => setSavCurrency(e.target.value as CurrencyCode)} className="bg-slate-950 border border-white/[0.08] rounded-xl px-4 py-2 text-[10px] font-black uppercase text-slate-400 outline-none">
-                                {CURRENCIES.map(c => <option key={c} value={c}>{c}</option>)}
+                        <form onSubmit={handleAddSaving} className="grid grid-cols-1 sm:grid-cols-5 gap-3 bg-bg-card p-4 rounded-3xl border border-border-card shadow-sm">
+                            <input required value={savTitle} onChange={e => setSavTitle(e.target.value)} placeholder="Asset Name" className="sm:col-span-2 bg-bg-input border border-border-input rounded-xl px-4 py-2 text-sm text-text-main outline-none focus:border-emerald-500/40" />
+                            <input required type="number" step="0.01" value={savAmount} onChange={e => setSavAmount(e.target.value)} placeholder="Value" className="bg-bg-input border border-border-input rounded-xl px-4 py-2 text-sm font-mono text-text-main outline-none focus:border-emerald-500/40" />
+                            <select value={savCurrency} onChange={e => setSavCurrency(e.target.value as CurrencyCode)} className="bg-bg-input border border-border-input rounded-xl px-4 py-2 text-[10px] font-black uppercase text-text-muted outline-none">
+                                {CURRENCIES.map(c => <option key={c} value={c} className="bg-bg-card">{c}</option>)}
                             </select>
-                            <button className="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-black rounded-xl text-xs transition-all shadow-lg shadow-emerald-500/20">ADD ASSET</button>
+                            <button className="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-black rounded-xl text-xs transition-all shadow-lg shadow-emerald-500/10 cursor-pointer">ADD ASSET</button>
                         </form>
 
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                             {savings.map(s => (
-                                <div key={s.id} className="bg-white/[0.02] border border-white/[0.08] rounded-2xl p-4 flex justify-between items-center group">
+                                <div key={s.id} className="bg-bg-card border border-border-card rounded-2xl p-4 flex justify-between items-center group shadow-sm">
                                     <div className="flex items-center gap-3">
-                                        <div className="p-2 rounded-xl bg-white/[0.06] text-[#21D89A]">
+                                        <div className="p-2 rounded-xl bg-bg-input text-[#21D89A]">
                                             {s.type === 'savings' ? <Landmark size={16} /> : <PieChart size={16} />}
                                         </div>
                                         <div>
-                                            <p className="text-sm font-bold text-slate-100">{s.title}</p>
-                                            <p className="text-[10px] text-slate-500 uppercase tracking-widest">{s.institution || 'N/A'}</p>
+                                            <p className="text-sm font-bold text-text-main">{s.title}</p>
+                                            <p className="text-[10px] text-text-muted uppercase tracking-widest">{s.institution || 'N/A'}</p>
                                         </div>
                                     </div>
                                     <div className="flex items-center gap-4">
-                                        <p className="text-emerald-400 font-bold tabular-nums text-sm">{formatCurrency(s.amount, s.currency || 'EUR')}</p>
-                                        <button onClick={() => deleteDocById('savings', s.id)} className="opacity-0 group-hover:opacity-100 transition-opacity text-slate-600 hover:text-rose-400 p-1"><Trash2 size={13} /></button>
+                                        <p className="text-[#047857] dark:text-emerald-450 font-bold tabular-nums text-sm">{formatCurrency(s.amount, s.currency || 'EUR')}</p>
+                                        <button onClick={() => deleteDocById('savings', s.id)} className="opacity-0 group-hover:opacity-100 transition-opacity text-text-muted hover:text-rose-500 p-1 cursor-pointer"><Trash2 size={13} /></button>
                                     </div>
                                 </div>
                             ))}
@@ -1205,27 +1205,27 @@ export const FinancePage: React.FC<FinancePageProps> = ({ viewMode = 'dashboard'
                                 const cycleLabel = e.billing_cycle === '3_months' ? 'Quarterly' : e.billing_cycle === '1_year' ? 'Yearly' : 'Monthly';
 
                                 return (
-                                <div key={e.id} className="bg-white/[0.02] border border-white/[0.08] rounded-3xl p-5 flex flex-wrap sm:flex-nowrap justify-between items-center gap-4 group">
+                                <div key={e.id} className="bg-bg-card border border-border-card rounded-3xl p-5 flex flex-wrap sm:flex-nowrap justify-between items-center gap-4 group shadow-sm">
                                     <div className="flex items-center gap-4">
                                         <div className="w-12 h-12 rounded-2xl bg-[#21D89A]/10 flex flex-col items-center justify-center border border-[#21D89A]/20 text-[#21D89A]">
                                             <CalendarDays size={20} />
                                         </div>
                                         <div>
-                                            <p className="font-bold text-slate-100 text-lg leading-tight">{e.title}</p>
+                                            <p className="font-bold text-text-main text-lg leading-tight">{e.title}</p>
                                             <div className="flex flex-wrap items-center gap-2 mt-1">
-                                                <span className="px-2 py-0.5 rounded-full bg-slate-950 text-[9px] font-black text-slate-400 border border-white/[0.08] uppercase">{cycleLabel}</span>
+                                                <span className="px-2 py-0.5 rounded-full bg-bg-input text-[9px] font-black text-text-muted border border-border-card uppercase">{cycleLabel}</span>
                                                 {e.payment_method && (
-                                                    <span className="text-slate-500 text-[10px] font-bold">via {e.payment_method}</span>
+                                                    <span className="text-text-muted text-[10px] font-bold">via {e.payment_method}</span>
                                                 )}
                                             </div>
                                         </div>
                                     </div>
                                     <div className="flex items-center gap-6 w-full sm:w-auto justify-between sm:justify-end">
                                         <div className="text-right">
-                                            <p className="text-slate-100 font-black tabular-nums">{formatCurrency(rawAmt, e.currency || 'EUR')}</p>
-                                            <p className="text-[10px] text-slate-500 font-bold uppercase tracking-tighter mt-1 text-amber-400/80">Next: {nextDateStr}</p>
+                                            <p className="text-text-main font-black tabular-nums">{formatCurrency(rawAmt, e.currency || 'EUR')}</p>
+                                            <p className="text-[10px] text-text-muted font-bold uppercase tracking-tighter mt-1 text-amber-500/80">Next: {nextDateStr}</p>
                                         </div>
-                                        <button onClick={() => deleteDocById('emis', e.id)} className="opacity-0 group-hover:opacity-100 transition-opacity text-slate-600 hover:text-rose-400 p-2 bg-slate-950 border border-white/[0.08] rounded-xl shadow-sm"><Trash2 size={14} /></button>
+                                        <button onClick={() => deleteDocById('emis', e.id)} className="opacity-0 group-hover:opacity-100 transition-opacity text-text-muted hover:text-rose-500 p-2 bg-bg-input border border-border-card rounded-xl shadow-sm cursor-pointer"><Trash2 size={14} /></button>
                                     </div>
                                 </div>
                             )})}

@@ -97,11 +97,11 @@ const ProjectTimeLogs: React.FC<{ project: Project; tasks: Task[]; viewMode: 'ac
 
     if (all.length === 0) {
         return (
-            <section className="bg-white/[0.02] border border-white/[0.08] rounded-2xl p-6">
-                <h2 className="text-slate-100 font-bold mb-4 flex items-center gap-2">
-                    <Clock size={18} className="text-amber-400" /> Time Records
+            <section className="bg-bg-card border border-border-card rounded-2xl p-6 shadow-sm">
+                <h2 className="text-text-main font-bold mb-4 flex items-center gap-2">
+                    <Clock size={18} className="text-amber-500" /> Time Records
                 </h2>
-                <p className="text-slate-600 text-sm italic text-center py-8 border-2 border-dashed border-white/[0.08] rounded-xl">
+                <p className="text-text-muted text-sm italic text-center py-8 border-2 border-dashed border-border-card rounded-xl">
                     No time logged yet. Start a task timer to record time against this project.
                 </p>
             </section>
@@ -109,16 +109,16 @@ const ProjectTimeLogs: React.FC<{ project: Project; tasks: Task[]; viewMode: 'ac
     }
 
     return (
-        <section className="bg-white/[0.02] border border-white/[0.08] rounded-2xl p-6">
-            <h2 className="text-slate-100 font-bold mb-1 flex items-center gap-2">
-                <Clock size={18} className="text-amber-400" /> Time Records
+        <section className="bg-bg-card border border-border-card rounded-2xl p-6 shadow-sm">
+            <h2 className="text-text-main font-bold mb-1 flex items-center gap-2">
+                <Clock size={18} className="text-amber-500" /> Time Records
             </h2>
-            <p className="text-slate-500 text-xs mb-5">
-                Total logged: <span className="text-amber-400 font-mono font-bold">{formatDuration(totalMs)}</span>
+            <p className="text-text-muted text-xs mb-5">
+                Total logged: <span className="text-amber-500 font-mono font-bold">{formatDuration(totalMs)}</span>
             </p>
 
             {/* Table header */}
-            <div className="grid grid-cols-[1fr_auto_auto_auto] gap-x-4 text-[10px] font-bold uppercase tracking-widest text-slate-500 px-3 mb-2">
+            <div className="grid grid-cols-[1fr_auto_auto_auto] gap-x-4 text-[10px] font-bold uppercase tracking-widest text-text-muted px-3 mb-2">
                 <span>Task</span>
                 <span>User</span>
                 <span className="text-right">Date</span>
@@ -133,23 +133,23 @@ const ProjectTimeLogs: React.FC<{ project: Project; tasks: Task[]; viewMode: 'ac
                     return (
                         <div
                             key={idx}
-                            className="grid grid-cols-[1fr_auto_auto_auto] gap-x-4 items-center px-3 py-2.5 bg-black/20 rounded-xl border border-white/5 hover:border-amber-500/20 transition-all group"
+                            className="grid grid-cols-[1fr_auto_auto_auto] gap-x-4 items-center px-3 py-2.5 bg-bg-input rounded-xl border border-border-input hover:border-amber-500/25 transition-all group"
                         >
                             <div className="flex items-center gap-2 min-w-0">
                                 {entry.is_active ?
-                                    <Timer size={14} className="text-emerald-400 animate-spin-slow flex-shrink-0" /> :
-                                    <div className="w-1.5 h-1.5 rounded-full bg-amber-400/60 flex-shrink-0" />
+                                    <Timer size={14} className="text-emerald-500 dark:text-emerald-400 animate-spin-slow flex-shrink-0" /> :
+                                    <div className="w-1.5 h-1.5 rounded-full bg-amber-500/60 flex-shrink-0" />
                                 }
-                                <span className="text-slate-200 text-xs font-medium truncate group-hover:text-amber-300 transition-colors">
+                                <span className="text-text-main text-xs font-medium truncate group-hover:text-amber-500 transition-colors">
                                     {entry.task_title}
                                 </span>
                             </div>
-                            <span className="text-slate-400 text-xs truncate max-w-[120px]">
+                            <span className="text-text-muted text-xs truncate max-w-[120px]">
                                 {entry.user_id && entry.user_id === auth.currentUser?.uid
                                     ? (auth.currentUser?.displayName || auth.currentUser?.email?.split('@')[0] || 'Me')
                                     : (entry.user_name || entry.user_email?.split('@')[0] || project.members?.find(m => m.uid === entry.user_id)?.email?.split('@')[0] || (entry as any).assignee_name || ((entry as any).assignee_email)?.split('@')[0] || (entry.user_id === project.owner_id ? 'Owner' : 'Unknown'))}
                             </span>
-                            <span className="text-slate-500 text-xs text-right whitespace-nowrap">{dateLabel}</span>
+                            <span className="text-text-muted text-xs text-right whitespace-nowrap">{dateLabel}</span>
                             <div className="flex items-center gap-3 justify-end">
                                 <span className={`text-xs font-mono font-bold text-right whitespace-nowrap ${entry.is_active ? 'text-emerald-400' : 'text-amber-400'}`}>
                                     {entry.is_active ? (
@@ -228,14 +228,14 @@ const ProjectNotes: React.FC<{ project: Project; viewMode: 'active' | 'archive' 
     };
 
     return (
-        <section className="bg-white/[0.02] border border-white/[0.08] rounded-2xl p-6 mb-8">
+        <section className="bg-bg-card border border-border-card rounded-2xl p-6 mb-8 shadow-sm">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-0 mb-4">
-                <h2 className="text-slate-100 font-bold flex items-center gap-2">
-                    <FileText size={18} className="text-cyan-300" /> Project Notes
+                <h2 className="text-text-main font-bold flex items-center gap-2">
+                    <FileText size={18} className="text-[#047857] dark:text-[#21D89A]" /> Project Notes
                 </h2>
                 <button
                     onClick={() => { setEditNote(undefined); setShowForm(true); }}
-                    className="flex items-center gap-1.5 px-3 py-1.5 bg-[#047857]/10 text-cyan-300 hover:bg-[#047857]/20 hover:text-cyan-200 text-xs font-bold rounded-lg transition-all self-start sm:self-auto"
+                    className="flex items-center gap-1.5 px-3 py-1.5 bg-[#21D89A]/15 text-[#047857] dark:text-[#21D89A] hover:bg-[#21D89A]/25 border border-[#21D89A]/20 text-xs font-bold rounded-lg transition-all self-start sm:self-auto cursor-pointer"
                 >
                     <Plus size={14} /> New Note
                 </button>
@@ -243,14 +243,14 @@ const ProjectNotes: React.FC<{ project: Project; viewMode: 'active' | 'archive' 
 
             <div className="space-y-3">
                 {projectNotes.map(note => (
-                    <div key={note.id} className="p-4 bg-black/20 border border-white/5 rounded-xl group hover:border-[#047857]/30 transition-all cursor-pointer flex justify-between items-start" onClick={() => { setEditNote(note); setShowForm(true); }}>
+                    <div key={note.id} className="p-4 bg-bg-input border border-border-input rounded-xl group hover:border-[#21D89A]/40 transition-all cursor-pointer flex justify-between items-start shadow-sm" onClick={() => { setEditNote(note); setShowForm(true); }}>
                         <div>
-                            <h3 className="text-slate-200 font-medium group-hover:text-cyan-300 transition-colors">{note.title}</h3>
-                            <p className="text-slate-500 text-xs mt-1 line-clamp-2">{note.content}</p>
+                            <h3 className="text-text-main font-semibold group-hover:text-[#047857] dark:group-hover:text-[#21D89A] transition-colors">{note.title}</h3>
+                            <p className="text-text-muted text-xs mt-1 line-clamp-2 leading-relaxed">{note.content}</p>
                         </div>
                         <button
                             onClick={(e) => handleToggleArchive(e, note)}
-                            className={`p-1.5 rounded-lg transition-all ${note.is_archived ? 'text-amber-400 bg-amber-500/10 hover:bg-amber-500/20' : 'text-slate-400 hover:text-amber-400 hover:bg-amber-500/10'}`}
+                            className={`p-1.5 rounded-lg transition-all cursor-pointer ${note.is_archived ? 'text-amber-500 bg-amber-500/10 hover:bg-amber-500/20' : 'text-text-muted hover:text-amber-500 hover:bg-amber-500/10'}`}
                             title={viewMode === 'archive' ? "Unarchive Note" : "Archive Note"}
                         >
                             {viewMode === 'archive' ? <ArchiveRestore size={16} /> : <Archive size={16} />}
@@ -258,7 +258,7 @@ const ProjectNotes: React.FC<{ project: Project; viewMode: 'active' | 'archive' 
                     </div>
                 ))}
                 {projectNotes.length === 0 && (
-                    <p className="text-slate-600 text-sm italic py-4 text-center border-2 border-dashed border-white/[0.08] rounded-xl">No notes added</p>
+                    <p className="text-text-muted text-sm italic py-4 text-center border-2 border-dashed border-border-card rounded-xl">No notes added</p>
                 )}
             </div>
 
@@ -354,54 +354,54 @@ export const ProjectDetail: React.FC = () => {
                 <div className="flex items-start gap-4">
                     <button
                         onClick={() => navigate('/projects')}
-                        className="p-2 rounded-xl bg-white/[0.03] border border-white/[0.08] text-slate-400 hover:text-[#21D89A] hover:border-[#21D89A]/30 transition-all"
+                        className="p-2 rounded-xl bg-bg-input border border-border-input text-text-muted hover:text-text-main hover:bg-bg-card hover:border-[#21D89A]/30 transition-all cursor-pointer"
                     >
                         <ArrowLeft size={20} />
                     </button>
                     <div>
                         <div className="flex items-center gap-3 mb-1">
                             <div className="w-4 h-4 rounded-full" style={{ backgroundColor: project.color }} />
-                            <h1 className="text-3xl font-bold text-slate-50">{project.name}</h1>
+                            <h1 className="text-3xl font-bold text-text-main tracking-tight">{project.name}</h1>
                         </div>
-                        <div className="flex items-center gap-3 text-slate-500 text-sm">
+                        <div className="flex items-center gap-3 text-text-muted text-sm">
                             {client && (
                                 <button
                                     onClick={() => navigate(`/clients/${client.id}`)}
-                                    className="hover:text-[#21D89A] flex items-center gap-1.5 transition-colors"
+                                    className="hover:text-[#047857] dark:hover:text-[#21D89A] flex items-center gap-1.5 transition-colors cursor-pointer font-semibold"
                                 >
                                     Client: {client.name}
                                 </button>
                             )}
                             <span>●</span>
-                            <span>Created {formatDate(project.created_at)}</span>
+                            <span className="font-medium">Created {formatDate(project.created_at)}</span>
                         </div>
                     </div>
                 </div>
 
                 {/* Archive Toggle */}
-                <div className="flex bg-black/20 p-1 rounded-xl border border-white/5 backdrop-blur-md self-start md:self-auto">
+                <div className="flex bg-bg-input p-1 rounded-xl border border-border-input backdrop-blur-md self-start md:self-auto shadow-inner">
                     <button
                         onClick={() => setViewMode('active')}
-                        className={`px-4 py-2 rounded-lg text-sm font-bold transition-all ${viewMode === 'active' ? 'bg-gradient-to-r from-[#21D89A] to-[#047857] text-black shadow-lg' : 'text-slate-500 hover:text-slate-300'}`}
+                        className={`px-4 py-2 rounded-lg text-sm font-bold transition-all cursor-pointer ${viewMode === 'active' ? 'bg-bg-card text-text-main shadow-sm border border-border-card' : 'text-text-muted hover:text-text-main'}`}
                     >
                         Active Board
                     </button>
                     <button
                         onClick={() => setViewMode('archive')}
-                        className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-bold transition-all ${viewMode === 'archive' ? 'bg-white/[0.08] text-slate-100 shadow-lg' : 'text-slate-500 hover:text-slate-300'}`}
+                        className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-bold transition-all cursor-pointer ${viewMode === 'archive' ? 'bg-bg-card text-text-main shadow-sm border border-border-card' : 'text-text-muted hover:text-text-main'}`}
                     >
                         <Archive size={14} /> Project Archive
                     </button>
                 </div>
 
                 {/* Total Time Display — read-only */}
-                <div className="flex items-center gap-3 bg-black/20 p-4 rounded-2xl border border-white/5 backdrop-blur-md">
-                    <div className="p-2 rounded-xl bg-amber-500/10 text-amber-400">
+                <div className="flex items-center gap-3 bg-bg-card p-4 rounded-2xl border border-border-card shadow-sm">
+                    <div className="p-2 rounded-xl bg-amber-500/10 text-amber-500 border border-amber-500/20">
                         <Timer size={20} />
                     </div>
                     <div className="text-left">
-                        <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Total Time Logged</p>
-                        <span className={`text-xl font-mono font-bold ${totalMs > 0 ? 'text-amber-400' : 'text-slate-500'}`}>
+                        <p className="text-[10px] font-bold text-text-muted uppercase tracking-widest">Total Time Logged</p>
+                        <span className={`text-xl font-mono font-bold ${totalMs > 0 ? 'text-amber-500' : 'text-text-muted'}`}>
                             {totalMs > 0 ? formatDuration(totalMs) : '00:00:00'}
                         </span>
                     </div>
@@ -413,42 +413,42 @@ export const ProjectDetail: React.FC = () => {
 
                 {/* Info & Files */}
                 <div className="space-y-8">
-                    <section className="bg-white/[0.02] border border-white/[0.08] rounded-2xl p-6">
-                        <h2 className="text-slate-100 font-bold mb-4">Project Overview</h2>
-                        <p className="text-slate-400 text-sm leading-relaxed mb-6">
+                    <section className="bg-bg-card border border-border-card rounded-2xl p-6 shadow-sm">
+                        <h2 className="text-text-main font-bold mb-4">Project Overview</h2>
+                        <p className="text-text-muted text-sm leading-relaxed mb-6">
                             {project.description || 'No description provided for this project.'}
                         </p>
                         <div className="space-y-4">
                             <div className="flex items-center justify-between text-sm">
-                                <span className="text-slate-500">Status</span>
+                                <span className="text-text-muted">Status</span>
                                 {statusBadge(project.status)}
                             </div>
                             <div className="flex items-center justify-between text-sm">
-                                <span className="text-slate-500">Tasks</span>
-                                <span className="text-slate-200 font-medium">{projectTasks.length}</span>
+                                <span className="text-text-muted">Tasks</span>
+                                <span className="text-text-main font-bold">{projectTasks.length}</span>
                             </div>
                             <div className="flex items-center justify-between text-sm">
-                                <span className="text-slate-500">Meetings</span>
-                                <span className="text-slate-200 font-medium">{projectMeetings.length}</span>
+                                <span className="text-text-muted">Meetings</span>
+                                <span className="text-text-main font-bold">{projectMeetings.length}</span>
                             </div>
                         </div>
                     </section>
 
                     {/* File Upload & List */}
-                    <section className="bg-white/[0.02] border border-white/[0.08] rounded-2xl p-6">
-                        <h2 className="text-slate-100 font-bold mb-4 flex items-center justify-between">
+                    <section className="bg-bg-card border border-border-card rounded-2xl p-6 shadow-sm">
+                        <h2 className="text-text-main font-bold mb-4 flex items-center justify-between">
                             Project Files
-                            <span className="text-xs font-normal text-slate-500">{project.files?.length || 0} items</span>
+                            <span className="text-xs font-normal text-text-muted">{project.files?.length || 0} items</span>
                         </h2>
 
                         {isModerator && (
                             <div
                                 {...getRootProps()}
-                                className={`border-2 border-dashed rounded-xl p-4 text-center cursor-pointer transition-all mb-4 ${isDragActive ? 'border-[#21D89A] bg-[#21D89A]/10' : 'border-white/[0.08] hover:border-[#21D89A]/40'}`}
+                                className={`border-2 border-dashed rounded-xl p-4 text-center cursor-pointer transition-all mb-4 ${isDragActive ? 'border-[#21D89A] bg-[#21D89A]/10' : 'border-border-input hover:border-[#21D89A]/50 bg-bg-input'}`}
                             >
                                 <input {...getInputProps()} />
-                                <Upload size={24} className="mx-auto mb-2 text-slate-500" />
-                                <p className="text-xs text-slate-400">
+                                <Upload size={24} className="mx-auto mb-2 text-text-muted" />
+                                <p className="text-xs text-text-muted/80">
                                     {uploading ? 'Uploading...' : 'Drop files here or click to upload'}
                                 </p>
                             </div>
@@ -456,20 +456,20 @@ export const ProjectDetail: React.FC = () => {
 
                         <div className="space-y-2">
                             {projectFiles.map(f => (
-                                <div key={f.id} className="flex items-center justify-between p-3 bg-black/20 rounded-xl group border border-transparent hover:border-[#21D89A]/20 transition-all">
+                                <div key={f.id} className="flex items-center justify-between p-3 bg-bg-input rounded-xl group border border-transparent hover:border-[#21D89A]/20 transition-all shadow-sm">
                                     <div className="flex items-center gap-3 min-w-0">
-                                        <FileArchive size={16} className="text-[#21D89A] flex-shrink-0" />
-                                        <span className="text-slate-300 text-xs truncate max-w-[120px]">{f.name}</span>
+                                        <FileArchive size={16} className="text-[#047857] dark:text-[#21D89A] flex-shrink-0" />
+                                        <span className="text-text-main text-xs truncate max-w-[120px] font-medium">{f.name}</span>
                                     </div>
                                     <div className="flex items-center gap-1 flex-shrink-0">
                                         <button
                                             onClick={() => triggerDownload(f.url, f.name)}
                                             title="Download file"
-                                            className="p-1.5 text-slate-500 hover:text-emerald-400 transition-colors"
+                                            className="p-1.5 text-text-muted hover:text-[#047857] dark:hover:text-[#21D89A] transition-colors cursor-pointer"
                                         >
                                             <Download size={14} />
                                         </button>
-                                        <a href={f.url} target="_blank" rel="noopener noreferrer" title="Open in new tab" className="p-1.5 text-slate-500 hover:text-[#21D89A] transition-colors">
+                                        <a href={f.url} target="_blank" rel="noopener noreferrer" title="Open in new tab" className="p-1.5 text-text-muted hover:text-[#21D89A] transition-colors">
                                             <ExternalLink size={14} />
                                         </a>
                                         {(isOwner || isAdmin || isModerator) && (
@@ -480,10 +480,10 @@ export const ProjectDetail: React.FC = () => {
                                                         const updatedFiles = (project.files || []).map(pf => pf.id === f.id ? { ...pf, is_archived: !f.is_archived } : pf);
                                                         await updateDocById('projects', project.id, { files: updatedFiles });
                                                     } catch (err) { }
-                                                }} className={`p-1.5 rounded-lg transition-all ${f.is_archived ? 'text-amber-400 bg-amber-500/10 hover:bg-amber-500/20' : 'text-slate-400 hover:text-amber-400 hover:bg-amber-500/10'}`} title={viewMode === 'archive' ? "Unarchive file" : "Archive file"}>
+                                                }} className={`p-1.5 rounded-lg transition-all cursor-pointer ${f.is_archived ? 'text-amber-400 bg-amber-500/10 hover:bg-amber-500/20' : 'text-text-muted hover:text-amber-500 hover:bg-amber-500/10'}`} title={viewMode === 'archive' ? "Unarchive file" : "Archive file"}>
                                                     {viewMode === 'archive' ? <ArchiveRestore size={14} /> : <Archive size={14} />}
                                                 </button>
-                                                <button onClick={() => handleDeleteFile(f.id, f.url)} title="Delete file" className="p-1.5 rounded-lg text-slate-400 hover:text-rose-400 hover:bg-rose-500/10 transition-colors">
+                                                <button onClick={() => handleDeleteFile(f.id, f.url)} title="Delete file" className="p-1.5 rounded-lg text-text-muted hover:text-rose-500 hover:bg-[#FFE4E8] dark:hover:bg-rose-950/20 transition-colors cursor-pointer">
                                                     <Trash2 size={14} />
                                                 </button>
                                             </>
@@ -492,7 +492,7 @@ export const ProjectDetail: React.FC = () => {
                                 </div>
                             ))}
                             {projectFiles.length === 0 && (
-                                <p className="text-slate-600 text-xs text-center py-4">No files found</p>
+                                <p className="text-text-muted text-xs text-center py-4 italic">No files found</p>
                             )}
                         </div>
                     </section>
@@ -500,11 +500,10 @@ export const ProjectDetail: React.FC = () => {
 
                 {/* Tasks, Time Records & Meetings */}
                 <div className="lg:col-span-2 space-y-8">
-                    {/* Tasks */}
                     <section>
                         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-0 mb-4">
-                            <h2 className="text-slate-100 font-bold flex items-center gap-2 text-lg">
-                                <CheckSquare size={18} className="text-[#21D89A]" /> Project Tasks
+                            <h2 className="text-text-main font-bold flex items-center gap-2 text-lg">
+                                <CheckSquare size={18} className="text-[#047857] dark:text-[#21D89A]" /> Project Tasks
                             </h2>
                             {isAdmin && (
                                 <button
@@ -525,7 +524,7 @@ export const ProjectDetail: React.FC = () => {
                                 />
                             ))}
                             {projectTasks.length === 0 && (
-                                <div className="col-span-full py-12 text-center border-2 border-dashed border-white/[0.08] rounded-2xl text-slate-600 italic">
+                                <div className="col-span-full py-12 text-center border-2 border-dashed border-border-card rounded-2xl text-text-muted italic bg-bg-card shadow-sm">
                                     No tasks assigned to this project
                                 </div>
                             )}
@@ -540,37 +539,45 @@ export const ProjectDetail: React.FC = () => {
 
                     {/* Meetings */}
                     <section>
-                        <h2 className="text-slate-100 font-bold mb-4 flex items-center gap-2">
-                            <Calendar size={18} className="text-[#21D89A]" /> Project Meetings
+                        <h2 className="text-text-main font-bold mb-4 flex items-center gap-2">
+                            <Calendar size={18} className="text-[#047857] dark:text-[#21D89A]" /> Project Meetings
                         </h2>
                         <div className="space-y-3">
                             {projectMeetings.map(m => (
-                                <div key={m.id} className="p-4 bg-white/[0.02] border border-white/[0.08] rounded-xl flex items-center justify-between group hover:border-[#21D89A]/40 transition-all">
+                                <div key={m.id} className="p-4 bg-bg-card border border-border-card rounded-xl flex items-center justify-between group hover:border-[#21D89A]/40 transition-all shadow-sm">
                                     <div className="flex items-center gap-4">
-                                        <div className="w-12 h-12 rounded-xl bg-[#047857]/15 flex flex-col items-center justify-center text-[#21D89A] border border-[#21D89A]/20">
+                                        <div className="w-12 h-12 rounded-xl bg-[#21D89A]/10 flex flex-col items-center justify-center text-[#047857] dark:text-[#21D89A] border border-[#21D89A]/20">
                                             <span className="text-xs font-bold leading-none">{new Date(m.start_time).toLocaleString('en-US', { month: 'short' }).toUpperCase()}</span>
                                             <span className="text-lg font-black leading-none">{new Date(m.start_time).getDate()}</span>
                                         </div>
                                         <div>
-                                            <h3 className="text-slate-200 font-medium group-hover:text-[#21D89A] transition-colors">{m.title}</h3>
-                                            <p className="text-slate-500 text-xs mt-0.5">
-                                                {new Date(m.start_time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                                            <h3 className="text-text-main font-medium group-hover:text-[#047857] dark:group-hover:text-[#21D89A] transition-colors">{m.title}</h3>
+                                            <p className="text-text-muted text-xs mt-0.5">
+                                                {formatDate(m.start_time)} • {m.location || 'Online'}
                                             </p>
                                         </div>
                                     </div>
-                                    <div className="flex items-center gap-1 flex-shrink-0">
-                                        <ExternalLink size={14} className="text-slate-600 hover:text-slate-400 transition-all mr-2" />
-                                        <button onClick={async (e) => {
-                                            e.stopPropagation();
-                                            await updateDocById('meetings', m.id, { is_archived: !m.is_archived });
-                                        }} className={`p-1.5 rounded-lg transition-all ${m.is_archived ? 'text-amber-400 bg-amber-500/10 hover:bg-amber-500/20' : 'text-slate-400 hover:text-amber-400 hover:bg-amber-500/10'}`} title={viewMode === 'archive' ? "Unarchive meeting" : "Archive meeting"}>
-                                            {m.is_archived ? <ArchiveRestore size={16} /> : <Archive size={16} />}
-                                        </button>
+                                    <div className="flex items-center flex-shrink-0">
+                                        {m.location && m.location.startsWith('http') && (
+                                            <a href={m.location} target="_blank" rel="noopener noreferrer" className="p-1.5 text-text-muted hover:text-[#21D89A] transition-all mr-2">
+                                                <ExternalLink size={14} />
+                                            </a>
+                                        )}
+                                        {(isOwner || isAdmin || isModerator) && (
+                                            <button onClick={async (e) => {
+                                                e.stopPropagation();
+                                                try {
+                                                    await updateDocById('meetings', m.id, { is_archived: !m.is_archived });
+                                                } catch (err) { }
+                                            }} className={`p-1.5 rounded-lg transition-all cursor-pointer ${m.is_archived ? 'text-amber-400 bg-amber-500/10 hover:bg-amber-500/20' : 'text-text-muted hover:text-amber-500 hover:bg-amber-500/10'}`} title={viewMode === 'archive' ? "Unarchive meeting" : "Archive meeting"}>
+                                                {viewMode === 'archive' ? <ArchiveRestore size={14} /> : <Archive size={14} />}
+                                            </button>
+                                        )}
                                     </div>
                                 </div>
                             ))}
                             {projectMeetings.length === 0 && (
-                                <p className="text-slate-600 text-sm italic py-4 text-center border-2 border-dashed border-white/[0.08] rounded-xl">No meetings linked</p>
+                                <p className="text-text-muted text-sm italic py-4 text-center border-2 border-dashed border-border-card rounded-xl bg-bg-card shadow-sm">No meetings linked</p>
                             )}
                         </div>
                     </section>
@@ -761,31 +768,31 @@ const TeamMembers: React.FC<{ project: Project }> = ({ project }) => {
     const availableTeam = savedTeam.filter(m => !existingUids.has(m.uid || ''));
 
     return (
-        <section className="bg-white/[0.02] border border-white/[0.08] rounded-2xl p-6">
-            <h2 className="text-slate-100 font-bold mb-4 flex items-center gap-2">
-                <Users size={18} className="text-emerald-400" /> Team Members
+        <section className="bg-bg-card border border-border-card rounded-2xl p-6 shadow-sm">
+            <h2 className="text-text-main font-bold mb-4 flex items-center gap-2">
+                <Users size={18} className="text-[#047857] dark:text-[#21D89A]" /> Team Members
             </h2>
 
             {isOwner && (
-                <div className="mb-6 space-y-3 p-4 bg-black/20 rounded-xl border border-white/5">
-                    <p className="text-slate-500 text-[11px] font-bold uppercase tracking-widest">Add Team Member</p>
+                <div className="mb-6 space-y-3 p-4 bg-bg-input rounded-xl border border-border-input shadow-inner">
+                    <p className="text-text-muted text-[11px] font-bold uppercase tracking-widest">Add Team Member</p>
 
                     {/* Team Member Dropdown */}
                     <select
                         value={selectedMember}
                         onChange={(e) => handleSelectMember(e.target.value)}
-                        className="w-full bg-slate-950 border border-white/[0.08] rounded-xl px-3 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-[#21D89A] transition-all"
+                        className="w-full bg-bg-card border border-border-input rounded-xl px-3 py-2.5 text-sm text-text-main focus:outline-none focus:border-[#21D89A] transition-all"
                     >
                         <option value="">Select from your team directory…</option>
                         {availableTeam.map((m, i) => (
-                            <option key={i} value={m.user_code || m.email}>
+                            <option key={i} value={m.user_code || m.email} className="bg-bg-card">
                                 {m.name || m.email || m.user_code} {m.user_code ? `(${m.user_code})` : ''} {m.email ? `— ${m.email}` : ''}
                             </option>
                         ))}
                         {availableTeam.length === 0 && (
-                            <option disabled>No available team members</option>
+                            <option disabled className="bg-bg-card">No available team members</option>
                         )}
-                        <option value="__manual__">✎ Enter User Code manually…</option>
+                        <option value="__manual__" className="bg-bg-card">✎ Enter User Code manually…</option>
                     </select>
 
                     {/* Manual Code Input — shown when "manual" is selected or no dropdown match */}
@@ -796,17 +803,17 @@ const TeamMembers: React.FC<{ project: Project }> = ({ project }) => {
                             onChange={(e) => setUserCode(e.target.value.toUpperCase())}
                             onKeyDown={(e) => e.key === 'Enter' && handleAddMember()}
                             placeholder="TM-XXXXXX (User Code)"
-                            className="w-full bg-slate-950 border border-white/[0.08] rounded-xl px-3 py-2 text-sm text-slate-200 font-mono focus:outline-none focus:border-[#21D89A] transition-all"
+                            className="w-full bg-bg-card border border-border-input rounded-xl px-3 py-2 text-sm text-text-main font-mono focus:outline-none focus:border-[#21D89A] transition-all"
                         />
                     )}
 
                     <div className="flex gap-2">
-                        <select value={role} onChange={(e) => setRole(e.target.value as 'admin' | 'moderator' | 'viewer')} className="flex-1 bg-slate-950 border border-white/[0.08] rounded-xl px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-[#21D89A] transition-all">
-                            <option value="admin">Admin — Full control</option>
-                            <option value="moderator">Moderator — Add & edit, no delete</option>
-                            <option value="viewer">Viewer — Read only + status changes</option>
+                        <select value={role} onChange={(e) => setRole(e.target.value as 'admin' | 'moderator' | 'viewer')} className="flex-1 bg-bg-card border border-border-input rounded-xl px-3 py-2 text-sm text-text-main focus:outline-none focus:border-[#21D89A] transition-all">
+                            <option value="admin" className="bg-bg-card">Admin — Full control</option>
+                            <option value="moderator" className="bg-bg-card">Moderator — Add & edit, no delete</option>
+                            <option value="viewer" className="bg-bg-card">Viewer — Read only + status changes</option>
                         </select>
-                        <button onClick={handleAddMember} disabled={adding || !userCode.trim()} className="bg-gradient-to-r from-[#21D89A] to-[#047857] hover:opacity-90 disabled:opacity-50 text-black px-5 py-2 rounded-xl text-sm font-bold transition-all active:scale-95">
+                        <button onClick={handleAddMember} disabled={adding || !userCode.trim()} className="bg-gradient-to-r from-[#21D89A] to-[#047857] hover:opacity-90 disabled:opacity-50 text-white px-5 py-2 rounded-xl text-sm font-bold transition-all active:scale-95 cursor-pointer shadow-sm">
                             {adding ? '...' : 'Add'}
                         </button>
                     </div>
@@ -814,15 +821,15 @@ const TeamMembers: React.FC<{ project: Project }> = ({ project }) => {
             )}
 
             <div className="space-y-2">
-                <div className="flex items-center justify-between p-3 bg-black/20 rounded-xl border border-[#21D89A]/20">
+                <div className="flex items-center justify-between p-3 bg-bg-input rounded-xl border border-border-input hover:border-[#21D89A]/20 transition-all shadow-sm">
                     <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-lg bg-[#21D89A]/20 text-[#21D89A] flex items-center justify-center font-bold text-xs">O</div>
+                        <div className="w-8 h-8 rounded-lg bg-[#21D89A]/20 text-[#047857] dark:text-[#21D89A] flex items-center justify-center font-bold text-xs">O</div>
                         <div>
-                            <p className="text-slate-200 text-sm font-medium">Project Owner {auth.currentUser?.uid === project.owner_id ? '(You)' : ''}</p>
-                            <p className="text-slate-500 text-[10px]">Full Access</p>
+                            <p className="text-text-main text-sm font-medium">Project Owner {auth.currentUser?.uid === project.owner_id ? '(You)' : ''}</p>
+                            <p className="text-text-muted text-[10px]">Full Access</p>
                         </div>
                     </div>
-                    <span className="text-[10px] font-bold px-2 py-0.5 rounded-full border bg-[#21D89A]/15 text-[#21D89A] border-[#21D89A]/30">Owner</span>
+                    <span className="text-[10px] font-bold px-2 py-0.5 rounded-full border bg-[#21D89A]/15 text-[#047857] dark:text-[#21D89A] border-[#21D89A]/30">Owner</span>
                 </div>
 
                 {members.map((m) => {

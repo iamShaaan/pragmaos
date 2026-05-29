@@ -35,9 +35,9 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children, 
                     transition={{ duration: 0.2 }}
                     className={`relative w-full ${sizeClassMap[size]} glass-card-strong rounded-2xl shadow-2xl max-h-[90vh] overflow-y-auto custom-scrollbar`}
                 >
-                    <div className="flex items-center justify-between p-5 border-b border-white/[0.08] sticky top-0 z-10 bg-white/[0.01] backdrop-blur-xl">
-                        <h2 className="text-white font-bold text-lg font-display tracking-tight">{title}</h2>
-                        <button onClick={onClose} className="p-1.5 rounded-xl text-slate-400 hover:text-[#21D89A] hover:bg-white/[0.06] transition-all duration-200 cursor-pointer">
+                    <div className="flex items-center justify-between p-5 border-b border-border-card sticky top-0 z-10 bg-bg-card/80 backdrop-blur-xl">
+                        <h2 className="text-text-main font-bold text-lg font-display tracking-tight">{title}</h2>
+                        <button onClick={onClose} className="p-1.5 rounded-xl text-text-muted hover:text-[#21D89A] hover:bg-bg-input transition-all duration-200 cursor-pointer">
                             <X size={18} />
                         </button>
                     </div>

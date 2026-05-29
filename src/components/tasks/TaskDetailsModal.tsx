@@ -97,7 +97,7 @@ export const TaskDetailsModal: React.FC<TaskDetailsModalProps> = ({ task, onClos
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                     onClick={onClose}
-                    className="absolute inset-0 bg-slate-950/80 backdrop-blur-sm"
+                    className="absolute inset-0 bg-[#060d11]/70 backdrop-blur-md"
                 />
 
                 {/* Modal Window */}
@@ -105,18 +105,18 @@ export const TaskDetailsModal: React.FC<TaskDetailsModalProps> = ({ task, onClos
                     initial={{ opacity: 0, scale: 0.95, y: 10 }}
                     animate={{ opacity: 1, scale: 1, y: 0 }}
                     exit={{ opacity: 0, scale: 0.95, y: 10 }}
-                    className="relative w-full max-w-2xl bg-slate-900 border border-slate-700/50 shadow-2xl rounded-2xl overflow-hidden flex flex-col max-h-[90vh]"
+                    className="relative w-full max-w-2xl glass-card-strong shadow-2xl rounded-2xl overflow-hidden flex flex-col max-h-[90vh]"
                 >
                     {/* Header Strip */}
-                    <div className={`h-2 w-full ${task.status === 'done' ? 'bg-emerald-500' :
+                    <div className={`h-2 w-full ${task.status === 'done' ? 'bg-[#21D89A]' :
                         task.status === 'in_progress' ? 'bg-indigo-500' :
-                            task.status === 'overdue' ? 'bg-red-500' : 'bg-slate-600'
+                        task.status === 'overdue' ? 'bg-red-500' : 'bg-border-card'
                         }`} />
 
                     {/* Header Content */}
-                    <div className="flex items-start justify-between p-6 border-b border-white/5">
+                    <div className="flex items-start justify-between p-6 border-b border-border-card bg-bg-card/80 backdrop-blur-xl sticky top-0 z-10">
                         <div className="pr-8">
-                            <h2 className="text-2xl font-bold text-white mb-3">{task.title}</h2>
+                            <h2 className="text-2xl font-bold text-text-main mb-3 font-display tracking-tight">{task.title}</h2>
                             <div className="flex flex-wrap gap-2">
                                 {statusBadge(task.status)}
                                 {priorityBadge(task.priority)}
@@ -134,7 +134,7 @@ export const TaskDetailsModal: React.FC<TaskDetailsModalProps> = ({ task, onClos
                                             onClose();
                                         } catch (e) { toast.error('Failed to change archive status'); }
                                     }}
-                                    className={`p-2 rounded-lg transition-colors flex-shrink-0 flex items-center justify-center ${task.is_archived ? 'bg-amber-500/20 text-amber-400 hover:bg-amber-500/30' : 'bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white'}`}
+                                    className={`p-2 rounded-xl transition-all duration-200 cursor-pointer flex-shrink-0 flex items-center justify-center ${task.is_archived ? 'bg-amber-500/10 text-amber-500 hover:bg-amber-500/20' : 'bg-bg-input hover:bg-border-card/50 text-text-muted hover:text-text-main'}`}
                                     title={task.is_archived ? 'Unarchive Task' : 'Archive Task'}
                                 >
                                     {task.is_archived ? <ArchiveRestore size={20} /> : <Archive size={20} />}
@@ -142,7 +142,7 @@ export const TaskDetailsModal: React.FC<TaskDetailsModalProps> = ({ task, onClos
                             )}
                             <button
                                 onClick={onClose}
-                                className="p-2 bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white rounded-lg transition-colors flex-shrink-0"
+                                className="p-2 bg-bg-input hover:bg-border-card/50 text-text-muted hover:text-text-main rounded-xl transition-all duration-200 cursor-pointer flex-shrink-0"
                             >
                                 <X size={20} />
                             </button>
@@ -150,42 +150,42 @@ export const TaskDetailsModal: React.FC<TaskDetailsModalProps> = ({ task, onClos
                     </div>
 
                     {/* Scrollable Body */}
-                    <div className="p-6 overflow-y-auto custom-scrollbar flex-1 space-y-8">
+                    <div className="p-6 overflow-y-auto custom-scrollbar flex-1 space-y-8 bg-bg-card/30">
 
                         {/* Summary Grid */}
                         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                             {/* Assignee */}
-                            <div className="bg-slate-950/50 rounded-xl p-3 border border-white/5">
+                            <div className="bg-bg-input/60 rounded-xl p-3 border border-border-card/60">
                                 <div className="flex items-center gap-2 mb-1">
-                                    <UserCircle size={14} className="text-indigo-400" />
-                                    <span className="text-[10px] uppercase font-bold text-slate-500 tracking-wider">Assignee</span>
+                                    <UserCircle size={14} className="text-indigo-500 dark:text-indigo-400" />
+                                    <span className="text-[10px] uppercase font-bold text-text-muted/80 tracking-wider">Assignee</span>
                                 </div>
-                                <p className="text-sm font-medium text-slate-200 truncate">
+                                <p className="text-sm font-semibold text-text-main truncate">
                                     {task.assignee_name || task.assignee_email || 'Unassigned'}
                                 </p>
                             </div>
 
                             {/* Client */}
-                            <div className="bg-slate-950/50 rounded-xl p-3 border border-white/5">
+                            <div className="bg-bg-input/60 rounded-xl p-3 border border-border-card/60">
                                 <div className="flex items-center gap-2 mb-1">
-                                    <Users size={14} className="text-emerald-400" />
-                                    <span className="text-[10px] uppercase font-bold text-slate-500 tracking-wider">Client</span>
+                                    <Users size={14} className="text-[#047857] dark:text-[#21D89A]" />
+                                    <span className="text-[10px] uppercase font-bold text-text-muted/80 tracking-wider">Client</span>
                                 </div>
-                                <p className="text-sm font-medium text-slate-200 truncate">
+                                <p className="text-sm font-semibold text-text-main truncate">
                                     {clientName || 'None'}
                                 </p>
                             </div>
 
                             {/* Project */}
-                            <div className="bg-slate-950/50 rounded-xl p-3 border border-white/5">
+                            <div className="bg-bg-input/60 rounded-xl p-3 border border-border-card/60">
                                 <div className="flex items-center gap-2 mb-1">
-                                    <FolderKanban size={14} className="text-amber-400" />
-                                    <span className="text-[10px] uppercase font-bold text-slate-500 tracking-wider">Project</span>
+                                    <FolderKanban size={14} className="text-amber-500 dark:text-amber-400" />
+                                    <span className="text-[10px] uppercase font-bold text-text-muted/80 tracking-wider">Project</span>
                                 </div>
                                 {isTransferring ? (
                                     <div className="flex flex-col gap-2 mt-1.5">
                                         <select
-                                            className="w-full bg-slate-900 border border-slate-700 text-slate-300 rounded p-1 text-xs focus:outline-none focus:border-amber-500"
+                                            className="w-full bg-bg-card border border-border-input text-text-main rounded p-1.5 text-xs focus:outline-none focus:border-[#21D89A]"
                                             value={transferProjectId}
                                             onChange={e => setTransferProjectId(e.target.value)}
                                         >
@@ -193,17 +193,17 @@ export const TaskDetailsModal: React.FC<TaskDetailsModalProps> = ({ task, onClos
                                             {projects.map(p => <option key={p.id} value={p.id}>{p.name}</option>)}
                                         </select>
                                         <div className="flex items-center gap-2">
-                                            <button onClick={handleTransfer} disabled={transferring} className="flex-1 py-1 bg-amber-500 text-slate-900 font-bold text-[10px] rounded hover:bg-amber-600 disabled:opacity-50">Save</button>
-                                            <button onClick={() => setIsTransferring(false)} className="flex-1 py-1 bg-slate-800 text-slate-300 font-bold text-[10px] rounded hover:bg-slate-700">Cancel</button>
+                                            <button onClick={handleTransfer} disabled={transferring} className="flex-1 py-1 bg-[#047857] hover:bg-[#035e44] text-white font-bold text-[10px] rounded hover:opacity-90 disabled:opacity-50">Save</button>
+                                            <button onClick={() => setIsTransferring(false)} className="flex-1 py-1 bg-bg-input border border-border-card text-text-main font-bold text-[10px] rounded hover:bg-border-card/50">Cancel</button>
                                         </div>
                                     </div>
                                 ) : (
                                     <div className="flex items-center justify-between">
-                                        <p className="text-sm font-medium text-slate-200 truncate">
+                                        <p className="text-sm font-semibold text-text-main truncate">
                                             {projectName || 'None'}
                                         </p>
                                         {(isOwner || isAssignee) && (
-                                            <button onClick={() => { setTransferProjectId(task.project_id || ''); setIsTransferring(true); }} className="text-[10px] font-bold text-amber-500 hover:text-amber-400 px-2 py-0.5 rounded bg-amber-500/10 transition-colors">
+                                            <button onClick={() => { setTransferProjectId(task.project_id || ''); setIsTransferring(true); }} className="text-[10px] font-bold text-[#047857] dark:text-[#21D89A] px-2 py-0.5 rounded bg-[#DDFBF0] dark:bg-[#1C3E32] transition-colors">
                                                 Transfer
                                             </button>
                                         )}
@@ -212,25 +212,25 @@ export const TaskDetailsModal: React.FC<TaskDetailsModalProps> = ({ task, onClos
                             </div>
 
                             {/* Due Date */}
-                            <div className="bg-slate-950/50 rounded-xl p-3 border border-white/5">
+                            <div className="bg-bg-input/60 rounded-xl p-3 border border-border-card/60">
                                 <div className="flex items-center gap-2 mb-1">
-                                    <Calendar size={14} className="text-rose-400" />
-                                    <span className="text-[10px] uppercase font-bold text-slate-500 tracking-wider">Due Date</span>
+                                    <Calendar size={14} className="text-rose-500 dark:text-rose-400" />
+                                    <span className="text-[10px] uppercase font-bold text-text-muted/80 tracking-wider">Due Date</span>
                                 </div>
-                                <p className="text-sm font-medium text-slate-200 truncate">
+                                <p className="text-sm font-semibold text-text-main truncate">
                                     {task.due_date ? formatDate(task.due_date) : 'No due date'}
                                 </p>
                             </div>
                         </div>
 
                         {/* Description Section */}
-                        <div className="bg-slate-950/20 rounded-xl p-5 border border-white/5">
-                            <h3 className="flex items-center gap-2 text-sm font-bold text-slate-300 mb-3 border-b border-white/5 pb-2">
-                                <AlignLeft size={16} className="text-slate-500" />
+                        <div className="bg-bg-input/30 rounded-xl p-5 border border-border-card">
+                            <h3 className="flex items-center gap-2 text-sm font-bold text-text-main mb-3 border-b border-border-card pb-2">
+                                <AlignLeft size={16} className="text-text-muted" />
                                 Description Details
                             </h3>
-                            <div className="text-sm text-slate-400 whitespace-pre-wrap leading-relaxed">
-                                {task.description ? task.description : <span className="italic text-slate-600">No description provided for this task.</span>}
+                            <div className="text-sm text-text-muted whitespace-pre-wrap leading-relaxed">
+                                {task.description ? task.description : <span className="italic text-text-muted/60">No description provided for this task.</span>}
                             </div>
                         </div>
 
@@ -238,24 +238,24 @@ export const TaskDetailsModal: React.FC<TaskDetailsModalProps> = ({ task, onClos
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             {/* Meta Metrics */}
                             <div className="space-y-4">
-                                <h3 className="flex items-center gap-2 text-sm font-bold text-slate-300 mb-3 border-b border-white/5 pb-2">
-                                    <Activity size={16} className="text-slate-500" />
+                                <h3 className="flex items-center gap-2 text-sm font-bold text-text-main mb-3 border-b border-border-card pb-2">
+                                    <Activity size={16} className="text-text-muted" />
                                     Metrics & Tags
                                 </h3>
 
-                                <div className="flex items-center justify-between bg-slate-950/50 p-3 rounded-xl border border-white/5">
-                                    <div className="flex items-center gap-2 text-slate-400">
-                                        <Clock size={16} className="text-indigo-400" />
+                                <div className="flex items-center justify-between bg-bg-input/60 p-3 rounded-xl border border-border-card">
+                                    <div className="flex items-center gap-2 text-text-muted">
+                                        <Clock size={16} className="text-indigo-500 dark:text-indigo-400" />
                                         <span className="text-xs font-semibold uppercase">Total Tracked Time</span>
                                     </div>
-                                    <span className="text-sm font-mono font-bold text-indigo-300">{formatDuration(task.total_time_ms || 0)}</span>
+                                    <span className="text-sm font-mono font-bold text-[#047857] dark:text-[#21D89A]">{formatDuration(task.total_time_ms || 0)}</span>
                                 </div>
 
                                 {task.tags && task.tags.length > 0 && (
                                     <div className="flex flex-wrap gap-2 pt-2">
                                         {task.tags.map(tag => (
-                                            <span key={tag} className="flex items-center gap-1.5 px-3 py-1 bg-slate-800 text-slate-300 rounded-lg text-xs font-medium border border-slate-700/50">
-                                                <Tag size={12} className="text-slate-500" />
+                                            <span key={tag} className="flex items-center gap-1.5 px-3 py-1 bg-bg-input text-text-main rounded-lg text-xs font-medium border border-border-card">
+                                                <Tag size={12} className="text-text-muted" />
                                                 {tag}
                                             </span>
                                         ))}
@@ -265,9 +265,9 @@ export const TaskDetailsModal: React.FC<TaskDetailsModalProps> = ({ task, onClos
                         </div>
 
                         {/* Notes & Updates Section */}
-                        <div className="bg-slate-950/20 rounded-xl p-5 border border-white/5 space-y-4">
-                            <h3 className="flex items-center gap-2 text-sm font-bold text-slate-300 border-b border-white/5 pb-2">
-                                <MessageSquareText size={16} className="text-indigo-400" />
+                        <div className="bg-bg-input/30 rounded-xl p-5 border border-border-card space-y-4">
+                            <h3 className="flex items-center gap-2 text-sm font-bold text-text-main border-b border-border-card pb-2">
+                                <MessageSquareText size={16} className="text-indigo-500 dark:text-indigo-400" />
                                 Task Updates & Notes
                             </h3>
 
@@ -275,16 +275,16 @@ export const TaskDetailsModal: React.FC<TaskDetailsModalProps> = ({ task, onClos
                             <div className="space-y-3 max-h-64 overflow-y-auto custom-scrollbar pr-2">
                                 {task.notes && task.notes.length > 0 ? (
                                     [...(task.notes || [])].sort((a, b) => b.created_at.getTime() - a.created_at.getTime()).map(note => (
-                                        <div key={note.id} className="p-3 bg-slate-900/50 rounded-xl border border-white/5 text-xs">
+                                        <div key={note.id} className="p-3 bg-bg-card rounded-xl border border-border-card text-xs">
                                             <div className="flex items-center justify-between mb-1">
-                                                <span className="font-bold text-indigo-300">{note.author_name}</span>
-                                                <span className="text-slate-500 text-[10px]">{formatDate(note.created_at)}</span>
+                                                <span className="font-bold text-[#047857] dark:text-[#21D89A]">{note.author_name}</span>
+                                                <span className="text-text-muted/80 text-[10px]">{formatDate(note.created_at)}</span>
                                             </div>
-                                            <p className="text-slate-300 leading-relaxed whitespace-pre-wrap">{note.content}</p>
+                                            <p className="text-text-main leading-relaxed whitespace-pre-wrap">{note.content}</p>
                                         </div>
                                     ))
                                 ) : (
-                                    <p className="text-center py-4 text-slate-600 text-[11px] italic">No updates posted yet.</p>
+                                    <p className="text-center py-4 text-text-muted/70 text-[11px] italic">No updates posted yet.</p>
                                 )}
                             </div>
 
@@ -295,12 +295,12 @@ export const TaskDetailsModal: React.FC<TaskDetailsModalProps> = ({ task, onClos
                                         value={noteContent}
                                         onChange={(e) => setNoteContent(e.target.value)}
                                         placeholder="Add a progress update..."
-                                        className="w-full bg-slate-950 border border-slate-700/50 rounded-xl px-4 py-3 text-xs text-slate-200 placeholder:text-slate-600 focus:outline-none focus:border-indigo-500 transition-all resize-none min-h-[80px]"
+                                        className="w-full bg-bg-card border border-border-input rounded-xl px-4 py-3 text-xs text-text-main placeholder:text-text-muted/50 focus:outline-none focus:border-[#21D89A] transition-all resize-none min-h-[80px]"
                                     />
                                     <button
                                         type="submit"
                                         disabled={submittingNote || !noteContent.trim()}
-                                        className="absolute right-3 bottom-3 p-2 bg-indigo-500 hover:bg-indigo-600 disabled:opacity-40 text-white rounded-lg transition-all shadow-lg shadow-indigo-500/20"
+                                        className="absolute right-3 bottom-3 p-2 bg-[#21D89A] hover:bg-[#047857] disabled:opacity-40 text-[#10231B] hover:text-white rounded-lg transition-all shadow-sm"
                                     >
                                         <Send size={14} className={submittingNote ? 'animate-pulse' : ''} />
                                     </button>
