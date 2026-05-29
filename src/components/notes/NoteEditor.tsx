@@ -12,8 +12,8 @@ interface NoteEditorProps {
     defaultSecure?: boolean;
 }
 
-const inputCls = 'w-full bg-slate-950 border border-white/[0.08] text-slate-100 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#26f7b2] transition-colors placeholder:text-slate-500';
-const labelCls = 'block text-slate-400 text-xs font-medium mb-1';
+const inputCls = 'w-full bg-bg-input border border-border-input text-text-main rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#26f7b2] transition-colors placeholder:text-slate-500/70';
+const labelCls = 'block text-text-muted text-xs font-medium mb-1';
 
 export const NoteEditor: React.FC<NoteEditorProps> = ({ onClose, editNote, linked_project_id, defaultSecure }) => {
     const [loading, setLoading] = useState(false);
@@ -63,13 +63,13 @@ export const NoteEditor: React.FC<NoteEditorProps> = ({ onClose, editNote, linke
                     <label className={labelCls}>Title *</label>
                     <input className={inputCls} placeholder="Note title..." value={form.title} onChange={(e) => set('title', e.target.value)} />
                 </div>
-                <div className="pt-4">
+                <div className="pt-4 flex gap-2">
                     <button
                         type="button"
                         onClick={() => set('is_secure', !form.is_secure)}
                         className={`flex items-center gap-2 px-3 py-2 rounded-lg border text-sm font-medium transition-all ${form.is_secure
                             ? 'bg-amber-500/15 text-amber-400 border-amber-500/30'
-                            : 'bg-white/[0.06] text-slate-400 border-white/[0.08] hover:border-[#26f7b2]/40'
+                            : 'bg-bg-input text-text-muted border-border-input hover:border-[#26f7b2]/40'
                             }`}
                         title="Toggle secure/vault mode"
                     >
@@ -86,7 +86,7 @@ export const NoteEditor: React.FC<NoteEditorProps> = ({ onClose, editNote, linke
                         }}
                         className={`flex items-center gap-2 px-3 py-2 rounded-lg border text-sm font-medium transition-all ${form.is_credential
                             ? 'bg-emerald-500/15 text-emerald-400 border-emerald-500/30'
-                            : 'bg-white/[0.06] text-slate-400 border-white/[0.08] hover:border-[#26f7b2]/40'
+                            : 'bg-bg-input text-text-muted border-border-input hover:border-[#26f7b2]/40'
                             }`}
                     >
                         <Zap size={14} />

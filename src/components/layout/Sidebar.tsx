@@ -62,7 +62,7 @@ export const Sidebar: React.FC = () => {
             {/* Mobile Backdrop */}
             {sidebarOpen && (
                 <div
-                    className="fixed inset-0 bg-[#060d11]/80 z-40 md:hidden backdrop-blur-md transition-opacity"
+                    className="fixed inset-0 bg-[var(--bg-modal-backdrop)] z-40 md:hidden backdrop-blur-md transition-opacity"
                     onClick={() => setSidebarOpen(false)}
                 />
             )}
@@ -71,17 +71,17 @@ export const Sidebar: React.FC = () => {
                     fixed md:relative z-50
                     ${sidebarOpen ? 'translate-x-0 w-64' : '-translate-x-full md:translate-x-0 md:w-18'} 
                     transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] 
-                    bg-white/[0.01] border-r border-white/[0.08] backdrop-blur-xl flex flex-col h-screen top-0 left-0
+                    bg-bg-sidebar border-r border-border-card backdrop-blur-xl flex flex-col h-screen top-0 left-0
                 `}
             >
                 {/* Logo */}
-                <div className="flex items-center gap-3 px-4 py-6 border-b border-white/[0.08] mb-4">
+                <div className="flex items-center gap-3 px-4 py-6 border-b border-border-card mb-4">
                     <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#26f7b2] to-[#009d9a] flex items-center justify-center flex-shrink-0 shadow-lg shadow-[#26f7b2]/20 transition-transform duration-200 hover:scale-105">
                         <Sparkles size={18} className="text-black" />
                     </div>
                     {sidebarOpen && (
                         <div className="flex flex-col leading-none transition-opacity duration-200">
-                            <span className="text-[#f8fafc] font-extrabold text-lg tracking-tight font-display">TaskMaster</span>
+                            <span className="text-text-main font-extrabold text-lg tracking-tight font-display">TaskMaster</span>
                             <span className="text-[#26f7b2]/70 text-[9px] font-bold uppercase tracking-[0.2em] mt-1">Project Ecosystem</span>
                         </div>
                     )}
@@ -90,7 +90,7 @@ export const Sidebar: React.FC = () => {
                 {/* Nav Items */}
                 <nav className="flex-1 space-y-1.5 px-3">
                     {sidebarOpen && (
-                        <p className="px-3 pb-2 pt-1 text-[10px] font-bold uppercase tracking-[0.18em] text-slate-600">Menu</p>
+                        <p className="px-3 pb-2 pt-1 text-[10px] font-bold uppercase tracking-[0.18em] text-text-muted">Menu</p>
                     )}
                     {navItems.map(({ to, icon: Icon, label, end }) => (
                         <NavLink
@@ -101,7 +101,7 @@ export const Sidebar: React.FC = () => {
                             className={({ isActive }) =>
                                 `flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-200 group relative overflow-hidden ${isActive
                                     ? 'bg-[#26f7b2]/10 text-[#26f7b2] border border-[#26f7b2]/20 shadow-[0_0_20px_rgba(38,247,178,0.12)]'
-                                    : 'text-slate-400 hover:text-slate-100 hover:bg-white/[0.04] hover:shadow-[0_0_10px_rgba(38,247,178,0.06)] border border-transparent'
+                                    : 'text-text-muted hover:text-text-main hover:bg-bg-card hover:border-border-card border border-transparent'
                                 }`
                             }
                         >
@@ -118,7 +118,7 @@ export const Sidebar: React.FC = () => {
                                         size={19}
                                         className={`flex-shrink-0 transition-all duration-200 ${isActive
                                             ? 'text-[#26f7b2]'
-                                            : 'group-hover:scale-110 group-hover:text-slate-100'
+                                            : 'group-hover:scale-110 group-hover:text-text-main'
                                             }`}
                                     />
                                     {sidebarOpen && (
@@ -137,16 +137,16 @@ export const Sidebar: React.FC = () => {
                             <div className="w-1.5 h-1.5 rounded-full bg-[#26f7b2] animate-pulse glow-emerald" />
                             <span className="text-[#26f7b2] text-[10px] font-black uppercase tracking-widest">Live Timer</span>
                         </div>
-                        <p className="text-slate-200 text-xs font-semibold truncate">{activeTask.title}</p>
+                        <p className="text-text-main text-xs font-semibold truncate">{activeTask.title}</p>
                     </div>
                 )}
 
                 {/* User Profile & Logout */}
-                <div className="mt-auto border-t border-white/[0.08] p-4 space-y-4">
+                <div className="mt-auto border-t border-border-card p-4 space-y-4">
                     {user && (
                         <div className="flex items-center gap-3">
                             {/* Avatar: profile photo or initial */}
-                            <div className="w-9 h-9 rounded-xl overflow-hidden flex-shrink-0 border border-white/[0.1] shadow-inner transition-all duration-200 hover:border-[#26f7b2]/40 hover:shadow-[0_0_10px_rgba(38,247,178,0.15)]">
+                            <div className="w-9 h-9 rounded-xl overflow-hidden flex-shrink-0 border border-border-card shadow-inner transition-all duration-200 hover:border-[#26f7b2]/40 hover:shadow-[0_0_10px_rgba(38,247,178,0.15)]">
                                 {photoURL ? (
                                     <img
                                         src={photoURL}
@@ -154,15 +154,15 @@ export const Sidebar: React.FC = () => {
                                         className="w-full h-full object-cover"
                                     />
                                 ) : (
-                                    <div className="w-full h-full bg-white/[0.03] flex items-center justify-center text-[#26f7b2] font-extrabold text-sm font-display">
+                                    <div className="w-full h-full bg-bg-card flex items-center justify-center text-[#26f7b2] font-extrabold text-sm font-display">
                                         {resolvedName.charAt(0).toUpperCase()}
                                     </div>
                                 )}
                             </div>
                             {sidebarOpen && (
                                 <div className="flex-1 min-w-0">
-                                    <p className="text-slate-200 text-sm font-bold truncate">{resolvedName}</p>
-                                    <p className="text-slate-500 text-[10px] truncate">{user.email}</p>
+                                    <p className="text-text-main text-sm font-bold truncate">{resolvedName}</p>
+                                    <p className="text-text-muted text-[10px] truncate">{user.email}</p>
                                 </div>
                             )}
                         </div>
@@ -171,7 +171,7 @@ export const Sidebar: React.FC = () => {
                     <div className="flex items-center gap-2">
                         <button
                             onClick={() => setSidebarOpen(!sidebarOpen)}
-                            className="flex-1 p-2.5 rounded-xl bg-white/[0.02] border border-white/[0.08] text-slate-400 hover:text-slate-100 hover:bg-white/[0.06] hover:border-white/[0.15] transition-all duration-200 flex items-center justify-center cursor-pointer"
+                            className="flex-1 p-2.5 rounded-xl bg-bg-input border border-border-input text-text-muted hover:text-text-main hover:bg-bg-card hover:border-border-card transition-all duration-200 flex items-center justify-center cursor-pointer"
                         >
                             {sidebarOpen ? <ChevronLeft size={16} /> : <ChevronRight size={16} />}
                         </button>

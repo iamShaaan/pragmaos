@@ -9,8 +9,8 @@ interface ProjectFormProps {
     editProject?: Project;
 }
 
-const inputCls = 'w-full bg-slate-950 border border-white/[0.08] text-slate-100 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#26f7b2] transition-colors placeholder:text-slate-500';
-const labelCls = 'block text-slate-400 text-xs font-medium mb-1';
+const inputCls = 'w-full bg-bg-input border border-border-input text-text-main rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#26f7b2] transition-colors placeholder:text-slate-500/70';
+const labelCls = 'block text-text-muted text-xs font-medium mb-1';
 
 const COLORS = ['#6366f1', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#06b6d4', '#ec4899', '#f97316'];
 
@@ -100,7 +100,7 @@ export const ProjectForm: React.FC<ProjectFormProps> = ({ onClose, editProject }
                 <div className="flex gap-2 mt-1">
                     {COLORS.map((c) => (
                         <button key={c} type="button" onClick={() => set('color', c)}
-                            className={`w-7 h-7 rounded-full transition-all ${form.color === c ? 'ring-2 ring-[#26f7b2] ring-offset-2 ring-offset-[#060d11] scale-110' : 'hover:scale-105'}`}
+                            className={`w-7 h-7 rounded-full transition-all ${form.color === c ? 'ring-2 ring-[#26f7b2] ring-offset-2 ring-offset-bg-app scale-110' : 'hover:scale-105'}`}
                             style={{ backgroundColor: c }}
                         />
                     ))}

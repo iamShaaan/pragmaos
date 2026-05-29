@@ -1,7 +1,7 @@
 import React from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import { Sidebar } from './Sidebar';
-import { Bell, Search, Menu, CheckCircle2, Clock } from 'lucide-react';
+import { Bell, Search, Menu, CheckCircle2, Clock, Sun, Moon } from 'lucide-react';
 import { useAppStore } from '../../store';
 import { useNotifications } from '../notifications/NotificationProvider';
 import { formatDistanceToNow } from 'date-fns';
@@ -23,6 +23,22 @@ export const AppShell: React.FC = () => {
     const { sidebarOpen, setSidebarOpen } = useAppStore();
     const { notifications, unreadCount, markAsRead, markAllAsRead, requestPermission, permissionGranted } = useNotifications();
     const [showNotifications, setShowNotifications] = React.useState(false);
+    const [theme, setTheme] = React.useState<'light' | 'dark'>(() => {
+        return (localStorage.getItem('theme') as 'light' | 'dark') || 'dark';
+    });
+
+    React.useEffect(() => {
+        if (theme === 'light') {
+            document.documentElement.classList.add('light');
+        } else {
+            document.documentElement.classList.remove('light');
+        }
+        localStorage.setItem('theme', theme);
+    }, [theme]);
+
+    const toggleTheme = () => {
+        setTheme(t => t === 'light' ? 'dark' : 'light');
+    };
 
     const title = PAGE_TITLES[location.pathname] || 'TaskMaster';
     const today = new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
@@ -33,32 +49,41 @@ export const AppShell: React.FC = () => {
     };
 
     return (
-        <div className="flex h-screen bg-[#060d11] overflow-hidden relative noise-overlay grid-bg ambient-glow">
+        <div className="flex h-screen bg-bg-app overflow-hidden relative noise-overlay grid-bg ambient-glow transition-colors duration-300">
             <Sidebar />
             <div className="flex-1 flex flex-col overflow-hidden min-w-0 relative z-10">
                 {/* Topbar */}
-                <header className="flex items-center justify-between px-4 sm:px-6 py-4 border-b border-white/[0.08] bg-white/[0.01] backdrop-blur-md shadow-lg sticky top-0 z-20">
+                <header className="flex items-center justify-between px-4 sm:px-6 py-4 border-b border-border-card bg-bg-card backdrop-blur-md shadow-lg sticky top-0 z-20 transition-all duration-300">
                     <div className="flex items-center gap-3">
                         <button
-                            className="md:hidden p-2 -ml-2 rounded-xl text-slate-400 hover:text-[#26f7b2] hover:bg-white/[0.04] transition-colors"
+                            className="md:hidden p-2 -ml-2 rounded-xl text-text-muted hover:text-[#26f7b2] hover:bg-bg-card transition-colors"
                             onClick={() => setSidebarOpen(!sidebarOpen)}
                         >
                             <Menu size={20} />
                         </button>
                         <div key={location.pathname} className="page-title-fade">
-                            <h1 className="text-[#f8fafc] text-lg sm:text-xl font-bold tracking-tight font-display">{title}</h1>
-                            <p className="text-slate-500 text-xs hidden sm:block font-medium">{today}</p>
+                            <h1 className="text-text-main text-lg sm:text-xl font-bold tracking-tight font-display transition-colors duration-300">{title}</h1>
+                            <p className="text-text-muted text-xs hidden sm:block font-medium transition-colors duration-300">{today}</p>
                         </div>
                     </div>
                     <div className="flex items-center gap-3">
                         <div className="relative hidden xs:block sm:block">
-                            <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" />
+                            <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted" />
                             <input
                                 type="text"
                                 placeholder="Search..."
-                                className="bg-white/[0.03] border border-white/[0.08] text-[#f8fafc] text-sm rounded-xl pl-9 pr-4 py-2 w-24 sm:w-48 focus:outline-none focus:border-[#26f7b2] focus:ring-4 focus:ring-[#26f7b2]/5 focus:w-32 sm:focus:w-64 transition-all duration-300 placeholder:text-slate-600"
+                                className="bg-bg-input border border-border-input text-text-main text-sm rounded-xl pl-9 pr-4 py-2 w-24 sm:w-48 focus:outline-none focus:border-[#26f7b2] focus:ring-4 focus:ring-[#26f7b2]/5 focus:w-32 sm:focus:w-64 transition-all duration-300 placeholder:text-text-muted/65"
                             />
                         </div>
+
+                        {/* Theme Switcher Button */}
+                        <button
+                            onClick={toggleTheme}
+                            className="p-2 rounded-xl border bg-bg-input text-text-muted border-border-input hover:text-[#26f7b2] hover:border-[#26f7b2]/30 hover:shadow-[0_0_12px_rgba(38,247,178,0.15)] transition-all duration-300 cursor-pointer flex items-center justify-center"
+                            title={theme === 'light' ? 'Switch to Dark Mode' : 'Switch to Light Mode'}
+                        >
+                            {theme === 'light' ? <Moon size={18} /> : <Sun size={18} />}
+                        </button>
 
                         <div className="relative">
                             <button
@@ -66,11 +91,11 @@ export const AppShell: React.FC = () => {
                                     setShowNotifications(!showNotifications);
                                     if (!permissionGranted) requestPermission();
                                 }}
-                                className={`p-2 rounded-xl border transition-all duration-200 relative flex ${showNotifications ? 'bg-[#26f7b2] text-black border-[#26f7b2] shadow-[0_0_15px_rgba(38,247,178,0.4)]' : 'bg-white/[0.03] text-slate-400 border-white/[0.08] hover:text-[#26f7b2] hover:bg-white/[0.08] hover:border-[#26f7b2]/30 hover:shadow-[0_0_12px_rgba(38,247,178,0.15)]'}`}
+                                className={`p-2 rounded-xl border transition-all duration-200 relative flex ${showNotifications ? 'bg-[#26f7b2] text-black border-[#26f7b2] shadow-[0_0_15px_rgba(38,247,178,0.4)]' : 'bg-bg-input text-text-muted border-border-input hover:text-[#26f7b2] hover:bg-bg-card hover:border-[#26f7b2]/30 hover:shadow-[0_0_12px_rgba(38,247,178,0.15)]'}`}
                             >
                                 <Bell size={18} />
                                 {unreadCount > 0 && (
-                                    <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-[#26f7b2] text-[9px] font-black text-black shadow-sm ring-2 ring-[#060d11] border-none">
+                                    <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-[#26f7b2] text-[9px] font-black text-black shadow-sm ring-2 ring-bg-app border-none transition-all duration-300">
                                         {unreadCount > 9 ? '9+' : unreadCount}
                                     </span>
                                 )}

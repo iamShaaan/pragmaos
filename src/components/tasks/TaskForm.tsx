@@ -13,8 +13,8 @@ interface TaskFormProps {
     initialClientId?: string;
 }
 
-const inputCls = 'w-full bg-slate-950 border border-white/[0.08] text-slate-100 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#26f7b2] transition-colors placeholder:text-slate-500';
-const labelCls = 'block text-slate-400 text-xs font-medium mb-1';
+const inputCls = 'w-full bg-bg-input border border-border-input text-text-main rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#26f7b2] transition-colors placeholder:text-slate-500/70';
+const labelCls = 'block text-text-muted text-xs font-medium mb-1';
 
 export const TaskForm: React.FC<TaskFormProps> = ({ onClose, editTask, initialProjectId, initialClientId }) => {
     const { user } = useAuth();

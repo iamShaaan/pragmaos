@@ -1,10 +1,66 @@
 @import "tailwindcss";
 
+:root {
+  /* Default: Dark Mode (Dark gray backdrop) */
+  --bg-app: #121214;
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --bg-card: rgba(255, 255, 255, 0.03);
+  --bg-card-strong: rgba(18, 18, 20, 0.75);
+  --border-card: rgba(255, 255, 255, 0.08);
+  --bg-sidebar: rgba(18, 18, 20, 0.4);
+  --bg-input: rgba(0, 0, 0, 0.25);
+  --border-input: rgba(255, 255, 255, 0.08);
+  --text-input: #f8fafc;
+  --bg-scrollbar-track: #121214;
+  --bg-scrollbar-thumb: rgba(38, 247, 178, 0.15);
+  --bg-scrollbar-thumb-hover: rgba(38, 247, 178, 0.35);
+  --shadow-card: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  --shadow-strong: 0 12px 40px 0 rgba(0, 0, 0, 0.5);
+  --ambient-gradient-1: rgba(38, 247, 178, 0.07);
+  --ambient-gradient-2: rgba(0, 157, 154, 0.07);
+  --invert-calendar: invert(0.8) sepia(1) saturate(5) hue-rotate(110deg);
+}
+
+html.light {
+  /* Light Mode (White background) */
+  --bg-app: #ffffff;
+  --text-main: #0f172a;
+  --text-muted: #475569;
+  --bg-card: rgba(0, 0, 0, 0.02);
+  --bg-card-strong: rgba(255, 255, 255, 0.9);
+  --border-card: rgba(0, 0, 0, 0.08);
+  --bg-sidebar: rgba(244, 244, 245, 0.8);
+  --bg-input: #f4f4f5;
+  --border-input: rgba(0, 0, 0, 0.08);
+  --text-input: #0f172a;
+  --bg-scrollbar-track: #ffffff;
+  --bg-scrollbar-thumb: rgba(38, 247, 178, 0.3);
+  --bg-scrollbar-thumb-hover: rgba(38, 247, 178, 0.5);
+  --shadow-card: 0 8px 32px 0 rgba(0, 0, 0, 0.06);
+  --shadow-strong: 0 12px 40px 0 rgba(0, 0, 0, 0.08);
+  --ambient-gradient-1: rgba(38, 247, 178, 0.04);
+  --ambient-gradient-2: rgba(0, 157, 154, 0.04);
+  --invert-calendar: invert(0.2) sepia(1) saturate(5) hue-rotate(110deg);
+}
+
 @theme {
   --color-slate-950: #060d11;
   --color-glitch-bg: #060d11;
   --color-glitch-emerald: #26f7b2;
   --color-glitch-cyan: #009d9a;
+  
+  /* Registered dynamic colors mapped to custom properties */
+  --color-bg-app: var(--bg-app);
+  --color-text-main: var(--text-main);
+  --color-text-muted: var(--text-muted);
+  --color-bg-card: var(--bg-card);
+  --color-bg-card-strong: var(--bg-card-strong);
+  --color-border-card: var(--border-card);
+  --color-bg-sidebar: var(--bg-sidebar);
+  --color-bg-input: var(--bg-input);
+  --color-border-input: var(--border-input);
+  --color-text-input: var(--text-input);
   
   --font-family-sans: 'Inter', system-ui, -apple-system, sans-serif;
   --font-family-display: 'Outfit', system-ui, -apple-system, sans-serif;
@@ -29,11 +85,12 @@
   }
 
   body {
-    background-color: #060d11;
-    color: #f8fafc;
+    background-color: var(--bg-app);
+    color: var(--text-main);
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
 
   /* Selection styling */
@@ -49,23 +106,26 @@
   }
 
   ::-webkit-scrollbar-track {
-    background: #060d11;
+    background: var(--bg-scrollbar-track);
+    transition: background-color 0.3s ease;
   }
 
   ::-webkit-scrollbar-thumb {
-    background: rgba(38, 247, 178, 0.2);
+    background: var(--bg-scrollbar-thumb);
     border-radius: 999px;
+    transition: background-color 0.3s ease;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: rgba(38, 247, 178, 0.4);
+    background: var(--bg-scrollbar-thumb-hover);
   }
 
   /* Input date calendar icon color */
   input[type="datetime-local"]::-webkit-calendar-picker-indicator,
   input[type="date"]::-webkit-calendar-picker-indicator {
-    filter: invert(0.8) sepia(1) saturate(5) hue-rotate(110deg);
+    filter: var(--invert-calendar);
     cursor: pointer;
+    transition: filter 0.3s ease;
   }
 
   /* Select arrow */
@@ -171,19 +231,21 @@
 
   /* Glassmorphism Styles */
   .glass-card {
-    background: rgba(255, 255, 255, 0.03);
+    background: var(--bg-card);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    border: 1px solid var(--border-card);
+    box-shadow: var(--shadow-card);
+    transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
   }
 
   .glass-card-strong {
-    background: rgba(6, 13, 17, 0.6);
+    background: var(--bg-card-strong);
     backdrop-filter: blur(30px);
     -webkit-backdrop-filter: blur(30px);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.5);
+    border: 1px solid var(--border-card);
+    box-shadow: var(--shadow-strong);
+    transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
   }
 
   .glass-card-hover {
@@ -191,9 +253,9 @@
   }
 
   .glass-card-hover:hover {
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--bg-card-strong);
     border-color: rgba(38, 247, 178, 0.3);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4), 0 0 20px rgba(38, 247, 178, 0.12);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15), 0 0 20px rgba(38, 247, 178, 0.12);
     transform: translateY(-2px);
   }
 
@@ -226,9 +288,10 @@
   /* Grid overlay background */
   .grid-bg {
     background-image:
-      linear-gradient(to right, rgba(255, 255, 255, 0.015) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+      linear-gradient(to right, var(--border-card) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--border-card) 1px, transparent 1px);
     background-size: 50px 50px;
+    transition: background-image 0.3s ease;
   }
 
   /* Noise Overlay */
@@ -249,8 +312,9 @@
     pointer-events: none;
     z-index: 0;
     background:
-      radial-gradient(45rem 45rem at 8% -8%, rgba(38, 247, 178, 0.07), transparent 60%),
-      radial-gradient(40rem 40rem at 105% 108%, rgba(0, 157, 154, 0.07), transparent 60%);
+      radial-gradient(45rem 45rem at 8% -8%, var(--ambient-gradient-1), transparent 60%),
+      radial-gradient(40rem 40rem at 105% 108%, var(--ambient-gradient-2), transparent 60%);
+    transition: background 0.3s ease;
   }
 }
 
