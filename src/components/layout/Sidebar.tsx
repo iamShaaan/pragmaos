@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
+import logoImg from '../../assets/LOGO.png';
+import faviconImg from '../../assets/Favicon.png';
 import {
     LayoutDashboard,
     CheckSquare,
@@ -9,7 +11,6 @@ import {
     FolderKanban,
     ChevronLeft,
     ChevronRight,
-    Sparkles,
     LogOut,
     ListTodo,
     Wallet
@@ -75,14 +76,14 @@ export const Sidebar: React.FC = () => {
                 `}
             >
                 {/* Logo - Calmer and cleaner */}
-                <div className="flex items-center gap-3 px-4 py-6 border-b border-border-card mb-4">
-                    <div className="w-9 h-9 rounded-xl bg-[#DDFBF0] border border-[#B7F3DD] flex items-center justify-center flex-shrink-0 transition-transform duration-200 hover:scale-105 shadow-sm">
-                        <Sparkles size={18} className="text-[#047857]" />
-                    </div>
-                    {sidebarOpen && (
-                        <div className="flex flex-col leading-none transition-opacity duration-200">
-                            <span className="text-text-main font-extrabold text-lg tracking-tight font-display">TaskMaster OS</span>
-                            <span className="text-[#047857]/70 text-[9px] font-bold uppercase tracking-[0.2em] mt-1">Light Nordic SaaS</span>
+                <div className="flex items-center px-4 border-b border-border-card mb-4 h-[72px]">
+                    {!sidebarOpen ? (
+                        <div className="w-9 h-9 rounded-xl overflow-hidden flex-shrink-0 transition-transform duration-200 hover:scale-105 shadow-sm mx-auto">
+                            <img src={faviconImg} alt="PragmaOS" className="w-full h-full object-cover" />
+                        </div>
+                    ) : (
+                        <div className="flex items-center transition-all duration-200 hover:opacity-90 pl-1.5">
+                            <img src={logoImg} alt="PragmaOS" className="h-8.5 w-auto object-contain" />
                         </div>
                     )}
                 </div>

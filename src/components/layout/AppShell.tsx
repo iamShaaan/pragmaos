@@ -42,7 +42,7 @@ export const AppShell: React.FC = () => {
         setTheme(t => t === 'light' ? 'dark' : 'light');
     };
 
-    const title = PAGE_TITLES[location.pathname] || 'TaskMaster';
+    const title = PAGE_TITLES[location.pathname] || 'PragmaOS';
     const today = new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
 
     // Close notifications when clicking outside

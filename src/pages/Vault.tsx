@@ -19,7 +19,7 @@ import { ref, uploadBytesResumable, getDownloadURL, deleteObject } from 'firebas
 // ─── PIN Hashing (SHA-256 via WebCrypto) ─────────────────────────────────────
 const hashPin = async (pin: string): Promise<string> => {
     const encoder = new TextEncoder();
-    const data = encoder.encode(pin + '_taskmaster_vault');
+    const data = encoder.encode(pin + '_pragmaos_vault');
     const buffer = await crypto.subtle.digest('SHA-256', data);
     return Array.from(new Uint8Array(buffer)).map(b => b.toString(16).padStart(2, '0')).join('');
 };

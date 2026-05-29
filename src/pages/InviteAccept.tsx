@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { doc, getDoc, updateDoc, serverTimestamp } from 'firebase/firestore';
 import { db, APP_ID, auth } from '../firebase/config';
+import faviconImg from '../assets/Favicon.png';
 import {
     signInWithEmailAndPassword,
     createUserWithEmailAndPassword,
@@ -9,7 +10,7 @@ import {
     onAuthStateChanged,
 } from 'firebase/auth';
 import { setDoc } from 'firebase/firestore';
-import { Sparkles, Mail, Lock, User, ArrowRight, Loader2, CheckCircle, XCircle, LinkIcon } from 'lucide-react';
+import { Mail, Lock, User, ArrowRight, Loader2, CheckCircle, XCircle, LinkIcon } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { motion } from 'framer-motion';
 
@@ -278,10 +279,10 @@ export const InviteAccept: React.FC = () => {
 
             <div className="w-full max-w-md">
                 <div className="text-center mb-8">
-                    <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center mx-auto mb-4 shadow-lg shadow-indigo-500/20">
-                        <Sparkles size={32} className="text-white" />
+                    <div className="w-16 h-16 rounded-2xl overflow-hidden flex items-center justify-center mx-auto mb-4 shadow-lg">
+                        <img src={faviconImg} alt="PragmaOS" className="w-full h-full object-cover" />
                     </div>
-                    <h1 className="text-2xl font-bold text-white">TaskMaster</h1>
+                    <h1 className="text-2xl font-bold text-white tracking-tight">PragmaOS</h1>
                 </div>
 
                 <div className="bg-slate-900/50 border border-white/10 backdrop-blur-xl rounded-2xl p-8 shadow-2xl">

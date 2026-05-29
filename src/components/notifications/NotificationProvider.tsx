@@ -28,7 +28,7 @@ const NotificationContext = createContext<NotificationContextProps>({
 export const useNotifications = () => useContext(NotificationContext);
 
 // Use a ref-like storage locally to prevent duplicate daily alerts
-const LOCAL_STORAGE_KEY = 'taskmaster_daily_alerts';
+const LOCAL_STORAGE_KEY = 'pragmaos_daily_alerts';
 
 export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const { user } = useAuth();
@@ -53,16 +53,14 @@ export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({ 
             return false;
         }
     };
-
     const showNativeNotification = (title: string, options?: NotificationOptions) => {
         if (permissionGranted) {
             new Notification(title, {
-                icon: '/vite.svg', // Assuming a default icon exists
+                icon: '/favicon.png',
                 ...options,
             });
         }
     };
-
     // 1. Listen to Firestore Notifications
     useEffect(() => {
         if (!user) {

@@ -72,7 +72,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({ profile, stats, on
                     <div>
                         <h1 className="text-4xl font-black text-text-main tracking-tight mb-1">{profile.displayName || 'No Name Set'}</h1>
                         <p className="text-[#047857] dark:text-[#21D89A] font-bold tracking-wide uppercase text-xs flex items-center justify-center md:justify-start gap-2">
-                            <Building2 size={12} /> {profile.companyName || 'TaskMaster Ecosystem'}
+                            <Building2 size={12} /> {profile.companyName || 'PragmaOS'}
                         </p>
                     </div>
 

@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
+import faviconImg from './assets/Favicon.png';
 import { AppShell } from './components/layout/AppShell';
 import { Dashboard } from './pages/Dashboard';
 import { Tasks } from './pages/Tasks';
@@ -15,7 +16,6 @@ import { listenCollection, orderBy, toDate, where } from './firebase/firestore';
 import { useAppStore } from './store';
 import { fetchExchangeRates } from './utils/currencyService';
 import type { Task, Meeting, Client, Project, Note, Routine, DailyLog, SavingEntry, EMIEntry, Invoice } from './types';
-import { Sparkles } from 'lucide-react';
 
 import { ClientDetail } from './pages/ClientDetail';
 import { ProjectDetail } from './pages/ProjectDetail';
@@ -210,10 +210,10 @@ const DataLoader: React.FC = () => {
 const LoadingScreen: React.FC = () => (
   <div className="min-h-screen bg-slate-950 flex items-center justify-center">
     <div className="text-center">
-      <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center mx-auto mb-4 animate-pulse">
-        <Sparkles size={28} className="text-white" />
+      <div className="w-16 h-16 rounded-2xl overflow-hidden flex items-center justify-center mx-auto mb-4 animate-pulse">
+        <img src={faviconImg} alt="PragmaOS" className="w-full h-full object-cover" />
       </div>
-      <p className="text-slate-400 text-sm">Loading TaskMaster...</p>
+      <p className="text-slate-400 text-sm font-semibold tracking-wide">Loading PragmaOS...</p>
     </div>
   </div>
 );

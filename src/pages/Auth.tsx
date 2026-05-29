@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile, sendPasswordResetEmail } from 'firebase/auth';
 import { auth, db, APP_ID } from '../firebase/config';
 import { setDoc, doc, serverTimestamp } from 'firebase/firestore';
-import { Sparkles, Mail, Lock, User, ArrowRight, Loader2 } from 'lucide-react';
+import { Mail, Lock, User, ArrowRight, Loader2 } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { motion, AnimatePresence } from 'framer-motion';
+import faviconImg from '../assets/Favicon.png';
 
 export const Auth: React.FC = () => {
     const [isLogin, setIsLogin] = useState(true);
@@ -88,10 +89,10 @@ export const Auth: React.FC = () => {
                 className="w-full max-w-md relative z-10"
             >
                 <div className="text-center mb-8">
-                    <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#21D89A] to-[#047857] flex items-center justify-center mx-auto mb-4 shadow-lg shadow-[#21D89A]/20">
-                        <Sparkles size={32} className="text-black" />
+                    <div className="w-16 h-16 rounded-2xl overflow-hidden flex items-center justify-center mx-auto mb-4 shadow-lg shadow-[#21D89A]/10">
+                        <img src={faviconImg} alt="PragmaOS" className="w-full h-full object-cover" />
                     </div>
-                    <h1 className="text-3xl font-extrabold text-[#f8fafc] mb-2 tracking-tight font-display">TaskMaster</h1>
+                    <h1 className="text-3xl font-extrabold text-[#f8fafc] mb-2 tracking-tight font-display">PragmaOS</h1>
                     <p className="text-slate-500 font-bold tracking-widest uppercase text-[10px]">Advanced Project Ecosystem</p>
                 </div>
 

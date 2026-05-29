@@ -92,7 +92,7 @@ export const generateInvoicePDF = async (invoice: Invoice, profile: Partial<User
     doc.setFontSize(14);
     doc.setFont('helvetica', 'bold');
     doc.setTextColor(...brandIndigo);
-    doc.text(profile.companyName || 'TaskMaster Ecosystem', companyX, 28, { align: 'right' });
+    doc.text(profile.companyName || 'PragmaOS', companyX, 28, { align: 'right' });
     
     doc.setFontSize(10);
     doc.setFont('helvetica', 'bold');
