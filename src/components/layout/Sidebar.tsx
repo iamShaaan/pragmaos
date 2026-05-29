@@ -83,7 +83,7 @@ export const Sidebar: React.FC = () => {
                         </div>
                     ) : (
                         <div className="flex items-center transition-all duration-200 hover:opacity-90 pl-1.5">
-                            <img src={logoImg} alt="PragmaOS" className="h-8.5 w-auto object-contain" />
+                            <img src={logoImg} alt="PragmaOS" className="h-[42px] w-auto object-contain" />
                         </div>
                     )}
                 </div>
