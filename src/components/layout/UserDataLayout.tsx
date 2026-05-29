@@ -210,9 +210,9 @@ export const UserDataLayout: React.FC = () => {
             <div className="space-y-6">
                 {/* Decorative Separator */}
                 <div className="flex items-center gap-4 py-4">
-                    <div className="h-px bg-white/5 flex-1" />
-                    <span className="text-slate-500 text-[10px] font-black uppercase tracking-[0.2em]">Workspace Data</span>
-                    <div className="h-px bg-white/5 flex-1" />
+                    <div className="h-px bg-border-card flex-1" />
+                    <span className="text-text-muted text-[10px] font-black uppercase tracking-[0.2em]">Workspace Data</span>
+                    <div className="h-px bg-border-card flex-1" />
                 </div>
 
                 {/* Horizontal Navigation */}
@@ -225,14 +225,14 @@ export const UserDataLayout: React.FC = () => {
                             className={({ isActive }) =>
                                 `flex items-center gap-2 px-5 py-3 rounded-2xl whitespace-nowrap transition-all duration-300 flex-shrink-0 border font-bold text-sm shadow-sm snap-center group
                                 ${isActive
-                                    ? 'bg-gradient-to-r from-[#21D89A]/20 to-[#047857]/20 text-[#21D89A] border-[#21D89A]/50 shadow-[0_0_15px_rgba(38,247,178,0.2)]'
-                                    : 'bg-white/[0.03] border-white/5 text-slate-400 hover:text-slate-200 hover:bg-white/[0.06] hover:border-white/10'
+                                    ? 'bg-[#DDFBF0] dark:bg-[#21D89A]/10 text-[#047857] dark:text-[#21D89A] border-[#B7F3DD] dark:border-[#21D89A]/30 shadow-sm'
+                                    : 'bg-[#F3F7F5] dark:bg-[#15221C] border-transparent dark:border-[#22372D] text-text-muted hover:text-text-main hover:bg-[#EEF7F2] dark:hover:bg-[#1A2B23] hover:border-[#DDE8E2] dark:hover:border-[#22372D]'
                                 }`
                             }
                         >
                             {({ isActive }) => (
                                 <>
-                                    <Icon size={16} className={`transition-colors duration-300 ${isActive ? 'text-[#21D89A]' : 'text-slate-500 group-hover:text-slate-400'}`} />
+                                    <Icon size={16} className={`transition-colors duration-300 ${isActive ? 'text-[#047857] dark:text-[#21D89A]' : 'text-text-muted group-hover:text-text-main'}`} />
                                     {label}
                                 </>
                             )}

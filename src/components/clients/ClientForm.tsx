@@ -9,8 +9,8 @@ interface ClientFormProps {
     editClient?: Client;
 }
 
-const inputCls = 'w-full bg-bg-input border border-border-input text-text-main rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#21D89A] transition-colors placeholder:text-slate-500/70';
-const labelCls = 'block text-text-muted text-xs font-medium mb-1';
+const inputCls = 'w-full bg-[#F3F7F5] dark:bg-bg-input border border-border-input dark:border-[#22372D] text-text-main rounded-xl px-4 py-2.5 text-sm focus:border-[#21D89A] focus:ring-1 focus:ring-[#21D89A] outline-none transition-all placeholder:text-text-muted/40 font-semibold shadow-sm';
+const labelCls = 'block text-text-muted text-xs font-bold uppercase tracking-wider mb-1.5 ml-1';
 
 export const ClientForm: React.FC<ClientFormProps> = ({ onClose, editClient }) => {
     const [loading, setLoading] = useState(false);
@@ -75,10 +75,9 @@ export const ClientForm: React.FC<ClientFormProps> = ({ onClose, editClient }) =
         }
     };
 
-
     return (
         <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                     <label className={labelCls}>Full Name *</label>
                     <input className={inputCls} placeholder="John Doe" value={form.name} onChange={(e) => set('name', e.target.value)} />
@@ -102,19 +101,19 @@ export const ClientForm: React.FC<ClientFormProps> = ({ onClose, editClient }) =
                 <label className={labelCls}>Phone Numbers</label>
                 <div className="flex gap-2">
                     <div className="relative flex-1">
-                        <Phone size={13} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" />
+                        <Phone size={13} className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted" />
                         <input className={`${inputCls} pl-8`} type="tel" placeholder="+43 1 234 567" value={phoneInput} onChange={(e) => setPhoneInput(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && (e.preventDefault(), addPhone())} />
                     </div>
-                    <button type="button" onClick={addPhone} className="px-3 py-2 bg-[#21D89A]/15 text-[#21D89A] border border-[#21D89A]/30 rounded-lg hover:bg-[#21D89A]/25">
+                    <button type="button" onClick={addPhone} className="px-3 py-2 bg-[#DDFBF0] hover:bg-[#B7F3DD] text-[#047857] border border-[#B7F3DD] rounded-xl transition-all shadow-sm cursor-pointer">
                         <Plus size={15} />
                     </button>
                 </div>
                 {form.phones.length > 0 && (
                     <div className="flex flex-wrap gap-1.5 mt-2">
                         {form.phones.map((p) => (
-                            <span key={p} className="flex items-center gap-1.5 px-2.5 py-1 bg-white/[0.06] text-slate-300 rounded-lg text-xs">
-                                <Phone size={11} className="text-emerald-400" />{p}
-                                <button type="button" onClick={() => set('phones', form.phones.filter((x) => x !== p))} className="text-slate-500 hover:text-rose-400"><X size={11} /></button>
+                            <span key={p} className="flex items-center gap-1.5 px-2.5 py-1 bg-[#F3F7F5] dark:bg-white/[0.06] text-text-main border border-border-card dark:border-transparent rounded-lg text-xs font-bold shadow-sm">
+                                <Phone size={11} className="text-[#047857] dark:text-[#21D89A]" />{p}
+                                <button type="button" onClick={() => set('phones', form.phones.filter((x) => x !== p))} className="text-text-muted hover:text-rose-500 ml-1 cursor-pointer"><X size={11} /></button>
                             </span>
                         ))}
                     </div>
@@ -126,19 +125,19 @@ export const ClientForm: React.FC<ClientFormProps> = ({ onClose, editClient }) =
                 <label className={labelCls}>Email Addresses</label>
                 <div className="flex gap-2">
                     <div className="relative flex-1">
-                        <Mail size={13} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" />
+                        <Mail size={13} className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted" />
                         <input className={`${inputCls} pl-8`} type="email" placeholder="client@company.com" value={emailInput} onChange={(e) => setEmailInput(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && (e.preventDefault(), addEmail())} />
                     </div>
-                    <button type="button" onClick={addEmail} className="px-3 py-2 bg-[#047857]/15 text-cyan-300 border border-[#047857]/30 rounded-lg hover:bg-[#047857]/25">
+                    <button type="button" onClick={addEmail} className="px-3 py-2 bg-[#E0F2FE] hover:bg-[#BAE6FD] text-[#0369A1] border border-[#BAE6FD] rounded-xl transition-all shadow-sm cursor-pointer">
                         <Plus size={15} />
                     </button>
                 </div>
                 {form.emails.length > 0 && (
                     <div className="flex flex-wrap gap-1.5 mt-2">
                         {form.emails.map((e) => (
-                            <span key={e} className="flex items-center gap-1.5 px-2.5 py-1 bg-white/[0.06] text-slate-300 rounded-lg text-xs">
-                                <Mail size={11} className="text-cyan-300" />{e}
-                                <button type="button" onClick={() => set('emails', form.emails.filter((x) => x !== e))} className="text-slate-500 hover:text-rose-400"><X size={11} /></button>
+                            <span key={e} className="flex items-center gap-1.5 px-2.5 py-1 bg-[#F3F7F5] dark:bg-white/[0.06] text-text-main border border-border-card dark:border-transparent rounded-lg text-xs font-bold shadow-sm">
+                                <Mail size={11} className="text-[#0369A1] dark:text-cyan-300" />{e}
+                                <button type="button" onClick={() => set('emails', form.emails.filter((x) => x !== e))} className="text-text-muted hover:text-rose-500 ml-1 cursor-pointer"><X size={11} /></button>
                             </span>
                         ))}
                     </div>
@@ -151,8 +150,8 @@ export const ClientForm: React.FC<ClientFormProps> = ({ onClose, editClient }) =
             </div>
 
             <div className="flex justify-end gap-3 pt-2">
-                <button type="button" onClick={onClose} className="px-4 py-2 text-sm text-slate-400 hover:text-slate-100 transition-colors">Cancel</button>
-                <button type="submit" disabled={loading} className="px-5 py-2 bg-gradient-to-r from-[#21D89A] to-[#047857] hover:opacity-90 text-black text-sm font-bold rounded-lg transition-all disabled:opacity-50 active:scale-95">
+                <button type="button" onClick={onClose} className="px-5 py-2.5 text-sm text-text-muted hover:text-text-main font-bold transition-all cursor-pointer">Cancel</button>
+                <button type="submit" disabled={loading} className="px-5 py-2.5 bg-[#047857] hover:bg-[#035e43] dark:bg-[#21D89A] dark:hover:bg-[#1ebd86] text-white dark:text-[#053B2A] text-sm font-bold rounded-xl transition-all shadow-sm disabled:opacity-50 active:scale-95 cursor-pointer">
                     {loading ? 'Saving...' : editClient ? 'Update Client' : 'Add Client'}
                 </button>
             </div>

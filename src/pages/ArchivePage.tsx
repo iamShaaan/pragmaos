@@ -19,11 +19,11 @@ interface ArchivedItem {
 const COLLECTIONS = ['tasks', 'clients', 'projects', 'meetings', 'notes'] as const;
 
 const ICON_MAP: Record<string, React.ReactNode> = {
-    tasks: <CheckSquare size={14} className="text-[#21D89A]" />,
-    clients: <Users size={14} className="text-emerald-400" />,
-    projects: <FolderKanban size={14} className="text-cyan-300" />,
-    meetings: <Calendar size={14} className="text-amber-400" />,
-    notes: <FileText size={14} className="text-pink-400" />,
+    tasks: <CheckSquare size={14} className="text-[#047857] dark:text-[#21D89A]" />,
+    clients: <Users size={14} className="text-[#047857] dark:text-emerald-400" />,
+    projects: <FolderKanban size={14} className="text-[#7C5CFC] dark:text-cyan-300" />,
+    meetings: <Calendar size={14} className="text-amber-600 dark:text-amber-400" />,
+    notes: <FileText size={14} className="text-rose-500 dark:text-pink-400" />,
 };
 
 const LABEL_MAP: Record<string, string> = {
@@ -107,15 +107,15 @@ export const ArchivePage: React.FC = () => {
     const filtered = filter === 'all' ? items : items.filter(i => i.deleted_from === filter);
 
     return (
-        <div className="space-y-6 max-w-3xl mx-auto">
+        <div className="space-y-6 max-w-3xl mx-auto bg-bg-card border border-border-card rounded-[28px] p-6 sm:p-8 shadow-sm">
             {/* Header */}
             <div className="flex items-center gap-3 mb-2">
-                <div className="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center">
-                    <Archive size={20} className="text-amber-400" />
+                <div className="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center shadow-sm">
+                    <Archive size={20} className="text-amber-600 dark:text-amber-500" />
                 </div>
                 <div>
-                    <h1 className="text-white font-black text-xl">Archive</h1>
-                    <p className="text-slate-500 text-xs">Items deleted in the last 30 days · auto-purge after expiry</p>
+                    <h1 className="text-text-main font-black text-xl">Archive</h1>
+                    <p className="text-text-muted text-xs">Items deleted in the last 30 days · auto-purge after expiry</p>
                 </div>
             </div>
 
@@ -125,9 +125,9 @@ export const ArchivePage: React.FC = () => {
                     <button
                         key={col}
                         onClick={() => setFilter(col)}
-                        className={`px-4 py-2 rounded-2xl text-xs font-bold transition-all duration-300 capitalize border ${filter === col
-                            ? 'bg-gradient-to-r from-[#21D89A]/20 to-[#047857]/20 text-[#21D89A] border-[#21D89A]/50 shadow-[0_0_15px_rgba(38,247,178,0.2)]'
-                            : 'bg-white/[0.03] border-white/5 text-slate-400 hover:text-slate-200 hover:bg-white/[0.06] hover:border-white/10'
+                        className={`px-4 py-2 rounded-2xl text-xs font-bold transition-all duration-300 capitalize border cursor-pointer ${filter === col
+                            ? 'bg-[#DDFBF0] dark:bg-[#21D89A]/10 text-[#047857] dark:text-[#21D89A] border-[#B7F3DD] dark:border-[#21D89A]/30 shadow-sm'
+                            : 'bg-[#F3F7F5] dark:bg-[#15221C] border-transparent dark:border-[#22372D] text-text-muted hover:text-text-main hover:bg-[#EEF7F2] dark:hover:bg-[#1A2B23] hover:border-[#DDE8E2] dark:hover:border-[#22372D]'
                             }`}
                     >
                         {col === 'all' ? `All (${items.length})` : `${LABEL_MAP[col]}s (${items.filter(i => i.deleted_from === col).length})`}
@@ -137,38 +137,38 @@ export const ArchivePage: React.FC = () => {
 
             {/* Items */}
             {loading ? (
-                <div className="text-center py-16 text-slate-600 text-sm">Loading archive...</div>
+                <div className="text-center py-16 text-text-muted text-sm animate-pulse">Loading archive...</div>
             ) : filtered.length === 0 ? (
-                <div className="text-center py-20 border-2 border-dashed border-white/[0.08] rounded-2xl">
-                    <Archive size={40} className="text-slate-700 mx-auto mb-3" />
-                    <p className="text-slate-500 font-medium">Archive is empty</p>
-                    <p className="text-slate-600 text-xs mt-1">Deleted items will appear here for 30 days</p>
+                <div className="text-center py-20 border-2 border-dashed border-border-card dark:border-[#22372D] rounded-[22px] bg-[#F3F7F5]/30">
+                    <Archive size={40} className="text-text-muted/40 mx-auto mb-3" />
+                    <p className="text-text-main font-bold text-sm">Archive is empty</p>
+                    <p className="text-text-muted text-xs mt-1">Deleted items will appear here for 30 days</p>
                 </div>
             ) : (
-                <div className="space-y-2">
+                <div className="space-y-2.5">
                     {filtered.map(item => {
                         const days = daysLeft(item.deleted_at);
                         const urgent = days <= 3;
                         return (
                             <div
                                 key={`${item.deleted_from}-${item.id}`}
-                                className={`flex items-center gap-4 p-4 bg-white/[0.02] border rounded-xl transition-all ${urgent ? 'border-rose-500/30' : 'border-white/[0.08]'
+                                className={`flex items-center gap-4 p-4 bg-bg-card border rounded-xl transition-all shadow-sm ${urgent ? 'border-rose-500/30 dark:border-rose-500/40 bg-rose-500/[0.01]' : 'border-border-card dark:border-[#22372D]'
                                     }`}
                             >
                                 {/* Icon */}
-                                <div className="w-8 h-8 rounded-lg bg-black/20 border border-white/[0.08] flex items-center justify-center flex-shrink-0">
+                                <div className="w-8 h-8 rounded-lg bg-[#F3F7F5] dark:bg-black/20 border border-border-card dark:border-[#22372D] flex items-center justify-center flex-shrink-0 shadow-sm">
                                     {ICON_MAP[item.deleted_from]}
                                 </div>
 
                                 {/* Info */}
                                 <div className="flex-1 min-w-0">
-                                    <p className="text-slate-200 text-sm font-bold truncate">{getLabel(item)}</p>
-                                    <div className="flex items-center gap-2 mt-0.5">
-                                        <span className="text-[10px] text-slate-500 capitalize font-medium bg-black/20 px-1.5 py-0.5 rounded">
+                                    <p className="text-text-main text-sm font-bold truncate">{getLabel(item)}</p>
+                                    <div className="flex items-center gap-2 mt-1">
+                                        <span className="text-[10px] text-text-muted capitalize font-bold bg-[#F3F7F5] dark:bg-black/20 border border-border-card dark:border-transparent px-1.5 py-0.5 rounded shadow-sm">
                                             {LABEL_MAP[item.deleted_from]}
                                         </span>
-                                        <span className="text-slate-600 text-[10px]">·</span>
-                                        <span className={`text-[10px] font-bold flex items-center gap-1 ${urgent ? 'text-rose-400' : 'text-slate-500'}`}>
+                                        <span className="text-text-muted/30 text-[10px]">·</span>
+                                        <span className={`text-[10px] font-bold flex items-center gap-1 ${urgent ? 'text-rose-600 dark:text-rose-400 font-bold' : 'text-text-muted'}`}>
                                             {urgent && <AlertTriangle size={9} />}
                                             <Clock size={9} />
                                             {days === 0 ? 'Expires today' : `${days}d left`}
@@ -182,7 +182,7 @@ export const ArchivePage: React.FC = () => {
                                         onClick={() => handleRestore(item)}
                                         disabled={!!restoring}
                                         title="Restore"
-                                        className="flex items-center gap-1.5 px-3 py-1.5 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 hover:bg-emerald-500 hover:text-black rounded-lg text-xs font-bold transition-all disabled:opacity-40"
+                                        className="flex items-center gap-1.5 px-3 py-1.5 bg-[#DDFBF0] hover:bg-[#B7F3DD] border border-[#B7F3DD] text-[#047857] rounded-lg text-xs font-bold transition-all disabled:opacity-40 shadow-sm cursor-pointer"
                                     >
                                         <RotateCcw size={12} className={restoring === item.id ? 'animate-spin' : ''} />
                                         Restore
@@ -191,7 +191,7 @@ export const ArchivePage: React.FC = () => {
                                         onClick={() => handlePurge(item)}
                                         disabled={!!purging}
                                         title="Delete permanently"
-                                        className="p-1.5 text-slate-600 hover:text-rose-400 hover:bg-rose-500/10 rounded-lg transition-all disabled:opacity-40"
+                                        className="p-1.5 text-text-muted hover:text-rose-500 hover:bg-[#FFE4E8] dark:hover:bg-rose-950/30 rounded-lg transition-all disabled:opacity-40 shadow-sm cursor-pointer"
                                     >
                                         <Trash2 size={13} />
                                     </button>
