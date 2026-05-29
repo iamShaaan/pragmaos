@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
   /* Default: Light Mode (Nordic SaaS Theme) */
   --bg-app: #F7FAF8;
