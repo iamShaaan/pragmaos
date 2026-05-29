@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import logoImg from '../../assets/LOGO.png';
+import logoDarkImg from '../../assets/LOGO_dark.png';
 import faviconImg from '../../assets/Favicon.png';
 import {
     LayoutDashboard,
@@ -35,7 +36,20 @@ export const Sidebar: React.FC = () => {
     const activeTask = tasks.find((t) => t.id === activeTimerId);
     const [photoURL, setPhotoURL] = useState<string | null>(null);
     const [displayName, setDisplayName] = useState<string | null>(null);
+    const [isDark, setIsDark] = useState(() => document.documentElement.classList.contains('dark'));
     const location = useLocation();
+
+    // Live-listen to dark mode class changes on document.documentElement
+    useEffect(() => {
+        const observer = new MutationObserver(() => {
+            setIsDark(document.documentElement.classList.contains('dark'));
+        });
+        observer.observe(document.documentElement, {
+            attributes: true,
+            attributeFilter: ['class'],
+        });
+        return () => observer.disconnect();
+    }, []);
 
     // Close sidebar on mobile when route changes
     useEffect(() => {
@@ -83,7 +97,7 @@ export const Sidebar: React.FC = () => {
                         </div>
                     ) : (
                         <div className="flex items-center transition-all duration-200 hover:opacity-90 pl-1.5">
-                            <img src={logoImg} alt="PragmaOS" className="h-[42px] w-auto object-contain" />
+                            <img src={isDark ? logoDarkImg : logoImg} alt="PragmaOS" className="h-[42px] w-auto object-contain" />
                         </div>
                     )}
                 </div>
