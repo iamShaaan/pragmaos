@@ -44,7 +44,7 @@ export default async function handler(req: any, res: any) {
 
         // Send email via Resend
         const response = await resend.emails.send({
-            from: 'PragmaOS <onboarding@resend.dev>',
+            from: 'PragmaOS <invitations@pragmaos.pro>',
             to: toEmails,
             subject: subject,
             text: body,
