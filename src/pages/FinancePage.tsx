@@ -901,7 +901,15 @@ ${userProfile.companyName || ''}`;
         return { earned, spent, dailyBreakdown };
     }, [entries, displayCurrency, exchangeRates]);
 
-    // Handlers
+    // Cache current month's invoices for display in the right-side dashboard widget
+    const currentMonthInvoices = useMemo(() => {
+        const currentMonth = today.getMonth();
+        const currentYear = today.getFullYear();
+        return invoices.filter(inv => {
+            const d = new Date(inv.date);
+            return d.getMonth() === currentMonth && d.getFullYear() === currentYear;
+        });
+    }, [invoices, today]);
     const handleAddEntry = async (e: React.FormEvent) => {
         e.preventDefault();
         const amtVal = parseFloat(amount);
@@ -1017,7 +1025,7 @@ ${userProfile.companyName || ''}`;
             <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
                 {(viewMode === 'history' 
                     ? (['history', 'invoices'] as const)
-                    : (['today', 'new_invoice', 'savings', 'emis'] as const)
+                    : (['today', 'new_invoice', 'invoices', 'savings', 'emis'] as const)
                 ).map(tab => (
                     <button
                         key={tab}
@@ -1028,7 +1036,7 @@ ${userProfile.companyName || ''}`;
                                 : 'bg-[#F3F7F5] text-[#6B7C73] border-transparent hover:bg-bg-card hover:text-text-main'
                         }`}
                     >
-                        {tab === 'emis' ? 'Subscriptions' : tab === 'new_invoice' ? 'New Invoice' : tab}
+                        {tab === 'emis' ? 'Subscriptions' : tab === 'new_invoice' ? 'New Invoice' : tab === 'invoices' ? 'Invoices' : tab}
                     </button>
                 ))}
             </div>
@@ -1200,6 +1208,42 @@ ${userProfile.companyName || ''}`;
                                                 <p className="text-center text-[10px] text-slate-600 py-4 italic">No activity this month</p>
                                             )}
                                         </div>
+                                    </div>
+                                </div>
+
+                                {/* Premium Monthly Invoices Display Widget */}
+                                <div className="bg-white dark:bg-bg-card border border-border-card rounded-[22px] p-5 space-y-4 shadow-sm relative overflow-hidden">
+                                    <div className="absolute top-0 left-0 w-full h-1 bg-[#21D89A]" />
+                                    <h3 className="text-text-main text-[10px] font-black uppercase tracking-widest border-b border-border-card pb-2">
+                                        Invoices this Month ({currentMonthInvoices.length})
+                                    </h3>
+                                    <div className="space-y-2.5 max-h-[300px] overflow-y-auto pr-2 custom-scrollbar">
+                                        {currentMonthInvoices.map(inv => (
+                                            <div key={inv.id} className="flex items-center justify-between p-3 rounded-xl bg-bg-app border border-border-card group hover:border-[#21D89A]/30 transition-all">
+                                                <div className="min-w-0 pr-2">
+                                                    <p className="text-xs font-bold text-text-main leading-tight truncate">{inv.invoice_number}</p>
+                                                    <p className="text-[9px] text-text-muted font-semibold truncate uppercase tracking-tight mt-0.5">{inv.recipient_name}</p>
+                                                </div>
+                                                <div className="flex items-center gap-2 flex-shrink-0">
+                                                    <div className="text-right">
+                                                        <p className="text-xs font-black text-text-main tabular-nums">{formatCurrency(inv.total_amount, inv.currency)}</p>
+                                                        <span className={`inline-block text-[8px] font-black uppercase tracking-wider ${inv.status === 'paid' ? 'text-emerald-500' : 'text-amber-500'}`}>{inv.status}</span>
+                                                    </div>
+                                                    <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                                                        <button 
+                                                            onClick={(e) => { e.stopPropagation(); handleOpenInvoiceEmailPreview(inv); }}
+                                                            className="p-1.5 rounded-lg bg-bg-input border border-border-card text-[#047857] hover:bg-[#DDFBF0] hover:text-[#047857] transition-all cursor-pointer"
+                                                            title="Send Invoice"
+                                                        >
+                                                            <Mail size={11} />
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        ))}
+                                        {currentMonthInvoices.length === 0 && (
+                                            <p className="text-center text-[10px] text-text-muted py-6 italic">No invoices generated this month</p>
+                                        )}
                                     </div>
                                 </div>
                             </div>
