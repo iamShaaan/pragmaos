@@ -98,13 +98,18 @@ export async function encryptText(text: string, key: CryptoKey, saltHex: string)
 /**
  * Decrypts a packed string using the derived key and AES-GCM.
  * Assumes format: saltHex:ivHex:ciphertextHex
+ * If the string does not match the encrypted pattern, it auto-detects it
+ * as a legacy plaintext note and safely returns the content as-is.
  */
 export async function decryptText(encryptedString: string, key: CryptoKey): Promise<string> {
-    const parts = encryptedString.split(":");
-    if (parts.length !== 3) {
-        throw new Error("Invalid cipher text format");
+    // Packed format pattern: 32-char hex (salt), 24-char hex (iv), ciphertext hex
+    const isEncrypted = /^[a-f0-9]{32}:[a-f0-9]{24}:[a-f0-9]+$/i.test(encryptedString);
+    if (!isEncrypted) {
+        // Safe fallback for legacy unencrypted plaintext notes
+        return encryptedString;
     }
 
+    const parts = encryptedString.split(":");
     const [, ivHex, ciphertextHex] = parts;
     const iv = hexToBytes(ivHex);
     const ciphertext = hexToBytes(ciphertextHex);
