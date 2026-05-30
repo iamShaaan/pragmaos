@@ -212,11 +212,11 @@ export const EmailPreviewModal: React.FC<EmailPreviewModalProps> = ({
                             >
                                 {sendingAutomation ? (
                                     <>
-                                        <Loader2 size={14} className="animate-spin" /> Log Automation...
+                                        <Loader2 size={14} className="animate-spin" /> Sending Email...
                                     </>
                                 ) : (
                                     <>
-                                        <Sparkles size={13} className="text-[#21D89A]" /> Send via n8n Action
+                                        <Sparkles size={13} className="text-[#21D89A]" /> Send Automatically
                                     </>
                                 )}
                             </button>
