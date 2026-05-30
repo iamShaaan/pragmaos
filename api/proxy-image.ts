@@ -1,5 +1,7 @@
-export default async function handler(req: any, res: any) {
-    // CORS headers to allow client-side canvas reading
+import https from 'https';
+
+export default function handler(req: any, res: any) {
+    // Standard CORS headers for client-side drawing
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS');
 
@@ -12,23 +14,21 @@ export default async function handler(req: any, res: any) {
         return res.status(400).json({ error: 'Missing image url parameter' });
     }
 
-    try {
-        const decodedUrl = decodeURIComponent(url as string);
-        const response = await fetch(decodedUrl);
+    const decodedUrl = decodeURIComponent(url as string);
 
-        if (!response.ok) {
-            return res.status(response.status).json({ error: 'Failed to retrieve image from remote storage' });
+    // Stream image binary directly using native https.get to bypass any Vercel Node runtime fetch issues
+    https.get(decodedUrl, (remoteRes) => {
+        if (remoteRes.statusCode !== 200) {
+            return res.status(remoteRes.statusCode || 500).json({ error: 'Failed to retrieve image from remote storage' });
         }
 
-        const arrayBuffer = await response.arrayBuffer();
-        const buffer = Buffer.from(arrayBuffer);
-        const contentType = response.headers.get('content-type') || 'image/png';
-
-        res.setHeader('Content-Type', contentType);
+        res.setHeader('Content-Type', remoteRes.headers['content-type'] || 'image/png');
         res.setHeader('Cache-Control', 'public, max-age=86400'); // Cache for 24h
-        return res.send(buffer);
-    } catch (err) {
+        
+        // Pipe the binary stream directly to the response
+        remoteRes.pipe(res);
+    }).on('error', (err) => {
         console.error('[Image Proxy Error]:', err);
-        return res.status(500).json({ error: (err as Error).message });
-    }
+        return res.status(500).json({ error: err.message });
+    });
 }
