@@ -659,7 +659,7 @@ const TeamMembers: React.FC<{ project: Project }> = ({ project }) => {
 
             const results = await searchByUserCode(userCode.trim());
             if (results.length === 0) { toast.error('No user found with that code.'); return; }
-            const found = results[0];
+            const found = results[0] as any;
             const targetUid: string = found.uid || found.id;
             if (targetUid === project.owner_id) { toast.error('That user is already the project owner'); return; }
             const existing: string[] = project.member_uids || project.shared_with || [];

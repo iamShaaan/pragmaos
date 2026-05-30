@@ -40,6 +40,7 @@ export const createDoc = async (path: string, data: Record<string, unknown>) => 
 
 // Search by old email field (kept for compatibility)
 export const searchUsers = async (email: string) => {
+    if (!email || email.length > 320 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return [];
     const q = query(col('users'), where('email', '==', email));
     const snap = await getDocs(q);
     return snap.docs.map(d => ({ id: d.id, ...d.data() }));
@@ -48,9 +49,10 @@ export const searchUsers = async (email: string) => {
 // Search by user code (new system) — e.g. "TM-A3X9P2"
 export const searchByUserCode = async (code: string) => {
     const normalised = code.trim().toUpperCase();
+    if (!normalised || normalised.length > 20 || !/^[A-Z0-9-]+$/.test(normalised)) return [];
     const q = query(col('users'), where('user_code', '==', normalised));
     const snap = await getDocs(q);
-    return snap.docs.map(d => ({ id: d.id, ...d.data() })) as any[];
+    return snap.docs.map(d => ({ id: d.id, ...d.data() }));
 };
 
 export const updateDocById = async (path: string, id: string, data: Record<string, unknown>) => {

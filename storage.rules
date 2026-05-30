@@ -1,8 +1,10 @@
 rules_version = '2';
 service firebase.storage {
   match /b/{bucket}/o {
-    match /apps/{appId}/{allPaths=**} {
-      allow read, write: if request.auth != null;
+    // New uploads include the owner's UID in the path: apps/{appId}/{userId}/...
+    // This makes ownership enforceable at the rules level.
+    match /apps/{appId}/{userId}/{allPaths=**} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
     }
   }
 }

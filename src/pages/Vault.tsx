@@ -6,15 +6,23 @@ import {
     Eye, EyeOff, FolderKanban, Loader2
 } from 'lucide-react';
 import { useAppStore } from '../store';
+import { useAuth } from '../hooks/useAuth';
 import { NoteEditor } from '../components/notes/NoteEditor';
 import { Modal } from '../components/ui/Modal';
 import type { Note, VaultFile } from '../types';
 import { deleteDocById, createDoc } from '../firebase/firestore';
 import { formatDate } from '../utils/timeFormat';
 import toast from 'react-hot-toast';
-import { db, APP_ID, storage, auth } from '../firebase/config';
+import { db, APP_ID, storage } from '../firebase/config';
 import { doc, getDoc, setDoc, collection, query, where, orderBy, onSnapshot, deleteDoc } from 'firebase/firestore';
 import { ref, uploadBytesResumable, getDownloadURL, deleteObject } from 'firebase/storage';
+import {
+    deriveKeyFromPin,
+    generateSaltHex,
+    encryptText,
+    decryptText,
+    VAULT_VERIFY_PAYLOAD
+} from '../utils/crypto';
 
 // ─── PIN Hashing (SHA-256 via WebCrypto) ─────────────────────────────────────
 const hashPin = async (pin: string): Promise<string> => {
@@ -238,6 +246,37 @@ const NoteCard: React.FC<{
 }> = ({ note, projects, revealedNotes, onView, onEdit, onDelete, onToggleReveal }) => {
     const isRevealed = revealedNotes.includes(note.id);
     const project = note.linked_project_id ? projects.find(p => p.id === note.linked_project_id) : null;
+    const { vaultKey } = useAppStore();
+    const [decrypted, setDecrypted] = useState<string | null>(null);
+    const [decryptError, setDecryptError] = useState(false);
+
+    useEffect(() => {
+        if (!note.is_secure) {
+            setDecrypted(note.content);
+            return;
+        }
+        if (isRevealed && vaultKey) {
+            decryptText(note.content, vaultKey)
+                .then(setDecrypted)
+                .catch((e) => {
+                    console.error("Decrypt failed:", e);
+                    setDecryptError(true);
+                });
+        } else {
+            setDecrypted(null);
+            setDecryptError(false);
+        }
+    }, [note.content, note.is_secure, isRevealed, vaultKey]);
+
+    const displayContent = !isRevealed && note.is_secure ? (
+        "••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••"
+    ) : decryptError ? (
+        "⚠️ Decrypted payload corrupted / key lost"
+    ) : decrypted !== null ? (
+        decrypted
+    ) : (
+        "Decrypting..."
+    );
 
     return (
         <div
@@ -265,7 +304,7 @@ const NoteCard: React.FC<{
                 </div>
             </div>
             <div className={`text-text-muted text-xs font-mono whitespace-pre-wrap leading-relaxed max-h-28 overflow-hidden ${!isRevealed ? 'blur-sm select-none opacity-40' : ''}`}>
-                {note.content || <span className="text-text-muted/40 italic">Empty note</span>}
+                {displayContent}
             </div>
             {note.tags?.length > 0 && (
                 <div className="flex flex-wrap gap-1 mt-3">
@@ -283,6 +322,39 @@ const NoteCard: React.FC<{
             )}
             <p className="text-text-muted/65 text-[10px] font-bold uppercase mt-3">{formatDate(note.updated_at)}</p>
         </div>
+    );
+};
+
+const DecryptedNoteModalContent: React.FC<{ note: Note }> = ({ note }) => {
+    const { vaultKey } = useAppStore();
+    const [content, setContent] = useState<string>("Decrypting...");
+    const [error, setError] = useState(false);
+
+    useEffect(() => {
+        if (!note.is_secure) {
+            setContent(note.content);
+            return;
+        }
+        if (!vaultKey) {
+            setContent("Vault locked.");
+            return;
+        }
+        decryptText(note.content, vaultKey)
+            .then(setContent)
+            .catch((e) => {
+                console.error("Decrypt failed inside modal:", e);
+                setError(true);
+            });
+    }, [note, vaultKey]);
+
+    if (error) {
+        return <span className="text-rose-500 italic">⚠️ Decrypted payload corrupted / key was reset</span>;
+    }
+
+    return (
+        <pre className="text-text-main text-sm whitespace-pre-wrap font-sans leading-relaxed">
+            {content || <span className="text-text-muted italic">Empty note</span>}
+        </pre>
     );
 };
 
@@ -378,9 +450,7 @@ const VaultNotes: React.FC<{ uid: string }> = () => {
                 {viewNote && (
                     <div className="space-y-4">
                         <div className="bg-[#F3F7F5] dark:bg-[#0D1612] rounded-xl p-4 max-h-[60vh] overflow-y-auto custom-scrollbar border border-border-card dark:border-[#22372D]">
-                            <pre className="text-text-main text-sm whitespace-pre-wrap font-sans leading-relaxed">
-                                {viewNote.content || <span className="text-text-muted italic">Empty note</span>}
-                            </pre>
+                            <DecryptedNoteModalContent note={viewNote} />
                         </div>
                         <div className="flex items-center justify-between border-t border-border-card dark:border-[#22372D] pt-4">
                             <div className="flex flex-wrap gap-2">
@@ -602,7 +672,8 @@ export const Vault: React.FC = () => {
     const [pinLoading, setPinLoading] = useState(true);
     const [activeTab, setActiveTab] = useState<'notes' | 'files'>('notes');
 
-    const uid = auth.currentUser?.uid;
+    const { user } = useAuth();
+    const uid = user?.uid;
     const { clients, projects } = useAppStore();
     const [stats, setStats] = useState({ vaultSize: 0, appSize: 0 });
 
@@ -629,15 +700,24 @@ export const Vault: React.FC = () => {
         });
     }, [uid, vaultUnlocked, clients, projects]);
 
-    // Load stored vault PIN hash from Firestore
+    const [storedSalt, setStoredSalt] = useState<string | null>(null);
+    const [storedVerifyToken, setStoredVerifyToken] = useState<string | null>(null);
+
+    // Load stored vault PIN details from Firestore
     useEffect(() => {
         if (!uid) return;
         const load = async () => {
             try {
                 const snap = await getDoc(doc(db, `apps/${APP_ID}/users`, uid));
-                setStoredPinHash(snap.data()?.vault_pin_hash || null);
-            } catch {
+                const data = snap.data();
+                setStoredPinHash(data?.vault_pin_hash || null);
+                setStoredSalt(data?.vault_salt || null);
+                setStoredVerifyToken(data?.vault_verify_token || null);
+            } catch (e) {
+                console.error("Error loading user profile details:", e);
                 setStoredPinHash(null);
+                setStoredSalt(null);
+                setStoredVerifyToken(null);
             } finally {
                 setPinLoading(false);
             }
@@ -646,38 +726,103 @@ export const Vault: React.FC = () => {
     }, [uid]);
 
     const handleUnlock = useCallback(async (pin: string): Promise<boolean> => {
-        const hash = await hashPin(pin);
-        if (hash === storedPinHash) {
-            setVaultUnlocked(true);
-            toast.success('🔓 Vault unlocked');
-            return true;
+        if (!uid) return false;
+
+        try {
+            // Legacy Migration: if PIN hash exists but no salt is registered
+            if (storedPinHash && !storedSalt) {
+                const legacyHash = await hashPin(pin);
+                if (legacyHash === storedPinHash) {
+                    // PIN is correct! Upgrade legacy user seamlessly to AES-256-GCM zero-knowledge
+                    const saltHex = generateSaltHex();
+                    const key = await deriveKeyFromPin(pin, saltHex);
+                    const verifyToken = await encryptText(VAULT_VERIFY_PAYLOAD, key, saltHex);
+
+                    await setDoc(doc(db, `apps/${APP_ID}/users`, uid), {
+                        vault_salt: saltHex,
+                        vault_verify_token: verifyToken
+                    }, { merge: true });
+
+                    setStoredSalt(saltHex);
+                    setStoredVerifyToken(verifyToken);
+                    useAppStore.getState().setVaultKey(key);
+                    setVaultUnlocked(true);
+                    toast.success('🔓 Legacy Vault upgraded & unlocked successfully!');
+                    return true;
+                }
+                toast.error('Wrong PIN — try again');
+                return false;
+            }
+
+            // Zero-Knowledge PBKDF2 check
+            if (storedSalt && storedVerifyToken) {
+                const key = await deriveKeyFromPin(pin, storedSalt);
+                try {
+                    const decryptedVerify = await decryptText(storedVerifyToken, key);
+                    if (decryptedVerify === VAULT_VERIFY_PAYLOAD) {
+                        useAppStore.getState().setVaultKey(key);
+                        setVaultUnlocked(true);
+                        toast.success('🔓 Vault unlocked successfully');
+                        return true;
+                    }
+                } catch {
+                    // Decrypt failure means incorrect PIN
+                }
+            }
+
+            toast.error('Wrong PIN — try again');
+            return false;
+        } catch (e) {
+            console.error("Unlock error:", e);
+            toast.error('An error occurred during vault unlock');
+            return false;
         }
-        toast.error('Wrong PIN — try again');
-        return false;
-    }, [storedPinHash]);
+    }, [storedPinHash, storedSalt, storedVerifyToken, uid]);
 
     const handleSetPin = useCallback(async (pin: string) => {
         if (!uid) return;
-        const hash = await hashPin(pin);
         try {
-            await setDoc(doc(db, `apps/${APP_ID}/users`, uid), { vault_pin_hash: hash }, { merge: true });
+            const saltHex = generateSaltHex();
+            const key = await deriveKeyFromPin(pin, saltHex);
+            const verifyToken = await encryptText(VAULT_VERIFY_PAYLOAD, key, saltHex);
+            const hash = await hashPin(pin);
+
+            await setDoc(doc(db, `apps/${APP_ID}/users`, uid), {
+                vault_pin_hash: hash,
+                vault_salt: saltHex,
+                vault_verify_token: verifyToken
+            }, { merge: true });
+
             setStoredPinHash(hash);
+            setStoredSalt(saltHex);
+            setStoredVerifyToken(verifyToken);
+            useAppStore.getState().setVaultKey(key);
             setVaultUnlocked(true);
-            toast.success('✅ Vault PIN set! Vault is now unlocked.');
-        } catch {
-            toast.error('Failed to save PIN');
+            toast.success('✅ Secure Vault PIN set! Vault unlocked.');
+        } catch (e) {
+            console.error("Set PIN error:", e);
+            toast.error('Failed to configure secure PIN');
         }
     }, [uid]);
 
     const handleResetPin = useCallback(async () => {
         if (!uid) return;
         try {
-            await setDoc(doc(db, `apps/${APP_ID}/users`, uid), { vault_pin_hash: null }, { merge: true });
+            await setDoc(doc(db, `apps/${APP_ID}/users`, uid), {
+                vault_pin_hash: null,
+                vault_salt: null,
+                vault_verify_token: null
+            }, { merge: true });
+
             setStoredPinHash(null);
+            setStoredSalt(null);
+            setStoredVerifyToken(null);
+            useAppStore.getState().setVaultKey(null);
             setVaultUnlocked(false);
-            toast.success('Vault PIN reset. Set a new PIN below.');
-        } catch {
-            toast.error('Failed to reset PIN');
+            toast.success('Vault security parameters wiped. Set a new PIN.');
+        } catch (e) {
+            console.error("Reset PIN error:", e);
+            toast.error('Failed to wipe Vault security details');
         }
     }, [uid]);
 
@@ -726,7 +871,10 @@ export const Vault: React.FC = () => {
                     </div>
                 </div>
                 <button
-                    onClick={() => { setVaultUnlocked(false); }}
+                    onClick={() => {
+                        useAppStore.getState().setVaultKey(null);
+                        setVaultUnlocked(false);
+                    }}
                     className="flex items-center justify-center gap-1.5 px-4 py-2 bg-[#F3F7F5] hover:bg-[#EEF7F2] dark:bg-[#15221C] dark:hover:bg-[#1A2B23] border border-border-card dark:border-[#22372D] text-text-muted hover:text-text-main text-xs font-bold rounded-xl transition-all cursor-pointer shadow-sm sm:w-auto w-full"
                 >
                     <Lock size={13} /> Lock Vault

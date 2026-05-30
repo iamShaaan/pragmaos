@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import type { Note } from '../../types';
 import { createDoc, updateDocById } from '../../firebase/firestore';
-import { auth } from '../../firebase/config';
+import { auth, db, APP_ID } from '../../firebase/config';
+import { getDoc, doc } from 'firebase/firestore';
+import { useAppStore } from '../../store';
+import { encryptText, decryptText } from '../../utils/crypto';
 import toast from 'react-hot-toast';
-import { Lock, Unlock, Zap } from 'lucide-react';
+import { Lock, Unlock, Zap, Loader2 } from 'lucide-react';
 
 interface NoteEditorProps {
     onClose: () => void;
@@ -16,7 +19,9 @@ const inputCls = 'w-full bg-bg-input border border-border-input text-text-main r
 const labelCls = 'block text-text-muted text-xs font-medium mb-1';
 
 export const NoteEditor: React.FC<NoteEditorProps> = ({ onClose, editNote, linked_project_id, defaultSecure }) => {
+    const { vaultKey } = useAppStore();
     const [loading, setLoading] = useState(false);
+    const [decrypting, setDecrypting] = useState(false);
     const [tagInput, setTagInput] = useState('');
     const [form, setForm] = useState({
         title: editNote?.title || '',
@@ -26,6 +31,30 @@ export const NoteEditor: React.FC<NoteEditorProps> = ({ onClose, editNote, linke
         is_credential: editNote?.is_credential || false,
         linked_project_id: editNote?.linked_project_id || linked_project_id || null,
     });
+
+    // Asynchronously decrypt secure notes on edit mount
+    useEffect(() => {
+        if (editNote?.is_secure) {
+            if (!vaultKey) {
+                toast.error("Vault locked — unlock your vault to edit secure notes");
+                onClose();
+                return;
+            }
+            setDecrypting(true);
+            decryptText(editNote.content, vaultKey)
+                .then((plainText) => {
+                    setForm((f) => ({ ...f, content: plainText }));
+                })
+                .catch((e) => {
+                    console.error("Failed to decrypt editNote:", e);
+                    toast.error("Unable to decrypt note: key invalid or corrupted.");
+                    onClose();
+                })
+                .finally(() => {
+                    setDecrypting(false);
+                });
+        }
+    }, [editNote, vaultKey, onClose]);
 
     const set = (k: string, v: unknown) => setForm((f) => ({ ...f, [k]: v }));
 
@@ -41,20 +70,57 @@ export const NoteEditor: React.FC<NoteEditorProps> = ({ onClose, editNote, linke
         if (!form.title.trim()) { toast.error('Title required'); return; }
         setLoading(true);
         try {
+            let finalContent = form.content;
+            if (form.is_secure) {
+                if (!vaultKey) {
+                    toast.error("Vault locked — unlock your vault to save secure notes.");
+                    setLoading(false);
+                    return;
+                }
+                const uid = auth.currentUser?.uid;
+                if (!uid) {
+                    toast.error("User session expired.");
+                    setLoading(false);
+                    return;
+                }
+                // Retrieve user profile salt
+                const userSnap = await getDoc(doc(db, `apps/${APP_ID}/users`, uid));
+                const saltHex = userSnap.data()?.vault_salt || "";
+                
+                // Encrypt note content
+                finalContent = await encryptText(form.content, vaultKey, saltHex);
+            }
+
+            const payload = {
+                ...form,
+                content: finalContent,
+                updated_at: new Date()
+            };
+
             if (editNote) {
-                await updateDocById('notes', editNote.id, { ...form, updated_at: new Date() });
+                await updateDocById('notes', editNote.id, payload);
                 toast.success('Note updated!');
             } else {
-                await createDoc('notes', { ...form, owner_id: auth.currentUser?.uid, updated_at: new Date() });
+                await createDoc('notes', { ...payload, owner_id: auth.currentUser?.uid });
                 toast.success('Note saved!');
             }
             onClose();
-        } catch {
+        } catch (e) {
+            console.error("Save error:", e);
             toast.error('Failed to save note');
         } finally {
             setLoading(false);
         }
     };
+
+    if (decrypting) {
+        return (
+            <div className="flex items-center justify-center p-8 space-x-2 text-text-muted">
+                <Loader2 className="animate-spin text-amber-500" size={18} />
+                <span className="text-sm font-semibold">Decrypting note...</span>
+            </div>
+        );
+    }
 
     return (
         <form onSubmit={handleSubmit} className="space-y-4">

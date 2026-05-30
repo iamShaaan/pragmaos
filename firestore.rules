@@ -21,50 +21,77 @@ service cloud.firestore {
 
     // =========================================================================
     // TASK MASTER  (apps/task-master-v1/...)
-    // Explicit, per-collection rules. Isolated from other apps by the path.
     // =========================================================================
 
     // ── User Profiles ─────────────────────────────────────────────────────────
+    // Any authenticated user can read profiles — needed for user-code/email search
+    // during invitation flows. Write restricted to own profile only.
     match /apps/task-master-v1/users/{userId} {
       allow read:  if isAuthed();
       allow write: if isAuthed() && request.auth.uid == userId;
     }
 
     // ── Invitations ───────────────────────────────────────────────────────────
+    // Must be signed in to read an invitation token (accepting requires auth anyway).
     match /apps/task-master-v1/invitations/{token} {
-      allow read:           if true;
+      allow read:           if isAuthed();
       allow create, update: if isAuthed();
     }
 
-    // ── All task-master-v1 collections (projects, tasks, clients, notes, etc.) ──
-    match /apps/task-master-v1/{collection}/{docId} {
-      allow create:        if isAuthed();
-      allow read:          if isAuthed(); // Simplified for query compatibility
+    // ── Tasks ─────────────────────────────────────────────────────────────────
+    // Three read paths: owner, direct assignee, project member (shared tasks).
+    // Matches the three listenCollection calls in App.tsx DataLoader.
+    match /apps/task-master-v1/tasks/{docId} {
+      allow create: if isAuthed();
+      allow read:   if isAuthed() && (
+                      resource.data.owner_id == request.auth.uid
+                      || resource.data.assignee_id == request.auth.uid
+                      || request.auth.uid in resource.data.project_member_uids
+                    );
       allow update, delete: if isOwner(resource) || isOrphan(resource);
     }
 
-    // projects specific delete rule (admins can delete)
+    // ── Projects ──────────────────────────────────────────────────────────────
+    // Owner or any member can read. Admins can update/delete.
     match /apps/task-master-v1/projects/{docId} {
-       allow delete: if isOwner(resource)
-                     || isOrphan(resource)
-                     || (isAuthed() && resource != null && resource.data.admin_uids is list
-                         && request.auth.uid in resource.data.admin_uids);
+      allow create: if isAuthed();
+      allow read:   if isAuthed() && (
+                      resource.data.owner_id == request.auth.uid
+                      || request.auth.uid in resource.data.member_uids
+                    );
+      allow update: if isOwner(resource)
+                    || isOrphan(resource)
+                    || (isAuthed() && resource != null && resource.data.admin_uids is list
+                        && request.auth.uid in resource.data.admin_uids);
+      allow delete: if isOwner(resource)
+                    || isOrphan(resource)
+                    || (isAuthed() && resource != null && resource.data.admin_uids is list
+                        && request.auth.uid in resource.data.admin_uids);
+    }
+
+    // ── All other task-master-v1 collections ──────────────────────────────────
+    // (meetings, notes, clients, routines, daily_logs, finance_entries,
+    //  savings, emis, invoices, files, actions)
+    // Owner-only read/write. Queries in App.tsx already filter by owner_id.
+    match /apps/task-master-v1/{collection}/{docId} {
+      allow create:         if isAuthed();
+      allow read:           if isOwner(resource);
+      allow update, delete: if isOwner(resource) || isOrphan(resource);
     }
 
     // ── Collection-level list queries ─────────────────────────────────────────
+    // Security is enforced by the per-document rules above and by the query
+    // constraints in the app (all queries include owner_id/member_uids where clauses).
     match /apps/task-master-v1/{collection} {
       allow list: if isAuthed();
     }
-    
-    // Explicit list for users just in case of specific shadowing
+
     match /apps/task-master-v1/users {
       allow list: if isAuthed();
     }
 
     // =========================================================================
     // OTHER APPS (Profluencer, CRM-Tool, etc.)
-    // These rules will NOT affect task-master-v1 paths (different match prefix).
-    // When Profluencer deploys its own rules they go here, keeping TM safe.
     // =========================================================================
     match /apps/{appId}/users/{userId} {
       allow read:  if isAuthed();
@@ -72,8 +99,8 @@ service cloud.firestore {
     }
 
     match /apps/{appId}/{collection}/{docId} {
-      allow create:        if isAuthed();
-      allow read:          if isAuthed();
+      allow create:         if isAuthed();
+      allow read:           if isOwner(resource);
       allow update, delete: if isAuthed()
                             && (resource == null
                                 || !('owner_id' in resource.data)

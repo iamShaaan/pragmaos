@@ -1,10 +1,21 @@
 import { addDoc } from 'firebase/firestore';
 import { col, serverTimestamp } from '../firebase/firestore';
 
+const VALID_ACTION_TYPES = [
+    'send_meeting_reminder',
+    'send_task_due_alert',
+] as const;
+
+type N8nActionType = typeof VALID_ACTION_TYPES[number];
+
 export const triggerN8n = async (
-    actionType: string,
+    actionType: N8nActionType,
     payload: Record<string, unknown>
 ) => {
+    if (JSON.stringify(payload).length > 10_000) {
+        console.error('[n8n bridge] Payload too large, action dropped');
+        return;
+    }
     try {
         await addDoc(col('actions'), {
             action_type: actionType,

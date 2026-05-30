@@ -58,6 +58,10 @@ interface AppStore {
     activeTimerId: string | null;
     timerStartTime: Date | null;
     setActiveTimer: (taskId: string | null, startTime?: Date | null) => void;
+
+    // Vault Cryptographic Key (in-memory only, non-persisted)
+    vaultKey: CryptoKey | null;
+    setVaultKey: (key: CryptoKey | null) => void;
 }
 
 export const useAppStore = create<AppStore>((set) => ({
@@ -110,4 +114,7 @@ export const useAppStore = create<AppStore>((set) => ({
     timerStartTime: null,
     setActiveTimer: (taskId, startTime) =>
         set({ activeTimerId: taskId, timerStartTime: startTime || null }),
+
+    vaultKey: null,
+    setVaultKey: (vaultKey) => set({ vaultKey }),
 }));
