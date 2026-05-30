@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Mail, Send, X, Paperclip, Check, Loader2, Sparkles } from 'lucide-react';
 import { getGmailComposeUrl } from '../../utils/gmail';
 import toast from 'react-hot-toast';
