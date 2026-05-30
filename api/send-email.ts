@@ -1,8 +1,13 @@
 import { Resend } from 'resend';
 
-const resend = new Resend(process.env.RESEND_API_KEY || '');
-
 export default async function handler(req: any, res: any) {
+    const apiKey = process.env.RESEND_API_KEY;
+    if (!apiKey) {
+        console.error('[send-email api] Missing RESEND_API_KEY environment variable.');
+        return res.status(500).json({ error: 'Server Configuration Error: RESEND_API_KEY is not configured on the host.' });
+    }
+
+    const resend = new Resend(apiKey);
     // CORS headers for secure serverless API execution
     res.setHeader('Access-Control-Allow-Credentials', 'true');
     res.setHeader('Access-Control-Allow-Origin', '*');

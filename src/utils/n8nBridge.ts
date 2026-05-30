@@ -53,11 +53,23 @@ export const triggerN8n = async (
             });
 
             if (res.ok) {
-                const data = await res.json();
+                const resText = await res.text();
+                let data: any = {};
+                try {
+                    data = JSON.parse(resText);
+                } catch {
+                    data = { rawText: resText };
+                }
                 actionStatus = 'success';
                 actionResult = { success: true, message: 'Email sent successfully via Resend serverless function', resendData: data };
             } else {
-                const errData = await res.json();
+                const resText = await res.text();
+                let errData: any = {};
+                try {
+                    errData = JSON.parse(resText);
+                } catch {
+                    errData = { error: resText || 'Server returned a non-JSON error response.' };
+                }
                 actionStatus = 'failed';
                 actionResult = { success: false, error: errData.error || 'Serverless send failed' };
                 console.error('[email bridge] Failed to send email via API:', errData);
