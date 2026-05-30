@@ -4,6 +4,8 @@ import { col, serverTimestamp } from '../firebase/firestore';
 const VALID_ACTION_TYPES = [
     'send_meeting_reminder',
     'send_task_due_alert',
+    'send_meeting_invitation',
+    'send_invoice_email',
 ] as const;
 
 type N8nActionType = typeof VALID_ACTION_TYPES[number];

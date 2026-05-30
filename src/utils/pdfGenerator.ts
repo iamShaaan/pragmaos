@@ -38,7 +38,7 @@ const getBase64ImageFromUrl = (imageUrl: string): Promise<string> => {
     });
 };
 
-export const generateInvoicePDF = async (invoice: Invoice, profile: Partial<UserProfile>) => {
+export const generateInvoicePDF = async (invoice: Invoice, profile: Partial<UserProfile>, shouldDownload = true) => {
     const doc = new jsPDF();
     const pageWidth = doc.internal.pageSize.width;
 
@@ -235,5 +235,8 @@ export const generateInvoicePDF = async (invoice: Invoice, profile: Partial<User
     });
 
     // ─── Save ───
-    doc.save(`Invoice_${invoice.invoice_number}.pdf`);
+    if (shouldDownload) {
+        doc.save(`Invoice_${invoice.invoice_number}.pdf`);
+    }
+    return doc;
 };

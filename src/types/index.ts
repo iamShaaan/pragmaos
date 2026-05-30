@@ -86,6 +86,7 @@ export interface Meeting {
     outcome?: 'ended' | 'success' | 'failed'; // status set after meeting ends
     owner_id?: string;
     is_archived?: boolean;
+    invitation_sent?: boolean;
 }
 
 
@@ -228,6 +229,7 @@ export interface Invoice {
     owner_id: string;
     created_at: Date;
     total_amount: number;
+    pdf_url?: string;
 }
 
 export interface FinanceEntry {

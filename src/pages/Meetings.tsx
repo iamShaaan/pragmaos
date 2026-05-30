@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import { Plus, Calendar, Clock, Users, Link2, Pencil, Trash2, CheckCircle2, XCircle, StopCircle } from 'lucide-react';
+import { Plus, Calendar, Clock, Users, Link2, Pencil, Trash2, CheckCircle2, XCircle, StopCircle, Mail } from 'lucide-react';
 import { useAppStore } from '../store';
 import { MeetingForm } from '../components/meetings/MeetingForm';
 import { Modal } from '../components/ui/Modal';
+import { EmailPreviewModal } from '../components/ui/EmailPreviewModal';
 import type { Meeting } from '../types';
 import { deleteDocById, updateDocById } from '../firebase/firestore';
 import { formatDateTime, formatTime } from '../utils/timeFormat';
+import { triggerN8n } from '../utils/n8nBridge';
 import toast from 'react-hot-toast';
 
 // ─── Outcome config ───
@@ -103,11 +105,13 @@ const MeetingCard = ({
     now,
     onEdit,
     onDelete,
+    onSendEmail,
 }: {
     meeting: Meeting;
     now: Date;
     onEdit: (m: Meeting) => void;
     onDelete: (id: string) => void;
+    onSendEmail: (m: Meeting) => void;
 }) => {
     const isUpcoming = meeting.start_time > now;
     const durationMs = meeting.end_time.getTime() - meeting.start_time.getTime();
@@ -156,6 +160,9 @@ const MeetingCard = ({
                 </div>
 
                 <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0">
+                    <button onClick={() => onSendEmail(meeting)} className={`p-1.5 rounded-lg text-text-muted hover:text-[#21D89A] hover:bg-[#21D89A]/10 transition-all cursor-pointer ${meeting.invitation_sent ? 'text-[#21D89A] bg-[#21D89A]/10' : ''}`} title="Send Invitation via Gmail">
+                        <Mail size={13} />
+                    </button>
                     <button onClick={() => onEdit(meeting)} className="p-1.5 rounded-lg text-text-muted hover:text-[#047857] hover:bg-[#DDFBF0] transition-all cursor-pointer">
                         <Pencil size={13} />
                     </button>
@@ -197,6 +204,12 @@ const MeetingCard = ({
                         </span>
                     </div>
                 )}
+                {meeting.invitation_sent && (
+                    <div className="flex items-center gap-1.5 text-xs text-[#21D89A] font-bold">
+                        <Mail size={11} />
+                        <span>Invite Sent</span>
+                    </div>
+                )}
             </div>
 
             {/* Status bar */}
@@ -207,9 +220,15 @@ const MeetingCard = ({
 
 // ─── Page ───
 export const Meetings: React.FC = () => {
-    const { meetings } = useAppStore();
+    const { meetings, clients } = useAppStore();
     const [showForm, setShowForm] = useState(false);
     const [editMeeting, setEditMeeting] = useState<Meeting | undefined>();
+    
+    // Email preview modal state
+    const [selectedEmailMeeting, setSelectedEmailMeeting] = useState<Meeting | undefined>();
+    const [emailPreviewOpen, setEmailPreviewOpen] = useState(false);
+    const [emailPreviewData, setEmailPreviewData] = useState({ to: '', subject: '', body: '' });
+
     const now = new Date();
 
     const upcoming = meetings
@@ -233,6 +252,60 @@ export const Meetings: React.FC = () => {
     const successCount = past.filter(m => m.outcome === 'success').length;
     const failedCount = past.filter(m => m.outcome === 'failed').length;
     const pendingCount = past.filter(m => !m.outcome).length;
+
+    const handleOpenEmailPreview = (m: Meeting) => {
+        setSelectedEmailMeeting(m);
+        
+        // Find linked client's emails if exists
+        const linkedClient = m.linked_client_id ? clients.find(c => c.id === m.linked_client_id) : null;
+        const clientEmails = linkedClient?.emails || [];
+        
+        // Combine client and participant emails
+        const recipients = Array.from(new Set([...m.participants, ...clientEmails])).join(', ');
+        
+        const durationMin = Math.round((m.end_time.getTime() - m.start_time.getTime()) / 60000);
+        const formattedDate = formatDateTime(m.start_time);
+        
+        const subject = `Meeting Invitation: ${m.title}`;
+        const body = `Hello,
+
+You are invited to a meeting. Here are the details:
+
+Event: ${m.title}
+Date & Time: ${formattedDate}
+Duration: ${durationMin} minutes
+${m.location ? `Meeting Link / Location: ${m.location}` : ''}
+
+Description:
+${m.description || 'No description provided.'}
+
+I look forward to our conversation.
+
+Best regards,`;
+        
+        setEmailPreviewData({ to: recipients, subject, body });
+        setEmailPreviewOpen(true);
+    };
+
+    const handleTriggerAutomation = async (data: { to: string; subject: string; body: string }) => {
+        if (!selectedEmailMeeting) return;
+        await triggerN8n('send_meeting_invitation', {
+            meeting_id: selectedEmailMeeting.id,
+            email: data.to,
+            title: data.subject,
+            body: data.body,
+            time: selectedEmailMeeting.start_time.toISOString()
+        });
+    };
+
+    const handleSentSuccess = async () => {
+        if (!selectedEmailMeeting) return;
+        try {
+            await updateDocById('meetings', selectedEmailMeeting.id, { invitation_sent: true });
+        } catch (err) {
+            console.error('Failed to update meeting invite status:', err);
+        }
+    };
 
     return (
         <div className="space-y-6">
@@ -283,7 +356,7 @@ export const Meetings: React.FC = () => {
                             {upcoming.map(m => (
                                 <div key={m.id} className="relative">
                                     <span className="absolute -left-[30px] sm:-left-[38px] top-6 w-3 h-3 rounded-full border-2 border-bg-app bg-[#21D89A]" />
-                                    <MeetingCard meeting={m} now={now} onEdit={openEdit} onDelete={handleDelete} />
+                                    <MeetingCard meeting={m} now={now} onEdit={openEdit} onDelete={handleDelete} onSendEmail={handleOpenEmailPreview} />
                                 </div>
                             ))}
                         </div>
@@ -301,7 +374,7 @@ export const Meetings: React.FC = () => {
                                 return (
                                     <div key={m.id} className="relative">
                                         <span className={`absolute -left-[30px] sm:-left-[38px] top-6 w-3 h-3 rounded-full border-2 border-bg-app ${dotBg}`} />
-                                        <MeetingCard meeting={m} now={now} onEdit={openEdit} onDelete={handleDelete} />
+                                        <MeetingCard meeting={m} now={now} onEdit={openEdit} onDelete={handleDelete} onSendEmail={handleOpenEmailPreview} />
                                     </div>
                                 );
                             })}
@@ -324,6 +397,17 @@ export const Meetings: React.FC = () => {
             <Modal isOpen={showForm} onClose={closeForm} title={editMeeting ? 'Edit Meeting' : 'Schedule Meeting'} size="lg">
                 <MeetingForm onClose={closeForm} editMeeting={editMeeting} />
             </Modal>
+
+            <EmailPreviewModal
+                isOpen={emailPreviewOpen}
+                onClose={() => setEmailPreviewOpen(false)}
+                title="Send Meeting Invitation"
+                initialTo={emailPreviewData.to}
+                initialSubject={emailPreviewData.subject}
+                initialBody={emailPreviewData.body}
+                onSentSuccess={handleSentSuccess}
+                onTriggerAutomation={handleTriggerAutomation}
+            />
         </div>
     );
 };

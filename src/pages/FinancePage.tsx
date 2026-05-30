@@ -8,12 +8,15 @@ import {
     Loader2, Trash2, ChevronDown, ChevronUp, CalendarDays,
     ArrowRightLeft, Landmark, CreditCard, PieChart, Minus
 } from 'lucide-react';
-import { createDoc, deleteDocById, getDocById } from '../firebase/firestore';
+import { createDoc, deleteDocById, getDocById, updateDocById } from '../firebase/firestore';
 import { formatCurrency, convertCurrency } from '../utils/currencyService';
 import { generateInvoicePDF } from '../utils/pdfGenerator';
+import { uploadFile } from '../firebase/storage';
+import { EmailPreviewModal } from '../components/ui/EmailPreviewModal';
+import { triggerN8n } from '../utils/n8nBridge';
 import toast from 'react-hot-toast';
 import type { FinanceEntry, CurrencyCode, FinanceType, Invoice, InvoiceItem, UserProfile } from '../types';
-import { FileText, Download, User, Briefcase, Sparkles } from 'lucide-react';
+import { FileText, Download, User, Briefcase, Sparkles, Mail } from 'lucide-react';
 
 // ─── Constants ───────────────────────────────────────────────────────────────
 const EXPENSE_CATEGORIES = ['Food', 'Transport', 'Shopping', 'Health', 'Entertainment', 'Bills', 'Other'];
@@ -140,7 +143,7 @@ const MonthCard: React.FC<{ month: string; entries: FinanceEntry[]; displayCurre
     );
 };
 
-const InvoiceDetailsModal: React.FC<{ invoice: Invoice; profile: Partial<UserProfile>; onClose: () => void }> = ({ invoice, profile, onClose }) => {
+const InvoiceDetailsModal: React.FC<{ invoice: Invoice; profile: Partial<UserProfile>; onClose: () => void; onSendInvoice: (invoice: Invoice) => void }> = ({ invoice, profile, onClose, onSendInvoice }) => {
     return (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6">
             <motion.div 
@@ -245,14 +248,20 @@ const InvoiceDetailsModal: React.FC<{ invoice: Invoice; profile: Partial<UserPro
                     )}
                 </div>
 
-                <div className="p-8 bg-bg-app border-t border-border-card flex gap-4">
+                <div className="p-8 bg-bg-app border-t border-border-card flex flex-col sm:flex-row gap-3">
                     <button 
                         onClick={() => generateInvoicePDF(invoice, profile)}
-                        className="flex-1 flex items-center justify-center gap-3 bg-gradient-to-r from-[#21D89A] to-[#047857] hover:opacity-90 text-white font-black py-4 rounded-2xl transition-all shadow-xl shadow-[#21D89A]/10 cursor-pointer"
+                        className="flex-1 flex items-center justify-center gap-2 bg-bg-input hover:bg-border-card text-text-main font-black py-3.5 rounded-2xl transition-all border border-border-card cursor-pointer"
                     >
-                        <Download size={20} /> DOWNLOAD PDF
+                        <Download size={16} /> DOWNLOAD PDF
                     </button>
-                    <button onClick={onClose} className="flex-1 bg-bg-input hover:bg-border-card text-text-main font-black py-4 rounded-2xl transition-all cursor-pointer">
+                    <button 
+                        onClick={() => onSendInvoice(invoice)}
+                        className="flex-1 flex items-center justify-center gap-2 bg-gradient-to-r from-[#21D89A] to-[#047857] hover:opacity-95 text-black font-black py-3.5 rounded-2xl transition-all shadow-xl shadow-[#21D89A]/15 cursor-pointer active:scale-95"
+                    >
+                        <Mail size={16} /> SEND INVOICE
+                    </button>
+                    <button onClick={onClose} className="sm:w-28 bg-bg-input hover:bg-border-card text-text-muted hover:text-text-main font-black py-3.5 rounded-2xl transition-all cursor-pointer">
                         CLOSE
                     </button>
                 </div>
@@ -558,7 +567,7 @@ const CreateInvoiceTab: React.FC<{ profile: Partial<UserProfile> }> = ({ profile
     );
 };
 
-const InvoicesListTab: React.FC<{ profile: Partial<UserProfile> }> = ({ profile }) => {
+const InvoicesListTab: React.FC<{ profile: Partial<UserProfile>; onSendInvoice: (invoice: Invoice) => void }> = ({ profile, onSendInvoice }) => {
     const { invoices } = useAppStore();
     const [selectedInvoice, setSelectedInvoice] = useState<Invoice | null>(null);
 
@@ -593,8 +602,15 @@ const InvoicesListTab: React.FC<{ profile: Partial<UserProfile> }> = ({ profile 
                                 </div>
                                 <div className="flex items-center gap-2">
                                     <button 
+                                        onClick={(e) => { e.stopPropagation(); onSendInvoice(inv); }}
+                                        className={`p-2.5 bg-bg-input hover:bg-border-card border border-border-card text-[#047857] dark:text-[#21D89A] rounded-xl transition-all cursor-pointer ${inv.pdf_url ? 'bg-[#21D89A]/10 border-[#21D89A]/30' : ''}`}
+                                        title="Send Invoice"
+                                    >
+                                        <Mail size={16} />
+                                    </button>
+                                    <button 
                                         onClick={(e) => { e.stopPropagation(); generateInvoicePDF(inv, profile); }}
-                                        className="p-2.5 bg-bg-input hover:bg-border-card border border-border-card text-[#047857] dark:text-[#21D89A] rounded-xl transition-all cursor-pointer"
+                                        className="p-2.5 bg-bg-input hover:bg-border-card border border-border-card text-text-main rounded-xl transition-all cursor-pointer"
                                         title="Download PDF"
                                     >
                                         <Download size={16} />
@@ -619,6 +635,7 @@ const InvoicesListTab: React.FC<{ profile: Partial<UserProfile> }> = ({ profile 
                         invoice={selectedInvoice} 
                         profile={profile} 
                         onClose={() => setSelectedInvoice(null)} 
+                        onSendInvoice={onSendInvoice}
                     />
                 )}
             </AnimatePresence>
@@ -631,13 +648,19 @@ export interface FinancePageProps {
 
 export const FinancePage: React.FC<FinancePageProps> = ({ viewMode = 'dashboard' }) => {
     const { user } = useAuth();
-    const { exchangeRates, savings, emis, financeEntries: entries, invoices } = useAppStore();
+    const { exchangeRates, savings, emis, financeEntries: entries, invoices, clients } = useAppStore();
     const today = new Date();
     const todayStr = format(today, 'yyyy-MM-dd');
 
     const [activeTab, setActiveTab] = useState<'today' | 'invoices' | 'new_invoice' | 'history' | 'savings' | 'emis'>(viewMode === 'history' ? 'history' : 'today');
     const [displayCurrency, setDisplayCurrency] = useState<CurrencyCode>('BDT');
     const [userProfile, setUserProfile] = useState<Partial<UserProfile>>({});
+
+    // Invoice Email Preview Modal States
+    const [selectedEmailInvoice, setSelectedEmailInvoice] = useState<Invoice | null>(null);
+    const [invoiceEmailPreviewOpen, setInvoiceEmailPreviewOpen] = useState(false);
+    const [invoiceEmailPreviewData, setInvoiceEmailPreviewData] = useState({ to: '', subject: '', body: '' });
+    const [invoicePdfLoading, setInvoicePdfLoading] = useState(false);
 
     // Load Profile for signature/company name
     useEffect(() => {
@@ -647,6 +670,94 @@ export const FinancePage: React.FC<FinancePageProps> = ({ viewMode = 'dashboard'
             });
         }
     }, [user]);
+
+    const buildInvoiceEmailBody = (inv: Invoice, pdfUrl: string) => {
+        return `Dear ${inv.recipient_name},
+
+I hope you are doing well.
+
+Please find the invoice ${inv.invoice_number} for services rendered.
+
+Invoice Summary:
+- Number: ${inv.invoice_number}
+- Date Issued: ${inv.date}
+- Due Date: ${inv.due_date || 'N/A'}
+- Total Amount: ${formatCurrency(inv.total_amount, inv.currency)}
+
+You can view and download your full invoice PDF here:
+${pdfUrl}
+
+Thank you for your business!
+
+Best regards,
+${userProfile.fullName || userProfile.displayName || 'Independent Contractor'}
+${userProfile.companyName || ''}`;
+    };
+
+    const handleOpenInvoiceEmailPreview = async (inv: Invoice) => {
+        setSelectedEmailInvoice(inv);
+        setInvoiceEmailPreviewOpen(true);
+        
+        let recipientEmail = '';
+        if (inv.type === 'client_bill') {
+            const client = clients.find(c => c.id === inv.recipient_id);
+            recipientEmail = client?.emails?.[0] || '';
+        }
+        
+        const subject = `Invoice ${inv.invoice_number} from ${userProfile.companyName || 'PragmaOS'}`;
+        
+        if (inv.pdf_url) {
+            const body = buildInvoiceEmailBody(inv, inv.pdf_url);
+            setInvoiceEmailPreviewData({ to: recipientEmail, subject, body });
+            return;
+        }
+        
+        setInvoicePdfLoading(true);
+        try {
+            // Generate PDF doc (shouldDownload = false)
+            const doc = await generateInvoicePDF(inv, userProfile, false);
+            
+            // Output as blob and upload to storage
+            const pdfBlob = doc.output('blob');
+            const pdfFile = new File([pdfBlob], `Invoice_${inv.invoice_number}.pdf`, { type: 'application/pdf' });
+            
+            const uploadResult = await uploadFile(pdfFile, 'invoices', inv.id);
+            const hostedUrl = uploadResult.url;
+            
+            // Update Firestore record
+            await updateDocById('invoices', inv.id, { pdf_url: hostedUrl });
+            
+            // Update email preview body
+            const body = buildInvoiceEmailBody(inv, hostedUrl);
+            setInvoiceEmailPreviewData({ to: recipientEmail, subject, body });
+        } catch (err) {
+            toast.error('Failed to generate or upload invoice PDF');
+            console.error(err);
+            setInvoiceEmailPreviewOpen(false);
+        } finally {
+            setInvoicePdfLoading(false);
+        }
+    };
+
+    const handleTriggerInvoiceAutomation = async (data: { to: string; subject: string; body: string }) => {
+        if (!selectedEmailInvoice) return;
+        await triggerN8n('send_invoice_email', {
+            invoice_id: selectedEmailInvoice.id,
+            email: data.to,
+            title: data.subject,
+            body: data.body,
+            pdf_url: selectedEmailInvoice.pdf_url || ''
+        });
+    };
+
+    const handleInvoiceSentSuccess = async () => {
+        if (!selectedEmailInvoice) return;
+        try {
+            await updateDocById('invoices', selectedEmailInvoice.id, { status: 'sent' });
+        } catch (err) {
+            console.error('Failed to update invoice status:', err);
+        }
+    };
     
 
 
@@ -1098,7 +1209,7 @@ export const FinancePage: React.FC<FinancePageProps> = ({ viewMode = 'dashboard'
 
                 {activeTab === 'invoices' && (
                     <motion.div key="invoices" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}>
-                        <InvoicesListTab profile={userProfile} />
+                        <InvoicesListTab profile={userProfile} onSendInvoice={handleOpenInvoiceEmailPreview} />
                     </motion.div>
                 )}
 
@@ -1261,6 +1372,20 @@ export const FinancePage: React.FC<FinancePageProps> = ({ viewMode = 'dashboard'
                     </motion.div>
                 )}
             </AnimatePresence>
+
+            <EmailPreviewModal
+                isOpen={invoiceEmailPreviewOpen}
+                onClose={() => setInvoiceEmailPreviewOpen(false)}
+                title="Send Invoice Email"
+                initialTo={invoiceEmailPreviewData.to}
+                initialSubject={invoiceEmailPreviewData.subject}
+                initialBody={invoiceEmailPreviewData.body}
+                attachmentName={selectedEmailInvoice ? `Invoice_${selectedEmailInvoice.invoice_number}.pdf` : undefined}
+                isLoading={invoicePdfLoading}
+                loadingMessage="Generating & Hosting PDF Invoice..."
+                onSentSuccess={handleInvoiceSentSuccess}
+                onTriggerAutomation={handleTriggerInvoiceAutomation}
+            />
         </div>
     </div>
 );
